@@ -33,7 +33,7 @@
 
 </head>
 
-<body id="page-top" onload="reviewingVis('reviewing.json'); getPublicationsAuthor('martin-cubaud');">
+<body id="page-top" onload="reviewingVis('reviewing.json'); getPublicationsAuthor('martin-cubaud');getJournalPublicationsAuthor('martin-cubaud');getConfPublicationsAuthor('martin-cubaud');getBookPublicationsAuthor('martin-cubaud');getOtherPublicationsAuthor('martin-cubaud');">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <select class="selectpicker" data-width="fit">
@@ -61,10 +61,10 @@
           <a class="nav-link js-scroll-trigger lang-en" href="#interest">Research Interests</a>
           <a class="nav-link js-scroll-trigger lang-fr" href="#interest">Sujets de recherche</a>
         </li>
-       <!-- <li class="nav-item">
+       <li class="nav-item">
           <a class="nav-link js-scroll-trigger lang-en" href="#news">News</a>
           <a class="nav-link js-scroll-trigger lang-fr" href="#news">Actualités</a>
-        </li>-->
+        </li>
         <li class="nav-item">
           <a class="nav-link js-scroll-trigger lang-en" href="#experience">Experience</a>
           <a class="nav-link js-scroll-trigger lang-fr" href="#experience">Parcours professionnel</a>
@@ -130,7 +130,7 @@
           <a href="https://orcid.org/0009-0007-3751-1946">
             <i class="ai ai-orcid"></i>
           </a>
-          <!--<a href="#">
+          <!--<a href="martin-cubaud">
             <i class="ai"><img src="img/icons/hal-b2.svg" width=45px/></i>
           </a>-->
         </div>
@@ -158,7 +158,7 @@
           </article>
           <article class="col-md-6 col-lg-4">
                 <div class="portfolio-item d-block mx-auto">
-                  <img class="img-fluid" src="img/vgi.png" alt="VGI" />
+                  <img class="img-fluid" src="https://www.openstreetmap.org/assets/osm_logo-4afddaae0230a5a46687fdc751ed256dfdccde144118cb02a7d7960f207a4b92.svg" alt="OpenStreetMap Logo" />
                   <div class="portfolio-desc d-flex align-center position-absolute h-100 w-100">
                     <div class="folio-info my-auto w-100 text-center">
                       <h5 class="lang-en">Volunteered Geographic Information</h5>
@@ -184,24 +184,23 @@
 
     <hr class="m-0">
 
-    <!--<section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="news">
+    <section class="resume-section p-3 p-lg-5 d-flex justify-content-center" id="news">
       <div class="w-100">
         <h2 class="mb-5">News</h2>
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
           <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <!--<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>-->
           </ol>
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="img/orthez_google.png" class="d-block w-100" alt="...">
+              <img src="img/GT_Gers_US235.png" class="d-block w-100" alt="...">
               <div class="carousel-caption d-none d-md-block">
-                <h5>First news</h5>
-                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                <p>Received the "Best Presentation Award" for his work entitled "Comparison of two data fusion approaches for land use classification », Martin Cubaud, Arnaud Le Bris, Laurence Jolivet, Ana-Maria Olteanu-Raimond" in "ISSDQ" Workshop at ISPRS Geospatial Week 2023.</p>
               </div>
             </div>
-            <div class="carousel-item">
+            <!--<div class="carousel-item">
               <img src="img/orthez_IGN.png" class="d-block w-100" alt="...">
               <div class="carousel-caption d-none d-md-block">
                 <h5>Second news</h5>
@@ -214,7 +213,7 @@
                 <h5>Third news</h5>
                 <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
               </div>
-            </div>
+            </div>-->
           </div>
           <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -226,7 +225,7 @@
           </a>
         </div>
       </div>
-    </section>-->
+    </section>
 
     <hr class="m-0">
 
@@ -423,25 +422,25 @@
       <div class="w-100">
         <h2 class="mb-5">Publications</h2>
 
-        <!--<span id="pubACL"><div class="subheading mb-3 mt-3">[ACL] Journals</div></span>-->
-        <!--<span id="pubACLN"><div class="subheading mb-3 mt-3">[ACLN] Journals</div></span>-->
-        <!--<span id="pubASCL"><div class="subheading mb-3 mt-3">[ASCL] Others</div></span>-->
+        <span id="pubACL"><div class="subheading mb-3 mt-3">[ACL] Journals</div></span>
+        <span id="pubACLN"><div class="subheading mb-3 mt-3">[ACLN] Journals</div></span>
+        <span id="pubASCL"><div class="subheading mb-3 mt-3">[ASCL] Others</div></span>
         <span id="pubACTI"><div class="subheading mb-3 mt-3">[ACTI] Conferences</div></span>
         <span id="pubACTN"><div class="subheading mb-3 mt-3">[ACTN] Conferences</div></span>
         <span id="pubCOM"><div class="subheading mb-3 mt-3">[COM] Conferences</div></span>
-        <!--<span id="pubOS"><div class="subheading mb-3 mt-3">[OS] Books and Chapters</div></span>-->
-        <!--<span id="pubDO"><div class="subheading mb-3 mt-3">[DO] Books and Chapters</div></span>-->
-        <!--<span id="pubAFF"><div class="subheading mb-3 mt-3">[AFF] Posters</div></span>-->
-        <!--<span id="pubAP"><div class="subheading mb-3 mt-3">[AP] Preprints</div></span>-->
-        <!--<span id="pubTH"><div class="subheading mb-3 mt-3">[TH] Dissertations</div></span>-->
-        <!--<span id="pubINV"><div class="subheading mb-3 mt-3">[INV] Invited Talks</div></span>-->
-        <!--<span id="pubPV"><div class="subheading mb-3 mt-3">[PV] Popularization</div></span>-->
+        <span id="pubOS"><div class="subheading mb-3 mt-3">[OS] Books and Chapters</div></span>
+        <span id="pubDO"><div class="subheading mb-3 mt-3">[DO] Books and Chapters</div></span>
+        <span id="pubAFF"><div class="subheading mb-3 mt-3">[AFF] Posters</div></span>
+        <span id="pubAP"><div class="subheading mb-3 mt-3">[AP] Preprints</div></span>
+        <span id="pubTH"><div class="subheading mb-3 mt-3">[TH] Dissertations</div></span>
+        <span id="pubINV"><div class="subheading mb-3 mt-3">[INV] Invited Talks</div></span>
+        <span id="pubPV"><div class="subheading mb-3 mt-3">[PV] Popularization</div></span>
 
         <!-- provide a subset of the publications based on a keyword -->
-        <!--
+        
         <span id="pubGeneralisation"><div class="subheading mb-3 mt-3">Généralisation</div></span>
-	<script> getKeywordPublicationsAuthorStartYear('guillaume-touya', 'Généralisation', 2006, "pubGeneralisation"); </script>
-        -->
+	<script> getKeywordPublicationsAuthorStartYear('martin-cubaud', 'Généralisation', 2006, "pubGeneralisation"); </script>
+        
       </div>
     </section>
 
