@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Module d’Analyse Statistique : Introduction générale</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<style>
+		.top_bar {
+			width: 100%;
+			background-color: #97bf11;
+			top: 0px;
+			font-size: 35px;
+		}
+		
+		p, a {
+			font-size: 30px;
+		}
+		li {
+			font-size: 30px;
+		}
+		section {
+			height: 100%;
+		}
+		b {
+		color: #7a9e08;
+		}
+		i {
+		font-style: italic;
+		}
+	</style>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+						<h2>Module d’Analyse Statistique :</h2>
+						<h4>Introduction générale</h4>
+						<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						<h4>M2 IGAST</h4>
+						<div>
+							<small>
+							<p>Martin Cubaud</p>
+							<p>LASTIG-UGE-IGN/ENSG</p>
+							<p>2024-2025</p>
+							</small>
+						</div>
+						<img src="logo_ENSG.png" alt="reveal.js logo" style="height: 100px; margin: 0 auto 4rem auto; background: transparent; position: absolute;top: 0px;right: 0px;" class="demo-logo">
+					</div>
+				</section>
+				<section>
+					<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+						<h4>Introduction générale</h4>
+						<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Réferences</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+						<ul>
+							<li>Cours M2 IGAST 2021 de Paul Chapron et 2018 d’Ana-Maria Olteanu-Raimond</li>
+							<li>Probabilités, analyse de données et statistiques , Gilbert Saporta, Editions TECHNIP, 2011</li>
+							<li> <a href="https://gitlab.huma-num.fr/hcommenges/cours_statcomplet/-/raw/master/cours_statcomplet.pdf">Cours de H. Commenges</a></li>
+							<li>Nombreuses ressources en ligne, e.g. : </li>
+							<li><a href="http://www.foad-mooc.auf.org/IMG/pdf/424B_-Application_des_methodes_statistiques_d_analyse.pdf">http://www.foad-mooc.auf.org/IMG/pdf/424B_-Application_des_methodes_statistiques_d_analyse.pdf</a></li>
+							<li><a href="http://www.itse.be/statistique2010/co/Module_statistique_FSP.html">http://www.itse.be/statistique2010/co/Module_statistique_FSP.html</a></li>
+						</ul>
+					</div>
+				</section>
+				
+				<section>
+					<h4 class="top_bar">Analyse spatiale : définition</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+						
+						<p>L'analyse spatiale étudie la <b>répartition</b> et l'<b>organisation</b> d'ensembles d'objets qui sont <b>localisés</b>.</p>
+						<p>L'objectif est de :</p>
+						<blockquote>"déceler en quoi la localisation apporte un élément utile à la connaissances des objets étudiés et peut en expliquer les caractéristiques"</blockquote>
+						<p>[Pumain, Saint-Julien 97]</p>
+					</div>
+				</section>
+
+				<section>
+					<h4 class="top_bar">Specifité de l'analyse spatiale</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+						<div style="background-color: #f2f5e6;">
+							<p style="width:100%; background-color:#7a9e08; color:white; margin:0px">Analyse statistique :</p>
+							<p>Méthodes <b>résumant</b> et <b>généralisant</b> des observations</p>
+							<ul>
+								<li>Les unités d'analyse sont des éléments indépendants en principe</li>
+								<li>On ne s'intéresse pas à leur localisation ni à leurs intéractions (spatiales)</li>
+							</ul>
+						</div>
+						<p></p>
+						<div style="background-color: #f2f5e6;">
+							<p style="width:100%; background-color:#7a9e08; color:white; margin:0px">Analyse <b style="color: #ffda6b">spatiale</b> statistique :</p>
+							<ul>
+								<li>Les unités d’analyse sont localisables</li>
+								<li>On s’intéresse à leur propriétés y compris la localisation</li>
+								<li>On fait l’hypothèse que leur localisation peut influencer les valeurs observées</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				
+				<section>
+				<h4 class="top_bar">Données spatiales vs. non spatiales</h4>
+				<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+					<p>Données spatiales :</p>
+					<p>Individus restreints spatialement (<b>selection spatiale</b>), ou variables de <b>localisation</b> géographique (e.g. Lieu de résidence, coordonnées) renseignées pour les individus</p>
+					<p>Quid des <b>distances</b> ? → modèle gravitaire, réseau etc.</p>
+				</div>
+				</section>
+				
+				<section>
+					<h4 class="top_bar">Deux approches</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+						<div style="background-color: #f2f5e6;">
+							<p style="width:100%; background-color:#7a9e08; color:white; margin:0px">Analyse géométrique :</p>
+							<p>Approche <b>géométrique</b> pour mieux décrire les données: analyse de forme, de réseaux, de proximité, méthodes de création de nouvelles entités à partir de la géométrie des objets.</p>
+						</div>
+						<p></p>
+						<div style="background-color: #f2f5e6;">
+							<p style="width:100%; background-color:#7a9e08; color:white; margin:0px">Analyse de données :</p>
+							<p>Approche <b>statistique</b> permettant de faire émerger des relations (des groupes, des lois) pour aider l'étude de certains phénomènes.</p>
+						</div>
+					</div>
+				</section>
+				
+				<section>
+					<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+						<h4>Statistiques Inférentielles</h4>
+						<h4>vs</h4>
+						<h4>Statistiques Descriptives</h4>
+						<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+					</div>
+				</section>
+				
+				<section>
+					<h4 class="top_bar">Statistiques Inférentielles</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+						<p>A partir d’un échantillon , que peut-on attendre (=<b>inférer</b>) de la population ?</p>
+						<ul>
+							<li>Modèles, estimateurs... : <b>régression</b>, <b>estimation</b>, <b>extrapolation</b></li>
+							<li><i>e.g.</i> sondages, recensement...</li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Statistiques Inférentielles : exemple</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+						<img src="img/penguins_reglin.png" style="width : 60%; align-self: center;"></img>
+						<p>Penguins data were collected and made available by Dr. Kristen Gorman and the Palmer Station, Antarctica LTER, a member of the Long Term Ecological Research Network.</p>
+						<a href="https://github.com/allisonhorst/palmerpenguins">[https://github.com/allisonhorst/palmerpenguins]</a>
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Statistiques Descriptives</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+						<p>Décrire, résumer, synthétiser les propriétés d'une <b>population</b> à partir des <b>variables</b> qui décrivent ses individus.</p>
+						<ul>
+							<li><b>Graphiques</b> : nuages de points, histogramme...</li>
+							<li><b>Mesures</b> (fréquences, distributions, moments) sur des variables</li>
+							<li><b>Liaisons</b> statistiques entre variables : corrélation, covariance...</li>
+							<li><b>Structure</b> interne des données : classification, ACP...</li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Attention aux groupes ! (paradoxe de Simpsons)</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+						<p>Paradoxe de Simpsons</p>
+						<img src="img/Simpsons_paradox_-_animation.gif" style="width : 60%; align-self: center;"></img>
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Dans ce module</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+						<p>Nous ferons majoritairement de la statistique <b>descriptive</b></p>
+						<p>(même si, pour bien décrire, il faut parfois inférer).</p>
+					</div>
+				</section>
+				
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Vocabulaire</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Population</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p><b>Ensemble</b> d'individus</p>
+							<p>"données", "corpus", "échantillon", "data"</p>
+							<p>très souvent <b>tabulaires</b></p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Individu</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p><b>Unité</b> statistique <b>élémentaire</b> : personnes, logements...</p>
+							<p>→ "les lignes du tableau"</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Variables</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p><b>Caractéristiques, propriétés</b> d'un individu, mesurées par des enquêtes, des observations...</p>
+							<p>→ "les colonnes du tableau"</p>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4 class="top_bar">Types de variables</h4>
+						<div style="width:90%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p><b>Qualitatives</b> : facteurs <i>e.g.</i> couleur, genre, CSP, type de pokemon... → notion de <b>modalité</b></p>
+							<p><b>Quantitatives</b> : nombres <i>e.g.</i> taille, masse, revenu, surface, points de vie...  parfois exprimés avec des <b>unités</b> : m, kg, s</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Discrètes et Continues</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p>Variables quantitatives <b>continues</b> : $var \in \R $</p>
+							<p>Valeurs réelles, toutes les valeurs de l'intervalle de mesures peuvent exister</p>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+							<p>Variables quantitatives <b>discrètes</b> : $var \in \N $</p>
+							<p>Valeurs entières, pour des attributs <b>dénombrables</b> (comptage)</p>
+							<p>parfois utilisées pour encoder une variable qualitative à deux modalités <i>e.g.</i> présence (1), absence (0)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Variables qualitatives</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p>Les valeurs sont prises dans un ensemble <b>fini</b> de valeurs possibles, défini par extension (<i>i.e.</i> on donne la liste des valeurs possibles)</p>
+							<p>→ notion de <b>modalités</b></p>
+							<p>→ <b>nominales</b> (non ordonnées ex état civil) ou </p>
+							<p>→ <b>ordinales</b> (ordonnées ex échelle de Likert)</p>
+							<div style="display: flex; width:100%; justify-content: space-around;">
+								<button>Très insatisfait(e)</button>
+								<button>Insatisfait(e)</button>
+								<button>Satisfait(e)</button>
+								<button>Très satisfait(e)</button>
+							</div>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h4 class="top_bar">L'échelle d'Analyse</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p>Spécificité de la statistique spatiale : à quelle échelle observer ?</p>
+							<p>Quel découpage, quelles unités spatiales ?</p>
+							<p>"Problème insoluble" : le <b>MAUP</b> (Modifiable Areal Unit Problem)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Unités spatiales</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p><b>Mailles administratives :</b></p>
+							<p>agrégation/imbrication d’unités spatiales prédéfinies : comtés, départements, régions, pays...</p>
+							<p>e.g. Comprendre comment le taux de chômage d'un pays est distribué entre les régions pour guider les politiques économiques</p>
+							<p><b>Découpages :</b></p>
+							<p>identification d'unités spatiales ayant des catactéristiques semblables</p>
+							<p>e.g. IRIS, carroyage</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">échelle individuelle vs echelle agrégée</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p><b>Désagrégation</b> ou <b>Ventilation :</b></p>
+							<p>→ Inférer des caractéristiques individuelles à partir de l'analyse de données agrégées (ni facile ni immédiat)</p>
+							<p><b>Agrégation :</b></p>
+							<p>→ Inférer des caractéristiques concernant les unités agrégés d'après les caractéristiques individuelles</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">le MAUP (Modifiable Areal Unit Problem)</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p>Problème d'agrégation spatiale : les résultats d'une analyse statistique spatiale dépendent du choix d'agrégation</p>
+							<p>→ biais "systématique et insoluble"</p>
+							<p>Exemples tirés du rapport ESPON :</p>
+							<a href="https://www.espon.eu/sites/default/files/attachments/espon343_maup_final_version2_nov_2006.pdf">https://www.espon.eu/sites/default/files/attachments/espon343_maup_final_version2_nov_2006.pdf</a>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">MAUP exemple 1</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<img src="img/Maup1.png" style="height : 100%; align-self: center;"></img>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">MAUP exemple 1</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<img src="img/Maup2.png" style="height : 100%; align-self: center;"></img>
+						</div>
+					</section>
+				</section>
+				<section>
+					<h4 class="top_bar">Attention aux seules valeurs chiffrées !</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<img src="img/DinoSequentialSmaller.gif" style="height : 100%; align-self: center;"></img>
+						</div>
+				</section>
+				<section>
+					<h4 class="top_bar">La première "chose à faire" !</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<b style="font-size: 60px;">Représenter/Tracer/Cartographier les variables de la population !</b>
+						</div>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				center: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+	</body>
+</html>

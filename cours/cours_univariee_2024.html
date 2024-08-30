@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Analyse Univariée</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="plugin/tabs/tabs.css">
+		<link rel="icon" type="image/png" href="logo_ENSG.png" />
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<style>
+		.top_bar {
+			width: 100%;
+			background-color: #97bf11;
+			top: 0px;
+			font-size: 35px;
+		}
+		
+		p, a {
+			font-size: 30px;
+		}
+		li {
+			font-size: 30px;
+		}
+		code{
+			font-size: 15px;
+			line-height: 1.2em;
+			max-height: 30%;
+		}
+		section {
+			height: 100%;
+		}
+		b {
+		color: #7a9e08;
+		}
+		i {
+		font-style: italic;
+		}
+	</style>
+	<!-- Add CSS for styling the tabs -->
+	<style>
+		.tabs {
+		margin: 0px;
+		display: flex;
+		}
+		.tab-button {
+		padding: 10px 20px;
+		border-radius: 10px 10px 0px 0px;
+		cursor: pointer;
+		background-color: #ddd;
+		border: none;
+		outline: none;
+		}
+		.tab-button:hover{
+			padding: 9px 19px;
+			border: 1px solid black;
+		}
+		.tab-button.active {
+		background-color: #666;
+		color: white;
+		}
+		.tab-content.inactive{
+		display: none;
+		visibility: hidden;
+		height: 0px;
+		margin: 0px;
+		}
+		.tab-content.active {
+		display: block;
+		visibility: visible;
+		height: fit-content;
+		margin: 0px;
+		}
+		.img.active{
+			visibility: visible;
+			margin: 0px;
+			max-height: 50%;
+			height: auto;
+		}
+		.img.inactive{
+			visibility: hidden;
+			margin: 0px;
+			height: 0px;
+		}
+	</style>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+						<h2>Analyse Univariée</h2>
+						<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						<h4>M2 IGAST</h4>
+						<div>
+							<small>
+							<p>Martin Cubaud</p>
+							<p>LASTIG-UGE-IGN/ENSG</p>
+							<p>2024-2025</p>
+							</small>
+						</div>
+						<img src="logo_ENSG.png" alt="reveal.js logo" style="height: 100px; margin: 0 auto 4rem auto; background: transparent; position: absolute;top: 0px;right: 0px;" class="demo-logo">
+					</div>
+				</section>
+				
+				<section>
+					<h4 class="top_bar">Analyse Univariée</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+						<p><b>Décrire</b> et <b>mesurer</b> la <b>répartition</b> des valeurs que peut prendre une variable : sa <b>distribution</b> (≈ “histogramme en continu”)</p>
+						<p>Parfois certaines distributions ressemblent à des distributions bien connues : on parle de <b>lois</b>.</p>
+						<p>e.g. loi normale/gaussienne, loi de Poisson, géométrique, exponentielle…</p>
+						<div style="display: flex; width : 100%">
+							<img src="img/images_univariees/expledistrib-1.png" style="width: 50%;">
+							<img src="img/images_univariees/expledistrib-2.png" style="width: 50%;">
+						</div>
+					</div>
+				</section>
+
+				<section>
+					<h4 class="top_bar">Histogramme d'une variable suivant une loi normale $\mathcal{N}(0, 1)$</h4>
+				  
+					<!-- Tab Navigation -->
+					<div class="tabs">
+					  <button class="tab-button numpy active" onclick="showTab('numpy')">Numpy</button>
+					  <button class="tab-button pandas" onclick="showTab('pandas')">Pandas</button>
+					  <button class="tab-button r" onclick="showTab('r')">R</button>
+					</div>
+				  
+					<!-- Python Code -->
+					<pre class="numpy tab-content active"><code class="language-python">xx = np.random.normal(size=2600)
+plt.figure(figsize=(12, 5))
+plt.hist(xx, bins=50, edgecolor="#aaaaaa", color="#44DD99")
+plt.xlabel("value")
+plt.ylabel("count")
+plt.grid(True)
+plt.show()</code></pre>
+					
+					<!-- Python Code -->
+					<pre class="pandas tab-content inactive"><code class="language-python">xx = pd.DataFrame(np.random.normal(size=2600))
+xx.hist(bins=50, figsize=(12, 5), edgecolor="#aaaaaa", color="#44DD99", grid=True)
+plt.xlabel("value")
+plt.ylabel("count")
+plt.show()</code></pre>
+					<!-- R Code -->
+					<pre class="r tab-content inactive"><code class="language-r">xx <- data.frame(value=rnorm(2600))
+plot1 <- ggplot(xx)+
+		geom_histogram(aes(x = value),bins = 50, color="#aaaaaa", fill="#44DD99" )+
+		theme_light()
+plot1</code></pre>
+				  <img class="numpy img active" src="img/images_univariees/numpy_hist.png">
+				  <img class="pandas img inactive" src="img/images_univariees/pandas_hist.png">
+				  <img class="r img inactive" src="img/images_univariees/gaussienne1-1.png">
+				</section>
+				<section data-transition="slide-in fade-out">
+					<h4 class="top_bar">Histogramme d'une distribution<br> réelle</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+						<img src="img/images_univariees/arbres1-1.png" width="100%">
+						<p>Données : arbres de la ville de Paris [<a href="https://opendata.paris.fr/">https://opendata.paris.fr/</a>]</p>
+					</div>
+				</section>
+				<section data-transition="fade-in slide-out">
+					<h4 class="top_bar">Histogramme d'une distribution<br> réelle filtrée</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+						<img src="img/images_univariees/arbres2-1.png" width="100%">
+						<p>Données : arbres de la ville de Paris [<a href="https://opendata.paris.fr/">https://opendata.paris.fr/</a>]</p>
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Analyse univariée : plan</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+						<p>Objectif : <b>Décrire la répartition des valeurs</b> d’une variable</p>
+						<h5 id="mesures-de-tendance-centrale">Mesures de <b>tendance centrale</b></h5>
+						<p>mode, moyenne, médiane</p>
+						<h5 id="mesures-de-dispersion">Mesures de <b>dispersion</b></h5>
+						<p>étendue, écart-type, variance, quantiles, coefficient de variation</p>
+						<h5 id="mesures-de-forme">Mesures de <b>forme</b></h5>
+						<p>symétrie (Skewness) et aplatissement (Kurtosis)</p>
+					</div>
+				</section>
+
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Statistique Descriptive<br> Univariée : la tendance</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+							<p><br></p>
+							<p style="align-self: flex-start;">Moyenne(s), mode, médiane</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Moyenne</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+							<p>\(\displaystyle \bar{x} = \frac{1}{n}\sum_{i=0}^{n} x_i\)</p>
+							<h4 class="top_bar fragment"  data-fragment-index="1">Moyenne pondérée</h4>
+							<p style="align-self: flex-start;"class="fragment"  data-fragment-index="1">Lorsque les valeurs n'ont pas le même poids</p>
+							<p style="align-self: flex-start;"class="fragment"  data-fragment-index="1">Par exemple : poids = effectif de la valeur dans la population.</p>
+							<p class="fragment"  data-fragment-index="1">\(\displaystyle \bar{x} = \frac{1}{\sum_{i=0}^{n} p_i}\sum_{i=0}^{n} p_i x_i\)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Avantages et inconvénients <br>de la moyenne</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<h5>Avantage</h5>
+							<p>Chaque valeur compte</p>
+							<h5>inconvénients</h5>
+							<ul>
+								<li>sensibilité aux valeurs extrêmes</li>
+								<li>pas de signification sur les valeurs discrètes (e.g. 2.5 enfants par femme)</li>
+							</ul>
+							<ul style="list-style-type:'→ '">
+								<li>exclure les outliers</li>
+								<li>utiliser un autre estimateur</li>
+								<li>étudier la distribution des valeurs (e.g. cas bimodal) et opérer une classification</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Autres Moyennes</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
+							
+							<h4 class="top_bar fragment"  data-fragment-index="1">Moyenne géométrique</h4>
+							<p class="fragment"  data-fragment-index="1">\(\displaystyle \bar{x} = \sqrt[n]{\prod _{i=0}^{n} x_i}\)</p>
+							<p style="align-self: flex-start;" class="fragment"  data-fragment-index="1">Moins sensible à la présence de valeurs extrêmes</p>
+							<h4 class="top_bar fragment"  data-fragment-index="2">Moyenne quadratique (RMS)</h4>
+							<p class="fragment"  data-fragment-index="2">\(\displaystyle \bar{x} = \sqrt{\frac{1}{n}\sum_{i=0}^{n} x_i^2}\)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Cas particulier : Moyenne glissante</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Moyenne calculée sur une fenètre de n valeurs consécutives.</p>
+							<p>e.g. on reçoit une mesure chaque seconde, très bruitée, et on désire afficher 10 minutes de signal lissé dans le temps</p>
+							<p>→ on calcule pour chaque point du signal, la moyenne sur 10 valeurs consécutives (5 en avant , 5 en arrière)</p>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Le Mode</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p><b>Mode</b> : valeur la plus fréquente (effectif max.) de la série de valeurs que prend une variable.</p>
+							<p><span style="color:red">⚠</span> si variable quantitative continue : faire une classification . Dans ce cas, le mode est la moyenne des valeurs min et max des bornes de la classe de plus grand effectif.</p>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Avantages et inconvénients du mode</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<h5>Avantages</h5>
+							<p>Peu sensible aux valeurs extrêmes (moins sensible que la moyenne)</p>
+							<p>Signification concrète : la situation la plus fréquente</p>
+							<h5>inconvénients</h5>
+							<p>Ne dépends pas de toutes les observations : la modification d’une seule valeur n’entraîne pas une modification du mode</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La Médiane</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p><b>Médiane</b> : valeur qui partage une série de valeurs en <b>deux sous-ensembles d'égal effectif</b>.</p>
+							<p>Comme en géométrie, la médiane est la valeur de la variable qui est la plus proche de toutes les autres.</p>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">étapes de calcul</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Ordonner les valeurs selon un ordre croissant.</p>
+							<p>Calculer le rang $i=\frac{n+1}{2}$.</p>
+							<p>Si n impair, la valeur médiane existe dans la série statistique.</p>
+							<p>Si n pair, la valeur médiane est entre deux valeurs, et est égale à la moyenne de ces 2 valeurs.</p>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Avantages et inconvénients<br> de la médiane</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<h5>Avantages</h5>
+							<p>Souvent plus pertinente que la moyenne</p>
+							<p>Peu sensible aux valeurs extrêmes (moins sensible que la moyenne)</p>
+							<p>Signification concrète : divise en deux la distribution : un individu sur deux a une valeur inférieure ou supérieure à celle-ci</p>
+							<h5>inconvénients</h5>
+							<p>Ne dépends pas de toutes les observations : la modification d’une seule valeur n’entraîne pas une modification de la médiane</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Quelle mesure choisir ?</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Tout dépend de la distribution !</p>
+							<p>→ <b>Toujours</b> afficher l"histogramme ou la distribution de densité !</p>
+							<p></p>
+							<p>Le <b>Mode</b> est privilégié pour les valeurs <b>nominales</b> et si on désire consider "le cas le plus fréquent".</p>
+							<p>Distribution sans longue traîne ? <br>→ moyenne et médiane</p>
+							<p>Plusieurs modes dans la distribution ? <br>→ classification puis médiane / moyenne par classe</p>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution bimodale</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
+							<img src="img/images_univariees/bimod1-1.png" width="100%">
+							<p style="align-self: flex-start;">Que choisir : moyenne ou médiane ?</p>							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution unimodale symétrique</h4>
+					  
+						<!-- Tab Navigation -->
+						<div class="tabs">
+						  <button class="tab-button numpy active" onclick="showTab('numpy')">Numpy</button>
+						  <button class="tab-button pandas" onclick="showTab('pandas')">Pandas</button>
+						  <button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+					  
+						<!-- Python Code -->
+						<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import gaussian_kde
+xx = np.random.normal(loc=5, scale=1, size=2900)
+density = gaussian_kde(xx) #kernel density estimator
+x = np.linspace(min(xx), max(xx), 100)
+y = density(x) #On estime la densité entre pour 100 valeurs entre xx_min et xx_max
+plt.figure(figsize=(12, 5))
+plt.plot(x, y, color="#44DD99", lw=1.3)
+plt.axvline(x=np.mean(xx), color="red")
+plt.axvline(x=np.median(xx) + 0.02, color="blue")
+plt.text(4.5, 0.2, "mean", color="red")
+plt.text(5.5, 0.2, "median", color="blue")
+plt.xlabel("value")
+plt.ylabel("density")
+plt.grid(True)
+plt.show()</code></pre>
+						
+						<!-- Python Code -->
+						<pre class="pandas tab-content inactive"><code class="language-python">xx = pd.Series(np.random.normal(loc=5, scale=1, size=2900))
+ax = xx.plot(
+	kind="density", ind=np.linspace(min(xx), max(xx), 100),
+	figsize=(12, 5), color="#44DD99", lw=1.3, grid=True,
+	xlabel="value", ylabel="density")
+ax.axvline(x=xx.mean(), color="red")
+ax.axvline(x=xx.median() + 0.02, color="blue")
+ax.text(4.5, 0.2, "mean", color="red")
+ax.text(5.5, 0.2, "median", color="blue")
+ax.set_xlabel("value")</code></pre>
+						<!-- R Code -->
+						<pre class="r tab-content inactive"><code class="language-r">xx <- data.frame(value=rnorm(2900,mean = 5, sd = 1))
+plot1 <- ggplot(xx)+
+		geom_line(aes(x = value),stat = "density", color="#44DD99", lwd= 1.3)+
+		geom_vline(xintercept = mean(xx$value), color="red")+
+		geom_vline(xintercept = median(xx$value) + 0.02,color="blue")+
+		annotate("text", x=c(4.5,5.5), y=c(0.2,0.2), colour=c("red","blue"),label=c("mean", "median"))+
+		theme_light()
+plot1</code></pre>
+					  <img class="numpy img active" src="img/images_univariees/numpy_density.png">
+					  <img class="pandas img inactive" src="img/images_univariees/pandas_density.png">
+					  <img class="r img inactive" src="img/images_univariees/gaussienne2-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Histogramme et distribution</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
+							<p style="align-self: flex-start;">Histogramme pour un vecteur <b>numérique</b> :</p>
+							<pre><code class="language-python">plt.figure(figsize=(12, 3))
+x = np.random.geometric(p=0.5, size=2500) #eg: Combien de fois lancer une pièce avant de tomber sur face
+plt.hist(x, bins=10)
+plt.title("Histogram of x")
+plt.xlabel("x")
+plt.ylabel("Frequency")
+plt.show()</code></pre>
+							<img style="width:100%;" src="img/images_univariees/histoR-2.png">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Histogramme et distribution</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
+							<p style="align-self: flex-start;">Un histogramme n’a pas de sens pour une variable <b>qualitative</b>.<br>On peut utiliser <i>plt.bar</i>, <span style="color:red">⚠</span> mais ce n’est plus une distribution !</p>
+							<pre><code class="language-python">colors = sorted(["blue", "yellow", "red", "green", "purple", "orange", "black"])
+samples = np.random.choice(colors, size=2500, replace=True)#['black', 'red', 'orange', ..., 'purple', 'green', 'purple']
+plt.figure(figsize=(12, 3))
+plt.bar(colors, np.unique(samples, return_counts=True)[1], color=colors)
+plt.show()</code></pre>
+							<img style="width:100%;" src="img/images_univariees/histoR2-2.png">
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Statistique Descriptive<br> Univariée : la dispersion</h4>
+							
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+							<p><br></p>
+							<p style="align-self: flex-start;">Variance, écart-type, Coeff. de variation.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La <b style="color: #ffda6b;">dispersion</b> statistique</h4>
+					  
+						<!-- Tab Navigation -->
+						<div class="tabs">
+						  <button class="tab-button numpy active" onclick="showTab('numpy')">Numpy</button>
+						  <button class="tab-button pandas" onclick="showTab('pandas')">Pandas</button>
+						  <button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+					  
+						<!-- Python Code -->
+						<pre class="numpy tab-content active"><code class="language-python">xy = np.random.normal(size=(900, 900))
+plt.figure(figsize=(5, 5))
+plt.scatter(xy[:, 0], xy[:, 1], s=21, color="#44DD99", edgecolor="#666666")
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.grid(True)
+plt.axis("equal")
+plt.show()</code></pre>
+						
+						<!-- Python Code -->
+						<pre class="pandas tab-content inactive"><code class="language-python">xy = pd.DataFrame(np.random.normal(size=(900, 900)))
+xy.plot(kind="scatter", x=0, y=1, s=[21], color="#44DD99", edgecolor="#666666", figsize=(5, 5), grid=True)
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.axis("equal")
+plt.show()</code></pre>
+						<!-- R Code -->
+						<pre class="r tab-content inactive"><code class="language-r">mydataset <- data.frame(X=rnorm(900), Y=rnorm(900))
+plot1 <- ggplot(mydataset)+
+		geom_point(aes(x=X, y=Y), fill="#44DD99", color="#666666", shape=21)+
+		coord_equal()+theme_light()
+plot1</code></pre>
+					  <img class="numpy img active" src="img/images_univariees/gaussienne2D-1_numpy.png">
+					  <img class="pandas img inactive" src="img/images_univariees/gaussienne2D-1_pandas.png">
+					  <img class="r img inactive" src="img/images_univariees/gaussienne2D-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Variance et écart-type</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>La <b>variance</b> est la somme des écarts carrés à la moyenne rapporté à l’effectif.</p>
+							<p>\(\displaystyle var_x = \frac{1}{n}\sum_{i=0}^{n} (x_i -\bar{x})^2\)</p>
+							<p>Avec $X$ une variable, $x_i$ les valeurs de la variable, $\bar{x}$ la moyenne de $X$, et $n$ l'effectif.</p>
+							<p>$\sigma_x = \sqrt{var_x}$ : l'<b>écart type</b> est la racine carrée de la variance.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Même moyenne et variances différentes</h4>
+						<img src="img/images_univariees/stds.png" style="height: 75%;">
+					</section>
+					<section>
+						<h4 class="top_bar">Variance et écart-type</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Variance et écart-type rendent compte de la <b>dispersion</b> de la variable autour de sa moyenne.</p>
+							<p>Ils sont <b>sensibles</b> aux valeurs extrêmes et toujours <b>positifs</b>.</p>
+							<p>Si $var_X=0$ ou $\sigma_x=0$ , alors X est constante.</p>
+							<p>Un écart-type faible indique que les valeurs sont réparties de façon <b>homogène</b> autour de la moyenne.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Lorsque $X \sim \mathcal{N}(\mu, \sigma)$</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_univariees/stddev1-1.png" style="height: 100%; align-self: center;">
+							<p>$[\mu - \sigma ; \mu+\sigma] \approx \frac{2}{3}$ de l'effectif.<br>$[\mu - 2\sigma ; \mu+2\sigma] \approx 95\%$ de l'effectif.<br>$[\mu - 3\sigma ; \mu+3\sigma] \approx 99\%$ de l'effectif.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Quantiles</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>La <b>médiane</b> sépare une population en <b>deux</b> classes d'égal effectif selon la valeur d'une variable (quantitative).</p>
+							<p>Les <b>quantiles</b> séparent une population en <b>n</b> classes d'égal effectif.</p>
+							<p>Les <b>quartiles</b> d'une population selon une variable $X$ sont trois valeurs $Q_1, Q_2, Q_3$,qui séparent une population en <b>quatres</b> classes d'égal effectif.</p>
+							<ul >
+								<li style="font-size: 18px;">25% des valeurs de <span class="math inline">\(X\)</span> sont strictement inférieures à $Q_1$</li>
+								<li style="font-size: 18px;">50% des valeurs de <span class="math inline">\(X\)</span> sont strictement inférieures à $Q_2$ (médiane)</li>
+								<li style="font-size: 18px;">75% des valeurs de <span class="math inline">\(X\)</span> sont strictement inférieures à $Q_3$</li>
+							</ul>
+							<p>De même, <b>déciles</b> et <b>centiles</b>.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">écarts inter-quartiles et inter-déciles</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Deux mesures de la <b>dispersion</b> d’une distribution :</p>
+							<p><b>Écart inter-quartile: </b> $Q_3-Q_1$, capture 50% des valeurs de la population les plus proches de la médiane.</p>
+							<p><b>Écart inter-décile: </b> $Q_9-Q_1$, capture 80% des valeurs de la population les plus proches de la médiane.</p>
+						</div>
+					</section>
+
+					<section>
+						<h4 class="top_bar">Les boîtes à moustaches (boxplots)</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Représentation courante de la dispersion d’une variable à l’aide de <b>quartiles</b></p>
+							<img style="align-self: center; height: 30%;" src="img/images_univariees/moustache.png">
+							<ul>
+								<li>La marque centrale de la boîte est la médiane</li>
+								<li>Les bords de la boîte sont les quartiles $Q_1$ et $Q_3$</li>
+								<li>Les extrémités des moustaches vont jusqu’à la plus grande (resp. la plus petite ) valeur inférieure (resp. supérieure) à 1.5 fois l’écart interquartile</li>
+								<li>Les valeurs qui dépassent les moustaches sont affichées sous formes de points.</li>
+							</ul>
+						</div>
+					</section>
+
+					<section>
+						<h4 class="top_bar">Les boîtes à moustaches (boxplots)</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Pandas</button>
+							<button class="tab-button numpy " onclick="showTab('numpy')">Numpy</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+						
+						<!-- Python Code -->
+						<pre class="pandas tab-content active"><code class="language-python">from sklearn.datasets import load_iris
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+df['Species'] = iris.target_names[iris.target]
+df.boxplot(by='Species', column='sepal width (cm)', vert=False, figsize=(9, 5))
+plt.show()</code></pre>
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content inactive"><code class="language-python">from sklearn.datasets import load_iris
+iris = load_iris()
+#We create a list by species of sepal widths.
+x = [iris.data[iris.target==i, 1] for i in np.unique(iris.target)]
+plt.figure(figsize=(9, 5))
+plt.boxplot(x, labels=iris.target_names, vert=False)
+plt.grid()
+plt.xlabel("sepal width (cm)")
+plt.ylabel("Species")
+plt.show()</code></pre>
+						  
+
+						  <!-- R Code -->
+						  <pre class="r tab-content inactive"><code class="language-r">plot1 <- ggplot(iris)+
+geom_boxplot(aes(y=Sepal.Width,x= Species) ) + coord_flip()
+plot1</code></pre>
+						<img class="numpy img inactive" src="img/images_univariees/boxplot_numpy.png">
+						<img class="pandas img active" src="img/images_univariees/boxplot_pandas.png">
+						<img class="r img inactive" src="img/images_univariees/boxplot1-1.png">
+					  
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Avantages et inconvénients<br> des quantiles</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<h5>Avantages</h5>
+							<p>Peu sensibles aux distributions aplaties et aux valeurs extrêmes</p>
+							<p>L’écart inter-quantile est plus robuste que l’écart-type</p>
+							<h5>inconvénients</h5>
+							<p>Parfois délicat pour les variables quantitatives discrètes</p>
+							<p>Les écarts inter-quantiles négligent l’influence des valeurs extrêmes sur la distribution</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Le coefficient de variation</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Le <b>coefficient de variation</b> (CV) est une autre mesure de dispersion.</p>
+							<p>C'est le ratio entre l'écart-type $\sigma_x$ et la moyenne $\bar{x}$ d'une variable quantitative X.</p>
+							<p>$CV(X)=\frac{\sigma_x}{\bar{x}}$</p>
+							<p>Plus il est important, plus la dispersion est grande.</p>
+							<p>Plus il est proche de 0, plus les données sont homogènes.</p>
+							<p>Il souffre des mêmes inconvénients que la moyenne et l'écart-type : sensibilité aux valeurs extrêmes.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Comparaison de dispersion de deux distributions de valeurs</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Exemple : deux communes versent des aides aux entreprises locales.</p>
+							<p>Commune A : moyenne = 390€, $\sigma$ = 30€</p>
+							<p>Commune B : moyenne = 152€, $\sigma$ = 8€</p>
+							<p>Pour quelle commune les aides sont les plus homogènes ?</p>
+							<p></p>
+							<p style="font-size: 18px;">On pourrait aussi comparer des distribution de valeurs exprimées dans des unités différentes !</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar"><b style="color: #ffda6b;">(Mauvaise)</b> Comparaison visuelle de deux distributions</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Numpy</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">A = np.random.normal(size=10000, loc=390, scale=30)
+B = np.random.normal(size=10000, loc=152, scale=8)
+plt.figure(figsize=(20, 3))
+ax = plt.subplot(1, 2, 1)
+plt.hist(A, bins=10, color="white", edgecolor="black", density=True)
+ax.set_xlabel("A")
+ax.set_ylabel("Density")
+ax.set_title("Histogram of A")
+ax = plt.subplot(1, 2, 2)
+plt.hist(B, bins=10, color="white", edgecolor="black", density=True)
+ax.set_xlabel("B")
+ax.set_ylabel("Density")
+ax.set_title("Histogram of B")
+plt.show()</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">A <-  rnorm(n = 10000, mean = 390, sd = 30)
+B <-  rnorm(n = 10000, mean = 152, sd = 8)
+par(mfrow=c(1, 2)) #2 graphes en colonnes
+hist(A, probability = T)
+lines(density(A), col="red")
+hist(B, probability = T)
+lines(density(B), col="red")</code></pre>
+						<img class="numpy img active" src="img/images_univariees/compDistNorm1-1_numpy.png">
+						<img class="r img inactive" src="img/images_univariees/compDistNorm1-1.png">
+					  	<p>Que'est-ce qui ne vas pas ?</p>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Comparaison visuelle de deux distributions</h4>
+													<!-- Tab Navigation -->
+						<p>Il faut une <b>échelle commune</b> !</p>
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Numpy</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">A = np.random.normal(size=10000, loc=390, scale=30)
+B = np.random.normal(size=10000, loc=152, scale=8)
+plt.figure(figsize=(20, 3))
+ax1 = plt.subplot(1, 2, 1)
+plt.hist(A, bins=10, color="white", edgecolor="black", density=True)
+ax1.set_xlabel("A")
+ax1.set_ylabel("Density")
+ax1.set_title("Histogram of A")
+ax2 = plt.subplot(1, 2, 2, sharex=ax1, sharey=ax2)
+plt.hist(B, bins=10, color="white", edgecolor="black", density=True)
+ax.set_xlabel("B")
+ax.set_ylabel("Density")
+ax.set_title("Histogram of B")
+plt.show()</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">A <-  rnorm(n = 10000, mean = 390, sd = 30)
+B <-  rnorm(n = 10000, mean = 152, sd = 8)
+par(mfrow=c(1, 2))
+hist(A, probability = T, xlim = c(50,600), ylim = c(0,0.05))
+lines(density(A), col="red")
+hist(B, probability = T,xlim = c(50,600), ylim = c(0,0.05))
+lines(density(B), col="red")</code></pre>
+						<img class="numpy img active" src="img/images_univariees/compDistNorm1-2_numpy.png">
+						<img class="r img inactive" src="img/images_univariees/compDistNorm2-1.png">
+						
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Statistique Descriptive<br> Univariée : la forme</h4>
+							
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+							<p><br></p>
+							<p style="align-self: flex-start;">Symétrie, applatissement</p>
+						</div>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				center: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<!-- Add JavaScript for tab functionality -->
+		<script>
+			function showTab(tabId) {
+			// Hide all tab content
+			document.querySelectorAll('.tab-content').forEach(content => {
+				content.classList.remove('active');
+				content.classList.add('inactive')
+			});
+			document.querySelectorAll('.img').forEach(content => {
+				content.classList.remove('active');
+				content.classList.add('inactive')
+			});
+		
+			// Deactivate all tab buttons
+			document.querySelectorAll('.tab-button').forEach(button => {
+				button.classList.remove('active');
+			});
+		
+			// Show the selected tab content
+			document.querySelectorAll("."+tabId).forEach(content => {
+				content.classList.remove('inactive');
+				content.classList.add('active');
+			});
+			
+
+			}
+		</script>
+	</body>
+</html>
