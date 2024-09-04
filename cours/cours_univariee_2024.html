@@ -87,6 +87,17 @@
 			margin: 0px;
 			height: 0px;
 		}
+		.text.active{
+			visibility: visible;
+			font-size: 30px;
+			margin: 20px 0px;
+		}
+		.text.inactive{
+			visibility: hidden;
+			color:white;
+			font-size: 1px;
+			margin: 0px 0px;
+		}
 	</style>
 	<body>
 		<div class="reveal">
@@ -661,6 +672,699 @@ lines(density(B), col="red")</code></pre>
 							<p style="align-self: flex-start;">Symétrie, applatissement</p>
 						</div>
 					</section>
+					<section>
+						<h4 class="top_bar"><b style="color: #ffda6b;">Asymétrie</b> des distributions</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<img src="img/images_univariees/asym1-1.png">
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Les coefficients de Pearson</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Deux moyens simples d'estimer l'asymétrie</p>
+							<p>$C_1 = \frac{\bar{x} - mode(X)}{\sigma_x}$</p>
+							<p>$C_2 = \frac{3(\bar{x} - mediane(X))}{\sigma_x}$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Interprétation des coefficients d’asymétrie</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li>Si le coefficient est <b>nul</b>, la distribution est <b>symétrique</b>.</li>
+								<li>Si le coefficient est <b>négatif</b>, la distribution est <b>déformée à gauche</b> de la médiane (sur-représentation de valeurs faibles, à gauche)</li>
+								<li>Si le coefficient est <b>positif</b>, la distribution est <b>déformée à droite</b> de la médiane (sur-représentation de valeurs fortes, à droite)</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Le coefficient de Fischer</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Ce coefficient est le moment d’ordre 3 de la variable $X$ ( de moyenne $\mu$ et d’écart-type $\sigma$) <b>centrée réduite</b></p>
+							<p>$skewness = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right] = \frac{\Sigma_{i=0}^n(x_i - \bar{x})^3}{n\sigma^3}$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">L'<b style="color: #ffda6b;">applatissement</b> des distributions (Kurtosis)</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_univariees/kurtos1-1.png">
+							<p>Courbe piquée: Peu de variation, distribution relativement homogène, beaucoup de valeurs égales ou proches de la moyenne.</p>
+							<p>Courbe applatie: Variations importantes, distribution relativement hétérogène, beaucoup de valeurs s’éloignent de la moyenne.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Coefficient d'applatissement : Kurtosis</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: left;">
+							<p>Coefficient non normalisé :</p>
+							<p>$K=\frac{\Sigma_{i=0}^n(x_i - \bar{x})^4}{n\sigma^4}$</p>
+							<p>Si la distribution est normale, $K=3$</p>
+							<p>Si $K>3$, la distribution est <b>plus applatie</b>.</p>
+							<p>Si $K<3$, la distribution est <b>moins applatie</b>.</p>
+							<p>On normalise parfois en considérant $K′=K−3$ (excès d’applatissement)</p>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Représentation d’une distribution et Échelle de couleurs</h4>
+							
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution et Échelle de couleurs</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Pour une variable quantitative continue qu’on souhaite colorer, il n’est pas toujours possible de graduer une échelle de couleur continue.</p>
+							<p>Il faut (souvent) classer les valeurs en catégories. Le <b>nombre</b> de classes et les <b>méthodes</b> de classification varient.</p>
+							<p>En général : 5, 7 ou 9 classes</p>
+							<ul>
+								<li> < 5 trop peu de détails </li>
+								<li> > 9 difficile de distinguer les classes proches</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution et Échelle de couleurs</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Méthodes de classifications de Qgis</p>
+							<ul>
+								<li> Ruptures Naturelles (Jenks) : Minimisation des variances intra-classe et maximisation des variances inter-classe </li>
+								<li> Effectifs égaux (quantiles)</li>
+								<li>Intervalles égaux</li>
+								<li>Ecart-type : intervales de 1 ou 0.5 σ</li>
+								<li>Jolies ruptures : intervalle égaux “décalés” pour faire joli : nombre ronds, puissances de 10…</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple avec la surface des quartiers de Paris</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">import geopandas as gpd
+quartier = gpd.read_file("quartier_paris.shp")
+quartier.plot(figsize=(15, 5), edgecolor="black")</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">quartiers <-  st_read("quartier_paris.shp")
+plot(quartiers$geometry)</code></pre>
+						<img class="numpy img active" src="img/images_univariees/quartierparis2-1_python.png">
+						<img class="r img inactive" src="img/images_univariees/quartierparis2-1.png">
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Allure de la distribution</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">quartier["surface"].plot(kind="hist", bins=15, xlabel="surface [m²]", ylabel="count", figsize=(15, 5), title="Histogram of surface")</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">hist(quartiers$surface,breaks = 15)</code></pre>
+						<img class="numpy img active" src="img/images_univariees/quartierparis3-1_python.png">
+						<img class="r img inactive" src="img/images_univariees/quartierparis3-1.png">
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Affichage par défaut :</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">quartier.plot(column="surface", legend=True, figsize=(15, 5), edgecolor="black").set_title("Surface")</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">par(mar=c(0,0,0,0))
+plot(quartiers["surface"])</code></pre>
+						<img class="numpy img active" src="img/images_univariees/quartierparis4-1_python.png">
+						<img class="r img inactive" src="img/images_univariees/quartierparis4-1.png">
+						<p  class="r text inactive">Par défaut la fonction plot de sf utilise la méthode “pretty” avec 10 ruptures (9±1 classes) => ce sont des intervalles égaux.</p>
+						<p class="numpy text active">Par défaut la fonction plot de géopandas utilise une échelle continue.</p>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Jenks à 5 , 7 et 9 classes</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+						<div style="display: flex; flex-direction: column; flex-wrap: wrap; height:75%; justify-content: center; align-items: center;">
+						<img class="numpy img active" src="img/images_univariees/quartierparis6-1_python.png" style="width:60%">
+						<img class="numpy img active" src="img/images_univariees/quartierparis6-2_python.png" style="width:60%">
+						<img class="numpy img active" src="img/images_univariees/quartierparis6-3_python.png" style="width:60%">
+						<img class="r img inactive" src="img/images_univariees/quartierparis6-1.png" style="width:70%">
+						<img class="r img inactive" src="img/images_univariees/quartierparis6-2.png" style="width:70%">
+						<img class="r img inactive" src="img/images_univariees/quartierparis6-3.png" style="width:70%">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Jenks à 5 , 7 et 9 classes</h4>
+													<!-- Tab Navigation -->
+						<p  class="r text inactive">Code R correspondant :</p>
+						<p class="numpy text active">Code Python correspondant :</p>
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">import mapclassify
+quartier.plot(column="surface", scheme="naturalbreaks", k=5, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 3), edgecolor="black").set_title("Jenks (5)")
+quartier.plot(column="surface", scheme="naturalbreaks", k=7, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 3), edgecolor="black").set_title("Jenks (7)")
+quartier.plot(column="surface", scheme="naturalbreaks", k=9, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 3), edgecolor="black").set_title("Jenks (9)")</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">par(mar=c(0,0,0,0))
+plot(quartiers["surface"], breaks="jenks", nbreaks = 5, main = "5 breaks")
+plot(quartiers["surface"], breaks="jenks", nbreaks = 7, main="7 breaks")
+plot(quartiers["surface"], breaks="jenks", nbreaks = 9, main= "9 breaks")</code></pre>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Effectifs égaux (quantiles)</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">ax = quartier.plot(column="surface", scheme="quantiles", k=5, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 5), edgecolor="black")
+ax.set_title("Effectifs égaux")</code></pre>
+						  
+
+						<img class="numpy img active" src="img/images_univariees/quartierparis7-1_python.png">
+						<img class="r img inactive" src="img/images_univariees/quartierparis7-1.png">
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Intervalles égaux (7)</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">quartier.plot(column="surface", scheme="equal_interval", k=7, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.2e}"}, figsize=(15, 5), edgecolor="black").set_title("Intervalles égaux (7)")</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">par(mar=c(0,0,0,0))
+plot(quartiers["surface"], breaks="equal", nbreaks = 7, main = "Intervalles égaux")</code></pre>
+						<img class="numpy img active" src="img/images_univariees/quartierparis8-1_python.png">
+						<img class="r img inactive" src="img/images_univariees/quartierparis8-1.png">
+						
+					</section>
+					<section>
+						<h4 class="top_bar">écart-types</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  <pre class="numpy tab-content active"><code class="language-python">quartier.plot(column="surface", scheme="stdmean", classification_kwds={"anchor":True}, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 5), edgecolor="black").set_title("écart-types")</code></pre>
+						  
+
+						  <!-- R Code -->
+<pre class="r tab-content inactive"><code class="language-r">par(mar=c(0,0,0,0))
+plot(quartiers["surface"], breaks="sd",main = "Écart-type")</code></pre>
+						<img class="numpy img active" src="img/images_univariees/quartierparis9-1_python.png">
+						<img class="r img inactive" src="img/images_univariees/quartierparis9-1.png">
+						<p>≈méthode des jolies ruptures sur variable centrée réduite</p>
+					</section>
+					<section>
+						<h4 class="top_bar">Guides de choix de la méthode de classification</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Pour les classification manuelles : </p>
+							<ul>
+								<li>Les classes <b>doivent</b> contenir toutes les valeurs, être sans recouvrement, contigües et distinctes. </li>
+								<li>Procéder par essai-erreur</li>
+								<li>Attention aux décimales et aux extrémités</li>
+							</ul>
+							<p></p>
+							<ul>
+								<li>Si distribution uniforme → Intervalles égaux</li>
+								<li>Si distribution asymétrique → Effectifs égaux, Jenks , progression géométrique (rare).</li>
+								<li>Si distribution symétrique → Écart-type, intervalle égaux</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Autres classification</h4>
+						<div class="tabs">
+							<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<p class="text r inactive">Consultez la doc de la fonction classInt du package du même nom</p>
+							<p class="text numpy active">Consultez la doc du package mapclassify.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Transformations des données</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><span style="color: red">⚠</span> D'abord effectuer une transformation linéaire pour ajuster le domaine de la variable afin que la transformation suivante soit <b>définie</b> et <b>injective</b>, = elle associe des valeurs distinctes à des résultats distincts</p>
+							<ul>
+								<li>$x \mapsto log(x)$ pour une distribution asymétrique à droite ou <br>$x \mapsto \sqrt{x}$ si moins asymétrique.</li>
+								<li>$x \mapsto x^2$ pour une distribution asymétrique à gauche ou <br>$x \mapsto x^3$ si très asymétrique</li>
+							</ul>
+							<p>(<span style="color: red">⚠</span> toujours vérifier l'allure de la distribution transformée)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Variables centrées-réduites</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><span style="color: red">⚠</span> En principe, uniquement lorsque la distribution d’une variable est proche d’une gaussienne <span style="color: red">⚠</span></p>
+							<p>Centrer : soustraire la moyenne.</p>
+							<p>Réduire : diviser par l'écart-type</p>
+							<p>Une variable <b>centrée réduite</b> est exprimée en «écarts-types à la moyenne»</p>
+							<p>→ permet de repérer les valeurs extrèmes (<-2σ ou >2σ)</p>
+							<p>→ utile pour comparer des individus selon un grand nombre de variables (tableaux de synthèse)</p>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Visualiser une distribution</h4>
+							
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+							<ul>
+								<li>Histogramme</li>
+								<li>Distribution</li>
+								<li>BoxPlot</li>
+								<li>Violin plot</li>
+								<li>Pyramides (histogrammes juxtaposés)</li>
+								<li>Polygones de fréquences</li>
+								<li>Distribution cumulée, Fonction de répartition, CDF</li>
+								<li>Dot strip plot</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Histogramme</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">from palmerpenguins import load_penguins
+penguins = load_penguins()
+penguins["body_mass_g"].dropna().plot(
+    kind="hist", bins=50, xlabel="body mass [g]", ylabel="count",
+    figsize=(15, 5), title="Penguins body mass\nhistogram", edgecolor="darkgray", color="darkorchid"
+	)</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+histo_mass <- ggplot(mydata)+
+	geom_histogram(aes(x=body_mass_g), fill="darkorchid4", color="darkgray", bins=50)+
+	labs(title = "Penguins Body Mass", subtitle = "Histogram")+
+	ylab("Count")+theme_light()
+histo_mass</code></pre>
+						<img class="pandas img active" src="img/images_univariees/histo_code_1-1_pandas.png">
+						<img class="r img inactive" src="img/images_univariees/histo_code_1-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution</h4>
+						<p><span style="color: red">⚠</span> ce n'est pas une probabilité, mais une densité de probabilité. Pour obtenir la probabilité, utiliser la formule $\mathbb{P}(a\leqslant X\leqslant b) = \int_a^b f(t)\,\mathrm{d}t$</p>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">ax = penguins["body_mass_g"].dropna().plot(
+	kind="density",  ylabel="count",
+	figsize=(15, 5), title="Penguins body mass\nProbability density and mean", color="darkorchid"
+)
+ax.axvline(x=penguins["body_mass_g"].dropna().mean(), color="black", linestyle="--")
+ax.set_xlabel("body mass [g]")</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+distrib_mass <- ggplot(mydata)+
+	geom_density(aes(x=body_mass_g), fill="darkorchid4", color="darkgray")+
+	geom_vline(aes(xintercept=mean(body_mass_g, na.rm = T)), color="black", size=0.4, linetype="dashed" )+
+	labs(title = "Penguins Body Mass", subtitle = "Probability density and mean")+
+	ylab("Count")+theme_light()
+distrib_mass</code></pre>
+						<img class="pandas img active" src="img/images_univariees/distrib_code_1-1_pandas.png">
+						<img class="r img inactive" src="img/images_univariees/distrib_code_1-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Boxplot</h4>
+						
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">penguins.boxplot(column="body_mass_g", by="species", vert=False, figsize=(15, 5)).set_xlabel("body mass [g]")</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+boxplot_mass <- ggplot(mydata)+
+	geom_boxplot(aes(x=body_mass_g, y=species, color=species))+
+	labs(title = "Penguins Body Mass", subtitle = "BoxPlot by Species")+
+	ylab("Count")+theme_light()
+boxplot_mass</code></pre>
+						<img class="pandas img active" src="img/images_univariees/boxplot_code_1-1_pandas.png">
+						<img class="r img inactive" src="img/images_univariees/boxplot_code_1-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Violin Plot</h4>
+						<p>Distribution + miroir. Utile pour des distributions complexes, mal résumées par la moyenne et la dispersion.</p>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">list_species = penguins["species"].unique()
+plt.figure(figsize=(15, 5))
+plt.violinplot(
+	[penguins[penguins["species"]==species]["body_mass_g"].dropna() for species in list_species],   
+)
+plt.xticks(range(1, len(list_species)+1), list_species)
+plt.xlabel("species", fontweight='bold')
+plt.ylabel("body mass [g]")
+plt.title("Penguins body mass\nviolin plot")</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+violin_mass <- ggplot(mydata)+
+	geom_violin(aes(y=body_mass_g, x=species, fill=species), color="gray", trim=F)+
+	labs(title = "Penguins Body Mass", subtitle = "ViolinPlot by Species")+
+	ylab("Count")+theme_light()
+violin_mass</code></pre>
+						<img class="pandas img active" src="img/images_univariees/violin_code_1-1_pandas.png">
+						<img class="r img inactive" src="img/images_univariees/violin_code_1-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Violin Plot et boxplot</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">list_species = penguins["species"].unique()
+plt.figure(figsize=(15, 5))
+mass_groupby_species = [penguins[penguins["species"]==species]["body_mass_g"].dropna() for species in list_species]
+plt.violinplot(mass_groupby_species, showextrema=False)
+plt.boxplot(mass_groupby_species, widths=0.1)
+plt.xticks(range(1, len(list_species)+1), list_species)
+plt.xlabel("species", fontweight='bold')
+plt.ylabel("body mass [g]")
+plt.title("Penguins body mass\nviolin plot and boxplot")</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+violin_mass <- ggplot(mydata)+
+	geom_violin(aes(y=body_mass_g, x=species, fill=species), color="lightgray", trim=F)+
+	geom_boxplot(aes(y=body_mass_g, x=species, fill=species), color="black", fill="#eeeeee" ,width=0.1)+
+	labs(title = "Penguins Body Mass", subtitle = "ViolinPlot and Boxplot by Species")+
+	ylab("Count")+theme_light()
+violin_masss</code></pre>
+						<img class="pandas img active" src="img/images_univariees/violin_code_2-1_pandas.png">
+						<img class="r img inactive" src="img/images_univariees/violin_code_2-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Pyramides (histogrammes juxtaposés)</h4>
+													<!-- Tab Navigation -->
+						<p>Lorsqu'une des variables est qualitative à deux modalités :</p>
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">female_data = penguins[penguins['sex'] == 'female']
+male_data = penguins[penguins['sex'] == 'male']
+female_count = np.histogram(female_data['body_mass_g'], bins=bins)[0]
+male_count = np.histogram(male_data['body_mass_g'], bins=bins)[0]
+bins = np.linspace(min(penguins['body_mass_g']), max(penguins['body_mass_g']), 50)
+plt.barh(bins[:-1], male_count, height=np.diff(bins)[0], label='Male', edgecolor="grey")
+plt.barh(bins[:-1], -female_count, height=np.diff(bins)[0], label='Female', edgecolor="grey")
+ticks = np.arange(-max(female_count), max(male_count), 2)
+plt.xticks(ticks=ticks, labels=np.abs(ticks))
+plt.axvline(x=0, color='black'); plt.xlabel('Count'); plt.ylabel('Body Mass [g]')
+plt.title('Penguins Body Mass\nPyramid Plot by Sex')
+plt.legend()</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+pyramide_mass <-  ggplot(mydata, aes(fill = sex)) + 
+	geom_bar(data = subset(mydata, sex == "female"), stat = "bin", aes(x=body_mass_g, y=..count..*(-1)), color="grey") +
+	geom_bar(data = subset(mydata, sex == "male"), stat = "bin", aes(x=body_mass_g), color="grey") + 
+	scale_y_continuous(labels = paste0(as.character(c(seq(20, 0, -10), seq(10, 20, 10))))) +
+	ylab("count")+  coord_flip()+
+	labs(title = "Penguins Body Mass", subtitle = "Pyramid Plot by sex")+
+	theme_light()
+	
+pyramide_mass</code></pre>
+						<img class="pandas img active" style="max-width: 80%;" src="img/images_univariees/pyramide_code_1-1_pandas.png">
+						<img class="r img inactive" style="max-width: 80%;" src="img/images_univariees/pyramide_code_1-1.png">
+					</section>
+					
+					<section>
+						<h4 class="top_bar">Polygones de fréquences</h4>
+													<!-- Tab Navigation -->
+						<p>“Histogramme en courbe”<br>Utile pour comparer plusieurs distributions</p>
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">bins = np.linspace(min(penguins['body_mass_g']), max(penguins['body_mass_g']), 50)
+plt.figure(figsize=(15, 5))
+for species in penguins["species"].unique():
+	hist = np.histogram(penguins[penguins["species"] == species]["body_mass_g"], bins=bins)[0]
+	plt.plot(bins[:-1]+np.diff(bins)/2, hist, label=species)
+plt.legend(title="species")
+plt.xlabel("body mass [g]")
+plt.ylabel("count")
+plt.grid(alpha=0.5)
+plt.title("Penguins body mass\nFrequency polygons")</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+freqpoly_mass <- ggplot(mydata)+
+	geom_freqpoly(aes(x=body_mass_g, color=species), bins=50)+
+	labs(title = "Penguins Body Mass", subtitle = "Frequence Polygons")+
+	ylab("Count")+theme_light()
+freqpoly_mass</code></pre>
+						<img class="pandas img active" style="max-width: 80%;" src="img/images_univariees/frequpoly_code1-1_pandas.png">
+						<img class="r img inactive" style="max-width: 80%;" src="img/images_univariees/frequpoly_code1-1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution cumulée, Fonction de répartition, CDF</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Courbe $x, y$,<br>en $x$ la valeur de la variable $V$, en $y$ la probabilité empirique d'avoir dans la population un individu pour lequel $V \leqslant x$</p>
+							<p><i>i.e.</i> c'est la fonction :<br>$F_V(x) = \mathbb{P}(V\leqslant x)$</p>
+							<img src="img/images_univariees/CDF1 -1.png" style="width: 70%; align-self: center;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution cumulée, Fonction de répartition, CDF</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Permet de superposer les CDF de sous groupes de la population. Ici : les espèces des manchots.</p>
+							<img src="img/images_univariees/CDF_groupe -1.png" style="width: 70%; align-self: center;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution cumulée simple</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Python</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">plt.figure(figsize=(15, 5))
+ax=plt.subplot()
+plt.xlim((penguins["body_mass_g"].min(), penguins["body_mass_g"].max()))
+penguins.plot(kind="hist", ax=ax, column="body_mass_g", density=True, histtype="step", cumulative=True, bins=len(penguins),
+				title="Penguins Body Mass\nCumulative Distribution Function", ylabel="Probability", legend=False)
+ax.set_xlabel("body mass [g]")
+plt.grid(alpha=0.5)</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+plot_mass <- ggplot(mydata)+
+	stat_ecdf(aes(x= body_mass_g),color="darkorchid4")+
+	labs(title = "Penguins Body Mass", subtitle = "Cumulative Distribution Function")+
+	ylab("Probability")+theme_light()
+plot_mass</code></pre>
+						<img class="pandas img active" style="max-width: 80%;" src="img/images_univariees/CDF_code -1_pandas.png">
+						<img class="r img inactive" style="max-width: 80%;" src="img/images_univariees/CDF_code -1.png">
+					</section>
+					<section>
+						<h4 class="top_bar">Distribution cumulée par groupe</h4>
+													<!-- Tab Navigation -->
+						<div class="tabs">
+							<button class="tab-button pandas active" onclick="showTab('pandas')">Matplotlib > 3.8</button>
+							<button class="tab-button matplotlib inactive" onclick="showTab('matplotlib')">Matplotlib < 3.8</button>
+							<button class="tab-button r" onclick="showTab('r')">R</button>
+						</div>
+
+
+						  <!-- Python Code -->
+						  	<pre class="pandas tab-content active"><code class="language-python">plt.figure(figsize=(15, 5))
+for species in penguins["species"].unique():
+	plt.ecdf(penguins[penguins["species"] == species]["body_mass_g"], label=species)
+plt.legend(title="species")
+plt.xlabel("body mass [g]")
+plt.ylabel("count")
+plt.title("Penguins Body Mass\nCumulative Distribution Function")
+plt.grid(alpha=0.5)</code></pre>
+							
+							<pre class="matplotlib tab-content inactive"><code class="language-python">def ecdf(x, vmin, vmax,**kwargs):
+	x = np.asarray(x)
+	argsort = np.argsort(x)
+	x = x[argsort]
+	cum_weights = (1 + np.arange(len(x))) / len(x)
+	line, = plt.plot([vmin, x[0], *x, vmax], [0, 0, *cum_weights, 1],
+											drawstyle="steps-post", **kwargs)
+	return line
+plt.figure(figsize=(15, 5))
+vmin = penguins["body_mass_g"].min()
+vmax = penguins["body_mass_g"].max()
+for species in penguins["species"].unique():
+	ecdf(penguins[penguins["species"] == species]["body_mass_g"], vmin=vmin, vmax=vmax, label=species)
+plt.legend(title="species")
+plt.xlabel("body mass [g]")
+plt.ylabel("count")
+plt.title("Penguins Body Mass\nCumulative Distribution Function")
+plt.grid(alpha=0.5)</code></pre>
+						  
+
+						  <!-- R Code -->
+							<pre class="r tab-content inactive"><code class="language-r">library(palmerpenguins)
+data(package = 'palmerpenguins')
+mydata <-  penguins
+plot_mass <- ggplot(mydata)+
+	stat_ecdf(aes(x= body_mass_g,color=species))+    #on affecte la couleur à la variable modale  
+	labs(title = "Penguins Body Mass", subtitle = "Cumulative Distribution Function")+
+	ylab("Probability")+theme_light()
+plot_mass</code></pre>
+						<img class="pandas img active" style="max-width: 80%;" src="img/images_univariees/CDF_code_groupe -1_pandas.png">
+						<img class="matplotlib img inactive" style="max-width: 80%;" src="img/images_univariees/CDF_code_groupe -1_pandas.png">
+						<img class="r img inactive" style="max-width: 80%;" src="img/images_univariees/CDF_code_groupe -1.png">
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Bonus</h4>
+							
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+				
+					<section id="fat-tail-distributions" class="slide level2">
+						<h4 class="top_bar">Fat-tail distributions</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Les distributions très asymétriques et très étendues sont délicates à résumer.</p>
+							<p>Les indicateurs traditionnels sont plus efficaces lorsque la variabilité des valeurs est moindre, et leur distribution plus symétrique.</p>
+							<p>e.g. Considérer la population moyenne des villes de France a-t’elle du sens ? <img src="img/images_univariees/histoVillesPop-1.png" width="768" style="display: block; margin: auto;" /></p>
+						</div>
+					</section>
+					<section id="distribution-rang-taille-des-villes-de-france" class="slide level2">
+						<h4 class="top_bar">Distribution rang-taille des villes de france</h4>
+					<p>Pour mieux voir la distribution et les écarts, on trace la <strong>taille</strong> des villes en fonction de leur <strong>rang</strong></p>
+					<p><img src="img/images_univariees/popVilles1%20-1.png" width="768" style="display: block; margin: auto;" /></p>
+					</section>
+					<section id="transformation-logarithmique" class="slide level2">
+						<h4 class="top_bar">Transformation logarithmique</h4>
+					<p>Appliquer une transformation <strong>monotone</strong>, <strong>bijective</strong> et <strong>inversible</strong> qui “applatisse” la distribution.</p>
+					<ul>
+					<li>réduit les écarts entre les valeurs</li>
+					<li>resserre l’essentiel des valeurs</li>
+					</ul>
+					<p><span class="math inline">\(\implies\)</span> mesure de façon plus robuste tendance, dispersion et forme</p>
+					<p>Ici : le logarithme décimal</p>
+					</section>
+					<section id="distribution-rang-logtaille" class="slide level2">
+						<h4 class="top_bar">Distribution rang-log(taille)</h4>
+					<p><img src="img/images_univariees/loglin1%20-1.png" width="768" style="display: block; margin: auto;" /></p>
+					</section>
 				</section>
 			</div>
 		</div>
@@ -686,25 +1390,30 @@ lines(density(B), col="red")</code></pre>
 		<script>
 			function showTab(tabId) {
 			// Hide all tab content
-			document.querySelectorAll('.tab-content').forEach(content => {
-				content.classList.remove('active');
-				content.classList.add('inactive')
-			});
-			document.querySelectorAll('.img').forEach(content => {
-				content.classList.remove('active');
-				content.classList.add('inactive')
-			});
-		
-			// Deactivate all tab buttons
-			document.querySelectorAll('.tab-button').forEach(button => {
-				button.classList.remove('active');
-			});
-		
-			// Show the selected tab content
-			document.querySelectorAll("."+tabId).forEach(content => {
-				content.classList.remove('inactive');
-				content.classList.add('active');
-			});
+			document.querySelectorAll('section').forEach(section => {
+				if(section.querySelectorAll("."+tabId).length>0){
+					section.querySelectorAll('.tab-content').forEach(content => {
+						content.classList.remove('active');
+						content.classList.add('inactive')
+					});
+					section.querySelectorAll('.active').forEach(content => {
+						content.classList.remove('active');
+						content.classList.add('inactive')
+					});
+				
+					// Deactivate all tab buttons
+					section.querySelectorAll('.tab-button').forEach(button => {
+						button.classList.remove('active');
+					});
+				
+					// Show the selected tab content
+					section.querySelectorAll("."+tabId).forEach(content => {
+						content.classList.remove('inactive');
+						content.classList.add('active');
+					});
+				}
+			})
+			
 			
 
 			}
