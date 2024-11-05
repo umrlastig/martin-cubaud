@@ -44,15 +44,21 @@
 	</style>
     <body>
         <h1>Cours de statistiques IGAST</h1>
-        <p>Cours en très grande partie construit à partir de l'excellent <a href="https://www.umr-lastig.fr/paul-chapron/resources/cours_site/index.html">cours IGAST 2020-2021</a> de Paul Chapron.</p>
+        <p>Cours en très grande partie construit à partir du <a href="https://www.umr-lastig.fr/paul-chapron/resources/cours_site/index.html">cours IGAST 2020-2021</a> de Paul Chapron.</p>
         <h2>Plan du cours</h2>
         <ul>
             <li class="cours"><a href="intro_générale_statistiques.html">Introduction générale statistiques</a></li>
             <li class="cours"><a href="cours_univariee_2024.html">Analyse univariée</a></li>
-			<li class="TP">TP1 Analyse univariée : <a href="TP1_analyse_univariee/Support_TP1.pdf">sujet</a> ; <a href="" onclick="windows.open('https://opendata.paris.fr/explore/dataset/les-arbres/information/'); windows.open('https://opendata.paris.fr/explore/dataset/quartier_paris/information/');">données</a> ;<a href="TP1_analyse_univariee/Analyse_univariee.html">corrigé</a> ;</li>
+			<li class="TP">TP1 Analyse univariée : <a href="TP1_analyse_univariee/Support_TP1.pdf">sujet</a> ; <a id="data_1">données</a> ;<a href="TP1_analyse_univariee/Analyse_univariee.html">corrigé</a> ;</li>
 			<li class="cours"><a href="cours_bivariee_2024.html">Analyse bivariée</a></li>
 			<li class="TP">TP2 Analyse bivariée : <a href="">sujet</a> ; <a href="">données</a> ;<a href="">corrigé</a> ;</li>
 			<li class="cours"><a href="cours_multivariee_2024.html">Analyse multivariée</a></li>
         </ul>
     </body>
+	<script>
+		document.getElementById("data_1").onclick=function(){
+			window.open('https://opendata.paris.fr/explore/dataset/les-arbres/information/');
+			window.open('https://opendata.paris.fr/explore/dataset/quartier_paris/information/');
+		}
+	</script>
 </html>
