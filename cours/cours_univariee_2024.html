@@ -304,7 +304,7 @@ plot1</code></pre>
 						<h4 class="top_bar">Quelle mesure choisir ?</h4>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Tout dépend de la distribution !</p>
-							<p>→ <b>Toujours</b> afficher l"histogramme ou la distribution de densité !</p>
+							<p>→ <b>Toujours</b> afficher l'histogramme ou la distribution de densité !</p>
 							<p></p>
 							<p>Le <b>Mode</b> est privilégié pour les valeurs <b>nominales</b> et si on désire consider "le cas le plus fréquent".</p>
 							<p>Distribution sans longue traîne ? <br>→ moyenne et médiane</p>
@@ -619,7 +619,7 @@ hist(B, probability = T)
 lines(density(B), col="red")</code></pre>
 						<img class="numpy img active" src="img/images_univariees/compDistNorm1-1_numpy.png">
 						<img class="r img inactive" src="img/images_univariees/compDistNorm1-1.png">
-					  	<p>Qu'est-ce qui ne vas pas ?</p>
+					  	<p>Qu'est-ce qui ne va pas ?</p>
 						
 					</section>
 					<section>
@@ -795,7 +795,9 @@ plot(quartiers$geometry)</code></pre>
 
 
 						  <!-- Python Code -->
-						  <pre class="numpy tab-content active"><code class="language-python">quartier["surface"].plot(kind="hist", bins=15, xlabel="surface [m²]", ylabel="count", figsize=(15, 5), title="Histogram of surface")</code></pre>
+						  <pre class="numpy tab-content active"><code class="language-python">quartier["surface"].plot(
+	kind="hist", bins=15, xlabel="surface [m²]", ylabel="count",
+	figsize=(15, 5), title="Histogram of surface")</code></pre>
 						  
 
 						  <!-- R Code -->
@@ -855,9 +857,17 @@ plot(quartiers["surface"])</code></pre>
 
 						  <!-- Python Code -->
 						  <pre class="numpy tab-content active"><code class="language-python">import mapclassify
-quartier.plot(column="surface", scheme="naturalbreaks", k=5, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 3), edgecolor="black").set_title("Jenks (5)")
-quartier.plot(column="surface", scheme="naturalbreaks", k=7, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 3), edgecolor="black").set_title("Jenks (7)")
-quartier.plot(column="surface", scheme="naturalbreaks", k=9, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 3), edgecolor="black").set_title("Jenks (9)")</code></pre>
+quartier.plot(
+	column="surface", scheme="naturalbreaks", k=5, legend=True, figsize=(15, 3), edgecolor="black",
+	legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}).set_title("Jenks (5)")
+
+quartier.plot(
+	column="surface", scheme="naturalbreaks", k=7, legend=True, figsize=(15, 3), edgecolor="black",
+	legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}).set_title("Jenks (7)")
+
+quartier.plot(
+	column="surface", scheme="naturalbreaks", k=9, legend=True, figsize=(15, 3), edgecolor="black",
+	legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}).set_title("Jenks (9)")</code></pre>
 						  
 
 						  <!-- R Code -->
@@ -877,7 +887,10 @@ plot(quartiers["surface"], breaks="jenks", nbreaks = 9, main= "9 breaks")</code>
 
 
 						  <!-- Python Code -->
-						  <pre class="numpy tab-content active"><code class="language-python">ax = quartier.plot(column="surface", scheme="quantiles", k=5, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 5), edgecolor="black")
+						  <pre class="numpy tab-content active"><code class="language-python">ax = quartier.plot(
+	column="surface", scheme="quantiles", k=5, legend=True, figsize=(15, 5), edgecolor="black",
+	legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}
+	)
 ax.set_title("Effectifs égaux")</code></pre>
 						  
 
@@ -895,7 +908,10 @@ ax.set_title("Effectifs égaux")</code></pre>
 
 
 						  <!-- Python Code -->
-						  <pre class="numpy tab-content active"><code class="language-python">quartier.plot(column="surface", scheme="equal_interval", k=7, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.2e}"}, figsize=(15, 5), edgecolor="black").set_title("Intervalles égaux (7)")</code></pre>
+						  <pre class="numpy tab-content active"><code class="language-python">quartier.plot(
+	column="surface", scheme="equal_interval", k=7, legend=True,
+	legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.2e}"}, figsize=(15, 5), edgecolor="black"
+	).set_title("Intervalles égaux (7)")</code></pre>
 						  
 
 						  <!-- R Code -->
@@ -915,7 +931,10 @@ plot(quartiers["surface"], breaks="equal", nbreaks = 7, main = "Intervalles éga
 
 
 						  <!-- Python Code -->
-						  <pre class="numpy tab-content active"><code class="language-python">quartier.plot(column="surface", scheme="stdmean", classification_kwds={"anchor":True}, legend=True, legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}, figsize=(15, 5), edgecolor="black").set_title("écart-types")</code></pre>
+						  <pre class="numpy tab-content active"><code class="language-python">quartier.plot(
+	column="surface", scheme="stdmean", classification_kwds={"anchor":True}, legend=True, figsize=(15, 5),
+	edgecolor="black", legend_kwds={"title": "Surface", "loc": (1.01, 0), "fmt": "{:.1e}"}
+	).set_title("écart-types")</code></pre>
 						  
 
 						  <!-- R Code -->
@@ -951,8 +970,8 @@ plot(quartiers["surface"], breaks="sd",main = "Écart-type")</code></pre>
 						</div>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<!-- Tab Navigation -->
-							<p class="text r inactive">Consultez la doc de la fonction classInt du package du même nom</p>
-							<p class="text numpy active">Consultez la doc du package mapclassify.</p>
+							<p class="text r inactive">Consultez la documentation de la fonction classInt du package du même nom</p>
+							<p class="text numpy active">Consultez la documentation du package mapclassify.</p>
 						</div>
 					</section>
 					<section>
@@ -1069,7 +1088,9 @@ distrib_mass</code></pre>
 
 
 						  <!-- Python Code -->
-						  	<pre class="pandas tab-content active"><code class="language-python">penguins.boxplot(column="body_mass_g", by="species", vert=False, figsize=(15, 5)).set_xlabel("body mass [g]")</code></pre>
+						  	<pre class="pandas tab-content active"><code class="language-python">penguins.boxplot(
+	column="body_mass_g", by="species", vert=False, figsize=(15, 5)
+	).set_xlabel("body mass [g]")</code></pre>
 						  
 
 						  <!-- R Code -->
@@ -1130,7 +1151,9 @@ violin_mass</code></pre>
 						  <!-- Python Code -->
 						  	<pre class="pandas tab-content active"><code class="language-python">list_species = penguins["species"].unique()
 plt.figure(figsize=(15, 5))
-mass_groupby_species = [penguins[penguins["species"]==species]["body_mass_g"].dropna() for species in list_species]
+mass_groupby_species = [
+	penguins[penguins["species"]==species]["body_mass_g"].dropna() for species in list_species
+]
 plt.violinplot(mass_groupby_species, showextrema=False)
 plt.boxplot(mass_groupby_species, widths=0.1)
 plt.xticks(range(1, len(list_species)+1), list_species)

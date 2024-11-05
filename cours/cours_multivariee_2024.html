@@ -1,0 +1,1885 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Analyse Multivariée</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="plugin/tabs/tabs.css">
+		<link rel="icon" type="image/png" href="logo_ENSG.png" />
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<style>
+		.top_bar {
+			width: 100%;
+			background-color: #97bf11;
+			top: 0px;
+			font-size: 35px;
+		}
+		
+		p, a {
+			font-size: 30px;
+		}
+		li {
+			font-size: 30px;
+		}
+		code{
+			font-size: 15px;
+			line-height: 1.2em;
+			max-height: 30%;
+		}
+		section {
+			height: 100%;
+		}
+		b, strong {
+		color: #7a9e08;
+		}
+		i {
+		font-style: italic;
+		}
+		.tabs {
+		margin: 0px;
+		display: flex;
+		}
+		.tab-button {
+		padding: 10px 20px;
+		border-radius: 10px 10px 0px 0px;
+		cursor: pointer;
+		background-color: #ddd;
+		border: none;
+		outline: none;
+		}
+		.tab-button:hover{
+			padding: 9px 19px;
+			border: 1px solid black;
+		}
+		.tab-button.active {
+		background-color: #666;
+		color: white;
+		}
+		.tab-content.inactive{
+		display: none;
+		visibility: hidden;
+		height: 0px;
+		margin: 0px;
+		}
+		.tab-content.active {
+		display: block;
+		visibility: visible;
+		height: fit-content;
+		margin: 0px;
+		}
+		.img.active{
+			visibility: visible;
+			margin: 0px;
+			max-height: 50%;
+			height: auto;
+		}
+		.img.inactive{
+			visibility: hidden;
+			margin: 0px;
+			height: 0px;
+		}
+		.text.active{
+			visibility: visible;
+			font-size: 30px;
+			margin: 20px 0px;
+		}
+		.text.inactive{
+			visibility: hidden;
+			color:white;
+			font-size: 1px;
+			margin: 0px 0px;
+		}
+
+		.dataframe.active{
+			font-size: 20px;
+			visibility: visible;
+			margin: 20px;
+		}
+		.dataframe.inactive{
+			font-size: 0px;
+			visibility: hidden;
+			margin: 8px;
+		}
+
+		.tr1{
+			background-color: #272822;
+			color: #c3c3c3;
+		}
+		.tr2{
+			background-color: #454545;
+			color: #c3c3c3;
+		}
+
+		.head.text.active{
+			font-size: inherit;
+		}
+		.answer{
+			background-color: #454545;
+		}
+
+		.hljs-comment{
+			color: wheat;
+		}
+	</style>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+						<h2>Analyse Multivariée</h2>
+						<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						<h4>M2 IGAST</h4>
+						<div>
+							<small>
+							<p>Martin Cubaud</p>
+							<p>LASTIG-UGE-IGN/ENSG</p>
+							<p>2024-2025</p>
+							</small>
+						</div>
+						<img src="logo_ENSG.png" alt="reveal.js logo" style="height: 100px; margin: 0 auto 4rem auto; background: transparent; position: absolute;top: 0px;right: 0px;" class="demo-logo">
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Plan du cours</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+						<p>Ce cours est construit à partir du cours M2 IGAST 2022 d'Ana-Maria Olteanu-Raimond.</p>
+						<ul>
+							<li><b>Introduction et rappels</b></li>
+							<li><b>Analyse factorielle</b></li>
+							<ul>
+								<li>ACP</li>
+								<li>Cercle des corrélations</li>
+							</ul>
+							<li><b>Classification</b></li>
+							<ul>
+								<li>Non-supervisée</li>
+								<li>Supervisée</li>
+							</ul>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Introduction et rappels</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Analyse multivariée - principes</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Analyse multivariée = les données sont <b>multidimensionnelles</b>.</p>
+							<table border="1" class="dataframe active" style="align-self: center;">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th>gid</th>
+									<th>nom</th>
+									<th>Code insee</th>
+									<th>Alt_moy</th>
+									<th>Pente_moy</th>
+									<th>De_relig</th>
+									<th>...</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th>1</th>
+									<td>RENCUREL</td>
+									<td>38333</td>
+									<td>1114</td>
+									<td>74</td>
+									<td>0,02893089</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr1">
+									<th>2</th>
+									<td>MALLEVAL-EN-VERCORS</td>
+									<td>38216</td>
+									<td>1114</td>
+									<td>74</td>
+									<td>0,07057872</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr2">
+									<th>3</th>
+									<td>MURIANETTE</td>
+									<td>38271</td>
+									<td>1027</td>
+									<td>73</td>
+									<td>0</td>
+									<td></td>
+								  </tr>
+								  <tr class="tr1">
+									<th>4</th>
+									<td>CHAMP-SUR-DRAC</td>
+									<td>38071</td>
+									<td>215</td>
+									<td>2</td>
+									<td>0,4742854</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr2">
+									<th>5</th>
+									<td>JARRIE</td>
+									<td>38200</td>
+									<td><span class="fragment shrink fade-out" data-fragment-index="1">385</span><span class="fragment" data-fragment-index="1"><b>$X_{ij}$</b></span></td>
+									<td>46</td>
+									<td>0,22279623</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr1">
+									<th>6</th>
+									<td>AUTRANS</td>
+									<td>38021</td>
+									<td>1305</td>
+									<td>42</td>
+									<td>0,02277919</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr2">
+									<th>7</th>
+									<td>MONTCHABOUD</td>
+									<td>38252</td>
+									<td>518</td>
+									<td>71</td>
+									<td>0,50559645</td>
+									<td></td>
+								  </tr>
+								  <tr class="tr1">
+									<th>8</th>
+									<td>PONT-EN-ROYANS</td>
+									<td>38319</td>
+									<td>409</td>
+									<td>43</td>
+									<td>0</td>
+									<td> </td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p>Quelles sont les communes qui se ressemblent ? Quelles sont les variables qui permettent d'identifier les ressemblances / dissemblances ?</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Analyse Multi-Variée - Principes</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>A chaque individu (unité spatiale), on associe son vecteur $X_i$, contenant la $i^{ème}$ ligne :</p>
+							<p>$X_i = (X_{i,1} ... X_{i,M})$</p>
+							<p>A chaque variable, on associe son vecteur $V_j$, contenant la $j^{ème}$ colonne :</p>
+							<p>$V_j = \begin{pmatrix}X_{1,j}\\...\\X_{N,j}\end{pmatrix} \rightarrow$ Moyenne, écart-type, variance</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distances entre unités spatiales</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Pas une distance géographique, mais une distance prenant en compte les valeurs des variables.<br> Deux individus sont proches dans "l'espace des distances" si la distance est faible.</p>
+							<p>Il existe plusieurs distances : euclidienne, Manhattan...</p>
+							<p><span style="color: red;">⚠</span> Normaliser les variables avant de calculer une distance !</p>
+							<p><span style="color: red;">⚠ Variables qualitatives :</span> Encodage, distances sur les hierarchies...</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distances entre unités spatiales</h4>
+						<div style="width:100%; height:100%; display: flex;">
+							<div style="width:75%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify; margin-right:20px">
+								<p><b>Distance euclidienne</b><br>$d(i_1,i_2)=\sqrt{\sum_{j=1}^M(X_{i_1,j} - X_{i_2, j})^2}$</p>
+								<p><b>Distance euclidienne au carré :</b> Permet de renforcer l’effet des distances entre les objets éloignés (atypiques)</p>
+								<p><b>Distance de Manhattan</b><br>$d_M(i_1,i_2)=\sum_{j=1}^M|X_{i_1,j} - X_{i_2, j}|$</p></p>
+								<p><b>"Distance" cosinus :</b> ignore la magnitude, plus stable en haute dimension<br>$d_{cos}(i_1, i_2)=1 - \frac{\sum_{j=1}^M X_{i_1,j} X_{i_2, j}}{\sqrt{\sum_{j=1}^M X_{i_1,j}^2} \sqrt{\sum_{j=1}^M X_{i_2,j}^2}}$</p>
+							</div>
+							<div style="width:25%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
+								<img src="img/images_multivariees/Manhattan.png" width="100%">
+								<p>(wikipedia)</p>
+								<img src="img/images_multivariees/cosine.png" width="100%">
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Distance de Manhattan vs Euclidienne</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>E.g. pour 2 variables $x$ et $y$, en notant $\Delta x = x_2 - x_1$ et $\Delta y = y_2 - y_1$ :</p>
+							<img src="img/images_multivariees/difference_distance.png" style="align-self: center; width: 80%;">
+							<ul>
+								<li>La distance de Manhattan est toujours supérieure ou égale à celle Euclidienne.</li>
+								<li>La différence est plus importante lorsque les 2 variables varient en même temps.</li>
+								<li>Si une des variables est fixée, augmenter la distance sur l'autre variable fait augmenter la différence.</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">étape préalable : Centrer-réduire</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Centrer</b> permet de mettre l'origine du système d'axes au centre de gravité du nuage de points; $G$ = vecteur des moyennes arithmétiques de chaque variable.</p>
+							<p>$G = \begin{pmatrix}\bar{V_{1}}\\...\\\bar{V_{M}}\end{pmatrix}, \bar{V_j}=\frac{1}{N}\sum_{i=1}^N X_{i,j}$</p>
+							<p>Matrice centrée :<br>$X_c = \begin{pmatrix} X_{1,1} - \bar{V_{1}} &... &X_{1,M} - \bar{V_{M}}\\ \vdots &\ddots& \vdots \\ X_{N,1} - \bar{V_{1}} &... &X_{N,M} - \bar{V_{M}}\end{pmatrix}$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">étape préalable : Centrer-réduire</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Réduire</b> permet de rendre comparables les variables exprimées sur des échelles (unités) différentes.</p>
+							<p>écart-type $\sigma_j = \sqrt{ \frac{1}{N} \sum_{i=1}^N (X_{i,j} - \bar{V_j})^2 }$</p>
+							<p>Matrice centrée réduite :<br>$X_{cr} = \begin{pmatrix} \frac{X_{1,1} - \bar{V_{1}}}{\sigma_1} &... & \frac{X_{1,M} - \bar{V_{M}}}{\sigma_M}\\ \vdots &\ddots& \vdots \\ \frac{X_{N,1} - \bar{V_{1}}}{\sigma_1} &... &\frac{X_{N,M} - \bar{V_{M}}}{\sigma_M}\end{pmatrix}$</p>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Analyse Factorielle</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Analyse en composantes principales</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Objectifs de l'ACP :</b></p>
+							<ul>
+								<li>Permet de résumer un grand nombre de variables en 2-3 dimensions.</li>								</li>
+								<li>Fournit des nouvelles variables, <b>composantes principales</b>, non corrélées entre elles.</li>
+								<li>Décrire et visualiser le lien entre les données.</li>
+								<li>Réduire le nombre de dimensions = de variables à utiliser.</li>
+								<li>Utile pour la classification : gain de temps, gain de stabilité, facilite l'interprétation...</li>
+								<li>Débruiter les données.</li>
+							</ul>
+						
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On a 2 variables X et Y assez corrélées.</p>
+							<img src="img/images_multivariees/nuage_1.png" style="align-self: center; width: 45%;">
+							<p>On veut résumer l'information en une seule variable.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Etape 1 : centrer-réduire</b></p>
+							<img src="img/images_multivariees/cr_transformation.gif" style="align-self: center; width: 45%;">
+							<p>$X_{cr} = \frac{X - \bar{X}}{\sigma_X}, Y_{cr} = \frac{Y - \bar{Y}}{\sigma_Y}$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Etape 2 : calcul de la matrice de corrélation</b></p>
+							<p>Matrice de la corrélation entre chaque paire de variable. Si on a M variables, la matrice est de taille M$\times$M.</p>
+							<p>$cor(X, Y)=cov(X_{cr}, Y_{cr})=\frac{1}{N}\sum_{i=1}^N X_{cr_i}Y_{cr_i}$</p>
+							<p>$COR = \begin{pmatrix} cor(X, X) & cor(X, Y) \\ cor(Y, X) & cor(Y, Y) \end{pmatrix} = \begin{pmatrix} 1 & 0.89 \\ 0.89 & 1 \end{pmatrix}$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Etape 3 :</b> chercher les directions de plus grande variance = <b>Les vecteurs propres</b>.<br>On cherche ces directions comme combinaisons linaires des anciennes variables.</p>
+							<img src="img/images_multivariees/nuage_plus_directions.png" style="align-self: center; width: 45%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p style="font-size: 22px;">On cherche $F_1 = a X_{cr} + b Y_{cr}$ qui maximise $var(F_1)$. (Avec $a^2+b^2=1$)</p>
+							<p style="font-size: 22px;">$var(F_1)=var(a X_{cr} + b Y_{cr}) = a^2 var(X_cr) + b^2 var(Y_cr) + 2ab Cov(X_cr, Y_cr)$</p>
+							<p style="font-size: 22px;">$var(F_1)=\begin{pmatrix} a & b \end{pmatrix} COR \begin{pmatrix} a \\ b \end{pmatrix} \rightarrow$ Maximal si $ COR \begin{pmatrix} a \\ b \end{pmatrix}$ est dans la même direction que $\begin{pmatrix} a \\ b \end{pmatrix}.$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Les <b>vecteurs propres</b> $\vec{v_1},...,\vec{v_M}$ sont des vecteurs unitaires tels que $COR\vec{v_j} = \lambda_j\vec{v_j}$</p>
+							<p>Les $\lambda_j$ sont appelés les <b>valeurs propres.</b> $\lambda_j$ est <b>la variance expliquée</b> par le vecteur propre j.</p>
+							<p style="font-size: 20px;">$\rightarrow$ Calculer les valeurs propres : solutions $\lambda$ de $DET(COR - \lambda Id) = 0$.</p>
+							<p style="font-size: 20px;">$\rightarrow$ Calculer le vecteur propre associé à $\lambda_j$ : solution $\vec{v}$ de $(COR - \lambda_j Id)\vec{v} = \vec{0}$.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Etape 4 :</b> Construire les nouvelles variables = <b>les composantes principales</b> en projetant selon les vecteurs propres.</p>
+							<img src="img/images_multivariees/proj_transformation.gif" style="align-self: center; width: 45%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple en 2D</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Etape 5 :</b> Réduction du nombre de dimensions.</p>
+							<p>Basée sur la notion de <b>taux d'inertie</b> : le % d'information porté par chaque axe factoriel.</p>
+							<p style="align-self: center;">$TI_j = \frac{\lambda_j}{\sum_{i=0}^M\lambda_i}$</p>
+							<p>Choix du nombre de dimensions en fonction de l'inertie souhaitée :</p>
+							<ul>
+								<li>Trier les valeurs propres.</li>
+								<li>Garder les p plus grandes valeurs propres, telles que l'inertie conservée $\sum_{j=0}^pTI_j$ soit supérieure à un seuil.</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Résumé de la méthode pour M variables.</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ol>
+								<li>Centrer et réduire la matrice de données brutes $\rightarrow \lbrack M_{cr} \rbrack_{N\times M}$</li>
+								<li>Calculer la matrice de corrélation $\rightarrow \lbrack COR\rbrack_{M \times M}$</li>
+								<li>Rechercher les valeurs propres et les vecteurs propres $\rightarrow \lbrack \lambda\rbrack_{1\times M},  \lbrack V \rbrack_{M \times M}$</li>
+								<li>Construction des composantes principales $\rightarrow F_1, F_2...F_M$</li>
+								<li>Réduction de dimension $\rightarrow \lbrack TI\rbrack_{1 \times M};  F_1, F_2...F_p$</li>
+							</ol>
+							<p>En python : classe <span style="font-family: monospace;">sklearn.decomposition.PCA</span>.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Signification :</b> permet 1) de trouver une signification à chaque composante, 2) de montrer que les composantes séparent les variables en paquets, 3) d'identifier la relation entre les variables</p>
+							<p><b>Trois types d'informations peuvent être représentés :</b></p>
+							<div style="width:100%; display: flex; flex-direction:row; justify-content: space-around; align-items:center; text-align: justify;">
+								<ul>
+									<li>Les composantes principales : ex F1 et F2</li>
+									<li>Coordonnées factorielles des variables</li>
+									<li>Coordonnées factorielles des individus</li>
+								</ul>
+								<img src="img/images_multivariees/cercles_correlations.png" style="align-self: center; width: 30%;">
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Les axes principaux : $F_1$ et $F_2$</b></p>
+							<p><b>Représentation des variables</b> : Chaque variable $V$ est représenté par un point de cordonnées $(cor(V, F1); cor(V, F2))$</p>
+							<img src="img/images_multivariees/cercles_correlations_explication.png" style="align-self: center; width: 50%;">
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Coordonnées factorielles des variables</b></p>
+							<img src="img/images_multivariees/tableau_factorielle.png" style="align-self: center; width: 50%;">
+							<p>Pour chaque variable, on évalue la corrélation entre la variable dans son espace original (centré-réduit) et son nouvel espace</p>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<h5>Interprétation</h5>
+							<div style="width:100%; display: flex; flex-direction:row; justify-content: space-around; align-items:center; text-align: justify;">
+								<div style="margin-right: 20px;">
+									<p><b>Variables proches du bord du cercle :</b> signifie que la variable est bien corrélée avec un des deux facteurs constituant ce plan $\rightarrow$ variables sont bien représentées par le plan factoriel</p>
+									
+									<p><b>Variables proches de 0 :</b> signifie que la variable n’est pas bien corrélée avec un des deux facteurs $\rightarrow$ variables sont mal représentées par le plan factoriel</p>
+								</div>
+								<img src="img/images_multivariees/cercles_correlations.png" style="align-self: center; width: 120%;">
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<h5>Corrélation linéaire entre deux variables</h5>
+							<div style="width:100%; display: flex; flex-direction:row; justify-content: space-around; align-items:center; text-align: justify;">
+								<div style="margin-right: 20px; width:60%">
+									<p style="font-size: 25px; font-weight: bold;">$r(V_1, V_2) = cos(angle(V_1, V_2))$</p>
+									<p style="font-size: 20px;">Angle proche de 0° : $cos(angle)=r(V_1, V_2)=1$<br>$\rightarrow V_1$ et $V_2$ sont fortement corrélés positivement.</p>
+									<p style="font-size: 20px;">Angle proche de 90° : $cos(angle)=r(V_1, V_2)=0$<br>$\rightarrow$ manque de corrélation entre $V_1$ et $V_2$.</p>
+									<p style="font-size: 20px;">Angle proche de 180° : $cos(angle)=r(V_1, V_2)=-1$<br>$\rightarrow V_1$ et $V_2$ sont fortement corrélés négativement.</p>
+									<p style="font-size: 20px; color:magenta"><br>$\rightarrow$Identifiez les variables corrélés positivement, négativement, et celles non corrélées.</p>
+								</div>
+								<img src="img/images_multivariees/cercles_correlations.png" style="align-self: center; width: 40%;">
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<h5>Représentation des unités spatiales</h5>
+							<p>Les coordonnées factorielle de l'US <b>i</b> pour la composante <b>k</b> :</p>
+							<img src="img/images_multivariees/composantes_factorielles.png" style="align-self: center; width: 80%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple d'interprétation</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>ACP appliquée sur un jeu de données caractérisé par :</b></p>
+							<ul>
+								<li>27 unités spatiales représentant des pays d'Europe</li>
+								<li>7 variables :
+									<ul>
+										<li>L'espérance de vie féminine</li>
+										<li>Le revenu moyen par habitant</li>
+										<li>La part du budget consacré à la santé</li>
+										<li>Le taux de femmes actives</li>
+										<li>Le taux d'éducation</li>
+										<li>Le taux de chomage</li>
+										<li>La mortalité infantile</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple d'interprétation</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Interprétation des coordonnées factorielles des variables</b></p>
+							<div style="width:100%; height:90%; display: flex; flex-direction:row; justify-content: center; align-items:start; text-align: justify;">
+								<table border="1" class="dataframe active" style="width: 70%;">
+									<thead>
+									<tr style="text-align: right;" class="tr1">
+										<th></th>
+										<th>Corrélation avec $F_1$</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr class="tr2">
+										<th>Esp vie F</th>
+										<td>0.86</td>
+									</tr>
+									<tr class="tr1">
+										<th>Pnb/hab</th>
+										<td>0.81</td>
+									</tr>
+									<tr class="tr2">
+										<th>% santé</th>
+										<td>0.78</td>
+									</tr>
+									<tr class="tr1">
+										<th>Activ F</th>
+										<td>0.17</td>
+									</tr>
+									<tr class="tr2">
+										<th>% éducation</th>
+										<td>0.10</td>
+									</tr>
+									<tr class="tr1">
+										<th>% chom</th>
+										<td>-0.62</td>
+									</tr>
+									<tr class="tr2">
+										<th>mort inf</th>
+										<td>-0.90</td>
+									</tr>
+									</tbody>
+								</table>
+								<div class="fragment">
+									<p>La première composante principale oppose : </p>
+									<ul>
+										<li>L’espérance de vie féminine, le revenu moyen par habitant, le % des budgets consacrés à la santé</li>
+										<li>Les forts taux de chômage et de mortalité infantile.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple d'interprétation</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Interprétation des coordonnées factorielles des individus</b></p>
+							<div style="width:100%; height:90%; display: flex; flex-direction:row; justify-content: center; align-items:start; text-align: justify;">
+								<img src="img/images_multivariees/tableau_axe_1.png" style="align-self: center; width: 80%; margin-right: 10px;">
+								<div class="fragment">
+									<p>S'opposent des pays : </p>
+									<ul>
+										<li>Forts pnb/hab et espérance de vie féminine et faible mortalité infantile.</li>
+										<li>Faibles pnb/hab et espérance de vie féminine et mortalité infantile relativement forte.</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</section>
+				</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Classification non Supervisée</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Classification</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Objectif :</b> Regrouper dans des classes les US qui se ressemblent, c-à-d qui possèdent des caractéristiques communes.</p>
+							<ul><li>Exemple de <b>classification</b> : couverture des sols, <b>classes</b> : bâti, eau, forêt...</li></ul>
+							<p><b>Deux grandes familles de méthodes de classification :</b></p>
+							<ul><li><b>Supervisée</b> : étant donné un ensemble de classes, la méthode de classification consiste à trouver la meilleure classe pour chaque US.</li></ul>
+							<ul><li><b>Non supervisée</b> : définir des classes non encore identifiées qui groupent les US et leur attribuer une étiquette (« un sens »)<br>$\rightarrow$ <span style='font-weight: bold;'>clustering, regroupement</span></li></ul>
+						</div>
+					</section>
+
+					<section>
+						<h4 class="top_bar">Classification non supervisée</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Principe : </b>définir des classes <b>homogènes</b> tout en favorisant l’<b>hétérogénéité</b> entre les classes.<br>Minimiser la distance entre deux US d’une même classe et maximiser la distance entre deux US de classes différentes.</p>
+							<p><b>Étapes</b></p>
+							<ul>
+								<li>Choix des données</li>
+								<li>Choix de la mesure d'éloignement/ressemblance entre les individus.</li>
+								<li>Choix d'un critère d'homogénéité des classes</li>
+								<li>Choix d'une méthode de classification</li>
+								<li>Mesure de la qualité de la classification</li>
+								<li>Interprétation des classes obtenues</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Choix des données</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>- Représenter les variables et étudier leurs corrélations.</p>
+							<p>- Données brutes, données transformées, composantes factorielles</p>
+							<h4 class="top_bar">Choix de la mesure d'éloignement données</h4>
+							<p>- Généralement la distance euclidienne</p>
+							<p>- Distance de Manhattan</p>
+							<p>- Distance euclidienne au carré : renforce l'influence des individus "éloignés"</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Critère d'homogénéité</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On choisit en général l'<b>inertie</b>.</p>
+							<p>Si l'ensemble des US est regroupé en Q classes :</p>
+							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
+							<img src="img/images_multivariees/inertie.svg" style="align-self: center; width: 80%;">
+							<p>Une classe est homogène si son inertie est faible</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Inertie</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Si l'ensemble des US est regroupé en Q classes :</p>
+							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
+							<p style="align-self: center;">$\sum_{i=1}^N d(X_i, \bar{X})^2 = \sum_{q=1}^Q \sum_{X_i \in q} d(X_i, \bar{X_q})^2 + \sum_{q=1}^Q n_q d(\bar{X_q}, \bar{X})^2$</p>
+							<p>avec $d(a, b)$ la distance entre $a$ et $b$, $\bar{X}$ la moyenne de $X$, $\bar{X_q}$ la moyenne des individus de la classe q.</p>
+							<p>Une classe est homogène si son inertie est faible</p>
+						</div>
+					</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+					<section>
+						<h4 class="top_bar">Classification non Supervisée</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><span style="color:red;">Toujours en premier :</span> regarder l'aspect des données avec des graphiques (exploration visuelle)</p>
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from sklearn.datasets import load_iris
+iris = load_iris()
+df = pd.DataFrame(iris.data, columns=iris.feature_names)
+pd.plotting.scatter_matrix(df, figsize=[20, 10], s=150)</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">data(iris)
+plot(iris)</code></pre>
+							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/plotIris-1_python.png">
+							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/plotIris-1.png">
+						
+							<p>Existe-t-il un lien entre les variables ?</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">différentes formes de relations entre variables</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width:80%;" src="img/images_bivariees/formes-1.png">
+							<p>En pratique, les formes sont beaucoup moins régulières.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Les étapes</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ol>
+								<li>Tracer le nuage de points</li>
+								<li>Existe-t-il une relation ?</li>
+								<li>Est-elle de forme linéaire ? De quel sens ?</li>
+								<li>Si la liaison est de forme linéaire → faire une <b>régression</b></li>
+								<li>Si la liaison est non linéaire, est-elle <b>monotone</b> ? De forme connue ?→ Proposer un <b>modèle</b></li>
+							</ol>
+							<p>5bis. Réaliser un modèle <b>LOESS</b> avec prudence (uniquement descriptif , aucun pouvoir de généralisation)</p>
+							<p>cf le blog de Lise Vaudor [<a href="http://perso.ens-lyon.fr/lise.vaudor/regression-loess/" class="uri">http://perso.ens-lyon.fr/lise.vaudor/regression-loess/</a>]</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression linéaire</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">						
+							<p>Si la forme du nuage de points s’y prête, on peut faire une <b>régression linéaire</b> (aussi appelé <b>ajustement</b> linéaire).</p>
+							<p>On cherche la droite qui «passe au mieux» (=<em>ajustée</em>) dans le nuage de points de deux variables quantitatives $V_1$ et $V_2$, qui permet de visualiser :</p>
+								<li>l’<b>intensité</b> du lien / de la dépendance : points proche de la droite ou non ?</li>
+								<li>la <b>forme</b> de la dépendance : linéaire ou non ?</li>
+								<li>le <b>sens</b> de la dépendance : nulle, positive ou négative ?</li>
+							</ul>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression linéaire</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width:80%;" src="img/images_bivariees/regline-1.png">
+							<p>«Droite qui passe au mieux» = qui minimise <b>la somme des écarts quadratiques</b> entre la droite et les points du nuage.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression linéaire : le modèle</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>L’<b>équation</b> de la droite est un <b>modèle linéaire</b> de la relation statistique qui lie $V_1$ et $V_2$;</p>
+							<p>Ici le modèle est : $\hat{V}_2 = a V_1 + b$</p>
+							<p>$a$ et $b$ sont les <b>paramètres</b> ou <b>coefficients</b> du modèle.<br></p>
+							<p>Si la régression linéaire est avérée, alors pour un individu $i$ dont on connait $V_{1}i$, on infère la valeur $V_{2}i$ par le modèle : $\hat{V}_2i=a V_1i+b$</p>
+							<p>On dit aussi que $V_1$ <b>explique</b> $V_2$, ou que le modèle <b>prédit</b> $V_2$ à partir de $V_1$ (on note les valeurs prédites $\hat{V}_2$)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La grande question</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
+							<p style="font-size: 40px;">Comment déterminer qu’une régression linéaire est «correcte» ?</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Comment evaluer la “validité” du modèle linaire ?</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>En pratique, il faut réunir deux critères :</p>
+							<ul>
+								<li>des coefficients avec des <b>p-values</b> associées <b>faibles</b> (e.g. <0.05) ↔ “on a peu de chances de se tromper”</li>
+								<li>un $R²$ <b>élevé</b> ↔ “le modèle prédit bien les observations”</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Le $R²$</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$R^2 \in [0, 1]$ est le <b> coefficient de détermination linéaire</b>.</p>
+							<p>Donne la <b>qualité de prédiction</b> de la régression.</p>
+							<p>“Proche de 1”" ≡ “très bonne qualité”</p>
+							<p>C’est le pourcentage de “variation” de $V_2$ due à la “variation” de $V_1$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Le $R²$</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Défini par $R^2 = 1-\dfrac{\sum_{i=1}^n\left(y_i-\hat{y_i}\right)^2}{\sum_{i=1}^n\left(y_i-\bar y\right)^2} $</p>
+
+							<p>si on note $\hat{V}_2$ les valeurs de $V_2$ prédites par le modèle linéaire, alors :</p>
+							<p>$R^2 = cor(V_2, \hat{V}_2)^2$</p>
+							<p>(au sens de la corrélation de Pearson)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La p-value</h4>
+						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Elle peut s’interpréter comme «la probabilité d’avoir un résultat de regression identique avec deux variables véritablement indépendantes»</p>
+							<p><br></p>
+							<p>La p-value est associée à la notion d’<b>hypothèses nulle</b>. Ici , l’hypothèse nulle est “les deux séries sont indépendantes”.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La p-value</h4>
+						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Plus grossièrement : la p-value est le <b>pourcentage de chances de se tromper</b> en rejetant l’hypothèse nulle,</p>
+							<p><br></p>
+							<p>c'est-à-dire<br>se tromper en considérant que les deux séries ne sont pas indépendantes et qu’il existe une relation entre les deux (ici, linéaire car nous testons un modèle linéaire).</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">L'hypothèse nulle</h4>
+						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$H_0$ : «les deux variables sont indépendantes»</p>
+							<ul>
+								<li><b>conserver</b> $H_0$ : considérer les deux variables comme <b>indépendantes</b></li>
+								<li><b>rejeter</b> $H_0$ : considérer les deux variables comme <b>dépendantes</b> = ayant une relation statistique, un lien.</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Format des resultats donnés par <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import linregress
+linregress(df['petal length (cm)'], df['petal width (cm)'])</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">regression <- lm(iris$Petal.Length~iris$Petal.Width)
+summary(regression)</code></pre>
+
+							<p></p>
+							<pre class="numpy tab-content active"><code class="answer">LinregressResult(
+	slope=0.41575541635241114, intercept=-0.36307552131902776,
+	rvalue=0.9628654314027963, pvalue=4.6750039073255014e-86,
+	stderr=0.009582435790766206, intercept_stderr=0.03976198987309611
+	)</code></pre>
+							<pre class="r tab-content inactive"><code class="answer">## 
+## Call:
+## lm(formula = iris$Petal.Length ~ iris$Petal.Width)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.33542 -0.30347 -0.02955  0.25776  1.39453 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)       1.08356    0.07297   14.85   <2e-16 ***
+## iris$Petal.Width  2.22994    0.05140   43.39   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4782 on 148 degrees of freedom
+## Multiple R-squared:  0.9271, Adjusted R-squared:  0.9266 
+## F-statistic:  1882 on 1 and 148 DF,  p-value: < 2.2e-16</code></pre>
+						
+						<p class="numpy text active">Coefficients du modèle ajusté, R (et non R²), la p-value, écart-type des erreurs sur les coefficients.</p>
+						<p class="r text inactive">Distribution des résidus, coefficients du modèle ajusté et leur p-value associée (ici sur un test de Student, notée Pr(>|t|) et R2)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus: Critères de significativité du lien linéaire</h4>
+						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Les <b>résidus</b> $\epsilon_i$ (écart entre valeur observée et valeur prédite $(V_2−\hat{V}_2)$ par le modèle pour l’individu i) doivent:</p>
+							<ul>
+								<li>être indépendants : covariance nulle ou très faible<br>$cov(x_i,\epsilon_i)=0$</li>
+								<li>être distribués selon un loi normale de moyenne nulle <br>$\epsilon  \sim \mathcal{N}(0,\sigma_{\epsilon})$</li>
+								<li>être distribués de façon homogène (homoscédasticité), i.e. de variance constante $var(\epsilon_i)=\sigma^2_\epsilon$ , indépendante de l’observation.</li>
+							</ul>
+						</div>	
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus : évaluation de l'indépendance des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+						
+							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
+import matplotlib.pyplot as plt
+reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
+residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
+sm.graphics.tsa.plot_acf(residuals, lags=20)
+plt.show()</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
+acf(residuals(modele1))</code></pre>
+
+							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
+							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
+						
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus : Évaluer l’homogénéité des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+						
+							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
+import matplotlib.pyplot as plt
+reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
+residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
+sm.graphics.tsa.plot_acf(residuals, lags=20)
+plt.show()</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
+acf(residuals(modele1))</code></pre>
+
+							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
+							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
+						
+						</div>
+					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Corrélation de deux variables quantitatives</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Corrélation (linéaire)</h4>
+						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Dans le cas d’une liaison statistique linéaire entre deux variables, on peut calculer l’«intensité» de ce lien sans nécessairement trouver les coefficients modèle linéaire : c’est la <b>corrélation</b></p>
+							<p>$cor(x, y) \in [-1; 1]$ entre deux variables $x$ et $y$</p>
+							<ul>
+								<li>+1 : les deux variables croissent ou décroissent conjointement</li>
+								<li>-1 : quand l’une des variables croît, l’autre décroît.</li>
+								<li>0 : pas de relation <b>linéaire</b> entre les deux variables</li>
+							</ul>
+						</div>	
+					</section>
+					<section>
+						<h4 class="top_bar">Calcul direct du coefficient de corrélation (de Pearson)</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Soient deux variables $V_1$ et $V_2$</p>
+							<p>Le coefficient de corrélation $r$ de $V_1$ et $V_2$ est la normalisation de la covariance par le produit des écart-types des variables</p>
+							<p>$r = \frac{cov(V_1, V_2)}{\sigma_{V_1}\sigma_{V_2}}$</p>
+							<p>La covariance est la <b>moyenne du produit des écarts à la moyenne</b></p>
+							<p>$cov(V1,V2)=\mathbb{E}[(V1−\mathbb{E}[V1])(V2−\mathbb{E}[V2])]$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Test de corrélation entre deux variables avec <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Version plus complète : c’est un <b>test</b>, on a plusieurs indicateurs statistiques sur ce test, notamment la <b>p-value</b> et <b>l’intervalle de confiance</b></p>
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import pearsonr
+result = pearsonr(df['petal length (cm)'], df['petal width (cm)'])
+print(result, result.confidence_interval(0.95))</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">cor.test(iris$Petal.Length, iris$Petal.Width)</code></pre>
+
+							<p></p>
+							<pre class="numpy tab-content active"><code class="answer">PearsonRResult(statistic=0.962865431402796, pvalue=4.675003907328653e-86)
+ConfidenceInterval(low=0.9490524593111143, high=0.972985317378797)</code></pre>
+							<pre class="r tab-content inactive"><code class="answer">## 
+##  Pearson's product-moment correlation
+## 
+## data:  iris$Petal.Length and iris$Petal.Width
+## t = 43.387, df = 148, p-value < 2.2e-16
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  0.9490525 0.9729853
+## sample estimates:
+##       cor 
+## 0.9628654</code></pre>
+							<p>Rappel : la p-value quantifie la <b>significativité</b> du test. En général, on considère le test significatif si elle est en dessous de 5%, soit 0.05.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Test de corrélation entre deux variables avec <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">df.corr(method='pearson')</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">cor(iris[,1:4])</code></pre>
+
+							  <table border="1" class="numpy dataframe active">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th>sepal length (cm)</th>
+									<th>sepal width (cm)</th>
+									<th>petal length (cm)</th>
+									<th>petal width (cm)</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th>sepal length (cm)</th>
+									<td>1.000000</td>
+									<td>-0.117570</td>
+									<td>0.871754</td>
+									<td>0.817941</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>sepal width (cm)</th>
+									<td>-0.117570</td>
+									<td>1.000000</td>
+									<td>-0.428440</td>
+									<td>-0.366126</td>
+								  </tr>
+								  <tr class="tr2">
+									<th>petal length (cm)</th>
+									<td>0.871754</td>
+									<td>-0.428440</td>
+									<td>1.000000</td>
+									<td>0.962865</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>petal width (cm)</th>
+									<td>0.817941</td>
+									<td>-0.366126</td>
+									<td>0.962865</td>
+									<td>1.000000</td>
+								  </tr>
+								</tbody>
+							  </table>
+							<pre class="r tab-content inactive"><code class="answer">##              Sepal.Length Sepal.Width Petal.Length Petal.Width
+## Sepal.Length    1.0000000  -0.1175698    0.8717538   0.8179411
+## Sepal.Width    -0.1175698   1.0000000   -0.4284401  -0.3661259
+## Petal.Length    0.8717538  -0.4284401    1.0000000   0.9628654
+## Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000
+</code></pre>
+							<p>Présentation des corrélations entre les variables quantitatives d’un tableau, pour tous les couples de variables.</p>
+							<p>La matrice de corrélation est symétrique, et sa diagonale est constituée de 1.</p>
+						</div>
+					</section>
+					<section data-transition="slide-in fade-out">
+						<h4 class="top_bar">Sensibilité aux outliers</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+					
+					  		<!-- Python Code -->
+					  		<pre class="tab-content numpy r active"><code class="language-python">X = [3,2,3,4,1,2,3,4,5,2,3,4,3]
+Y = [1,2,2,2,3,3,3,3,3,4,4,4,5]
+plt.figure(figsize=(16, 6))
+plt.plot(X, Y, 'o')
+plt.xlim(0, 16)
+plt.ylim(0, 16)
+plt.show()</code></pre>
+							<p></p>
+							<img class="numpy r img active" style="align-self: center;" src="img/images_bivariees/sensitiveOut1-1_python.png">
+							<pre class="numpy r tab-content active"><code class="language-python">pearsonr(X, Y).statistic</code></pre>
+							<pre class="numpy r tab-content active"><code class="answer">0.00</code></pre>
+							
+						</div>
+					</section>
+					<section  data-transition="slide-out fade-in">
+						<h4 class="top_bar">Sensibilité aux outliers</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+					
+					  		<!-- Python Code -->
+					  		<pre class="tab-content numpy r active"><code class="language-python">X = [3,2,3,4,1,2,3,4,5,2,3,4,3, 15]
+Y = [1,2,2,2,3,3,3,3,3,4,4,4,5, 15]
+plt.figure(figsize=(16, 6))
+plt.plot(X, Y, 'o')
+plt.xlim(0, 16)
+plt.ylim(0, 16)
+plt.show()</code></pre>
+							<p></p>
+							<img class="numpy r img active" style="align-self: center;" src="img/images_bivariees/sensitiveOut2-1_python.png">
+							<pre class="numpy r tab-content active"><code class="language-python">pearsonr(X, Y).statistic</code></pre>
+							<pre class="numpy r tab-content active"><code class="answer">0.9052224371373307</code></pre>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Sensibilité aux outliers</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Outlier</b> : observation “anormale”, par sa valeur extrême, comparée aux autres</p>
+							<p>La corrélation et la régression linéaire sont très sensibles aux outliers.</p>
+							<p>→ s’interroger sur la nécessité de nettoyer/filtrer les données et des conséquences</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Que faire lorsque la relation n’est pas linéaire ?</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Quand les deux variables semblent corrélées, de façon <b>monotone</b> mais <b>non linéaire</b>,</p>
+							<p>→ <b>Coefficient de Spearman</b>, basé sur le rang des individus.</p>
+							<p style="align-self: center;">$\rho = 1 - \frac{6\Sigma_{i=1}^n (rg(X_i) - rg(Y_i) )^2 }{n^3 - n}$</p>
+							<p>avec :</p>
+							<p>$rg(X_i)$ le rang de $X_i$ (le classement de sa valeur) dans la distribution de $X$</p>
+							<p>$n$ le nombre d'individus</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Obtenir le coefficient de Spearman avec <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import spearmanr
+spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">cor.test(iris$Sepal.Length, iris$Sepal.Width, method="spearman", exact = FALSE)</code></pre>
+
+							<p></p>
+							<pre class="numpy tab-content active"><code class="answer">SignificanceResult(statistic=-0.166777658283235, pvalue=0.04136799424884587)</code></pre>
+							<pre class="r tab-content inactive"><code class="answer">## 
+##  Spearman's rank correlation rho
+## 
+## data:  iris$Sepal.Length and iris$Sepal.Width
+## S = 656283, p-value = 0.04137
+## alternative hypothesis: true rho is not equal to 0
+## sample estimates:
+##        rho 
+## -0.1667777</code></pre>
+							<p class="r text inactive">l’argument exact doit être précisé en cas de valeurs ex aequo dans les données.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Utilisation conjointe des coefficients de Pearson et Spearman</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$r$ (Pearson) et $\rho$ (Spearman) sont deux moyens d'estimer la corrélation, lequel choisir ?</p>
+							<p>si $r=\rho$ : on garde r (plus simple à interpréter)</p>
+							<p>si $|r|<|\rho|$ : la relation est non-linéaire : prendre $\rho$</p>
+							<p>si $|r|>|\rho|$ : il y a un biais, prendre $\rho$ (plus robuste)</p>
+							<p>… et toujours <b>tracer le nuage de points</b> pour examiner la nature de la relation.</p>
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>“trucs” pour linéariser des relations non-linéaires</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Relation log-linéaire</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_bivariees/loglin-1.png" style="align-self: center; width: 80%;">
+							<p>Relation de $y = ax^b$</p>
+							<p>Se linéarise par $ln(y) = b\times ln(x)+ln(a)$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Relation géométrique (exponentielle)</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_bivariees/expolin-1.png" style="align-self: center; width: 80%;">
+							<p>Relation de $y = e^{ax+b}$</p>
+							<p>Se linéarise par $ln(y) = ax+ln(b)$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Relation logarithmique</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_bivariees/logar-1.png" style="align-self: center; width: 80%;">
+							<p>Relation de $y = a \times ln(x)+b$</p>
+							<p>→ changement de variable</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Relation logistique</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_bivariees/logistic-1.png" style="align-self: center; width: 80%;">
+							<p>Relation de $y = y_{min} + \frac{y_{max} - y_{min}}{1 + e^{ax+b}}$</p>
+							<p>Se linéarise par $ln(\frac{y_{max} - y}{y - y_{min}}) = ax+b$</p>
+						</div>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Liens entre deux variables qualitatives</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation graphique</h4>
+						<div style="width:100%; height:85%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Pour deux variables qualitatives, on ne peut pas produire de nuages de points, ni de droites de régression.</p>
+							<p>→ On peut représenter la table de contingence (cf fonctions <span style="font-family: monospace;">statsmodels.graphics.mosaicplot.mosaic</span> et <span style="font-family: monospace;">pandas.crosstab</span>)</p>
+							<img src="img/images_bivariees/mosaic-1.png" style="align-self: center; width: 60%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Test statistique dit du “Chi 2” ou “Chi carré”</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Le test du $\chi^2$ est un test d’indépendance, il mesure l’<b>écart</b>, la différence, entre deux distributions de <b>variables qualitatives</b>.</p>
+							<p>Il répond à la question : “Existe-t-il un lien statistique entre deux séries de valeurs qualitatives”</p>
+							<p>(La réponse est de type OUI/NON , le $\chi^2$ ne donne pas l’<b>intensité</b> du lien)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Test statistique dit du “Chi 2” ou “Chi carré”</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li>Hypothèse nulle $H_0$ : les deux distributions sont indépendantes.</li>
+								<li>«Faire le test» permet de conserver ou de rejeter cette hypothèse</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Principe du Chi 2</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li>On génère une <b>population théorique</b> à laquelle on va comparer la <b>population observée</b> en considérant leurs <b>distributions</b>.</li>
+								<li>Cette distribution théorique reflête ce qui se passerait si on suppose que $H_0$ est vraie.</li>
+								<li>Avec cette comparaison, on pourra conserver ou de rejeter l'hypothèse nulle.</li>
+							</ul>
+							<p>La création de cette distribution se fait à partir du <b>tableau de contingence</b>.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Tableau de contingence</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>C'est un tableau à double entrée qui croise deux <b>variables qualitatives</b>.<br>Dans une case on trouve l’<b>effectif</b> (= le nombre) des individus caractérisés par la conjonction des modalités en ligne et en colonnes.</p>
+							<p>Exemple sur des formes géométriques de couleurs :</p>
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>blanc</i></th>
+									<th><i>noir</i></th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>carré</i></th>
+									<td>22</td>
+									<td>12</td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>rond</i></th>
+									<td>10</td>
+									<td>30</td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>triangle</i></th>
+									<td>26</td>
+									<td>5</td>
+								  </tr>
+								</tbody>
+							  </table>
+							  <p class="numpy text active">Avec pandas : fonction <span style="font-family: monospace;">crosstab</span></p>
+							  <p class="r text inactive">En R : fonction <span style="font-family: monospace;">table()</span></p>
+						</div>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Construction de la distribution théorique</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On commence par sommer les effectifs selon les modalités (en ligne et en colonne)</p>
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>blanc</i></th>
+									<th><i>noir</i></th>
+									<th>total</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>carré</i></th>
+									<td>22</td>
+									<td>12</td>
+									<td>34</td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>rond</i></th>
+									<td>10</td>
+									<td>30</td>
+									<td>40</td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>triangle</i></th>
+									<td>26</td>
+									<td>5</td>
+									<td>31</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>total</th>
+									<td>58</td>
+									<td>47</td>
+									<td>105</td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p>On appelle les sommes en lignes et en colonnes <b>sommes marginales</b>, elles sont mises dans les “marges” du tableau.</p>
+						</div>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Construction de la distribution théorique</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>En divisant par la taille de la population, on obtient <b>les fréquences observées</b></p>
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>blanc</i></th>
+									<th><i>noir</i></th>
+									<th>total</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>carré</i></th>
+									<td>0.20952381</td>
+									<td>0.11428571</td>
+									<td>0.3238095</td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>rond</i></th>
+									<td>0.09523810</td>
+									<td>0.28571429</td>
+									<td>0.3809524</td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>triangle</i></th>
+									<td>0.24761905</td>
+									<td>0.04761905</td>
+									<td>0.2952381</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>total</th>
+									<td>0.552381</td>
+									<td>0.447619</td>
+									<td>1</td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p style="font-size: 20px;"> On obtient les <b>pourcentages de l’effectif</b> dans les cases du tableau.</p>
+							<p style="font-size: 20px;"> C’est également la <b>probabilité</b> qu’un individu de la <b>population observée</b> soit caractérisé par les modalités en ligne et en colonne. </p>
+						</div>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Construction de la distribution théorique</h4>
+						<div style="width:100%; height:85%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>blanc</i></th>
+									<th><i>noir</i></th>
+									<th>total</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>carré</i></th>
+									<td>0.20952381</td>
+									<td>0.11428571</td>
+									<td><b>0.3238095</b></td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>rond</i></th>
+									<td>0.09523810</td>
+									<td>0.28571429</td>
+									<td><b>0.3809524</b></td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>triangle</i></th>
+									<td>0.24761905</td>
+									<td>0.04761905</td>
+									<td><b>0.2952381</b></td>
+								  </tr>
+								  <tr class="tr1">
+									<th>total</th>
+									<td><b>0.552381</b></td>
+									<td><b>0.447619</b></td>
+									<td><b>1</b></td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p>De la même façon, les <b>fréquences marginales</b> (marges divisées par la taille de la pop.), donnent la <b>probabilité</b> d’observer un individu de la modalité correspondant à la ligne ou à la colonne considérée.</p>
+							<p style="font-size: 20px;"> Exemple : dans cette population , j’ai 29.5% de chances de tirer un triangle, et 55% de chances de tirer une pièce blanche. </p>
+						
+						</div>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Construction de la distribution théorique</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Rappel : probabilité conjointe de deux événements <b>indépendants</b> :<br> $P(A \cap B) = P(A) \times P(B)$</p>
+							<p>À partir des <b>fréquences marginales</b> précédentes, on obtient pour chaque couple de modalités, la probabilité <b>théorique</b>, celle qui suppose $H_0$, par un simple produit.</p>
+							<p style="font-size: 20px;"> Exemple : Si $H_0$ est vraie, la probabilité d’observer un triangle noir est donnée par:</p>
+							<p style="font-size: 20px;"> $P(triangle∩noir)=P(triangle)×P(noir)$</p>
+							<p style="font-size: 20px;"> $P(triangle∩noir)=0.447619×0.2952381=0.1321542$</p>
+							<p style="font-size: 20px;">La probabilité théorique d’observer un triangle noir est de 13,2%</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Construction de la distribution théorique</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On crée un second tableau, dont chaque case vaut le produit des fréquences marginales calculées sur le tableau des observations.</p>
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>blanc</i></th>
+									<th><i>noir</i></th>
+									<th>total</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>carré</i></th>
+									<td>0.1788662</td>
+									<td>0.1449433</td>
+									<td>0.3238095</td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>rond</i></th>
+									<td>0.2104309</td>
+									<td>0.1705215</td>
+									<td>0.3809524</td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>triangle</i></th>
+									<td>0.1630839</td>
+									<td>0.1321542</td>
+									<td>0.2952381</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>total</th>
+									<td>0.552381</td>
+									<td>0.447619</td>
+									<td>1</td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p>C'est le tableau des <b>fréquences théoriques</b>.</p>
+							
+						</div>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Tableau des effectifs théoriques</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On l’obtient en multipliant les fréquences théoriques par la taille de la population observée (ici 105)</p>
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>blanc</i></th>
+									<th><i>noir</i></th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>carré</i></th>
+									<td>18.78095</td>
+									<td>15.21905</td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>rond</i></th>
+									<td>22.09524</td>
+									<td>17.90476</td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>triangle</i></th>
+									<td>17.12381</td>
+									<td>13.87619</td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p>N.B. Il n’est pas nécessaire d’arrondir les effectifs théoriques.</p>
+						</div>
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Calcul du Chi 2</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>C’est la somme, pour chaque case du tableau de contingence (i.e. pour chaque couple de modalités), des écarts carrés entre effectif observé et effectif théorique, divisés par l’effectif théorique.</p>
+							<p>Soient $T^{obs}$ le tableau des effectifs observés, $T^{theo}$ le tableau des effectifs théoriques,</p>
+							<p style="align-self: center;">$\chi^2 = \sum_{i, j}\frac{(T^{obs}_{i,j}−T^{theo}_{i,j})^2}{T^{theo}_{i,j}}$</p>
+							<p>Ici : $\chi^2=26.30329$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Interprétation du Chi 2</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Il faut comparer la valeur du $\chi^2$ calculée avec la valeur <b>critique</b> qu’on trouve dans une <b>table de loi du chi 2.</b></p>
+							<p>C’est un tableau à double entrée : une <b>valeur de quantile</b>, et un <b>degré de liberté.</b></p>
+							<p>On peut considérer que la valeur de quantile est le pourcentage d’erreur qu’on s’autorise de faire. On prend souvent <b>5%</b> : la colonne 1-0.05 = 0.95</p>
+							<p>Le degré de liberté est obtenu en calculant la valeur :<br> $(nb_{lignes}−1)∗(nb_{colonnes}−1)$.</p>
+							<p>Dans notre exemple , le degré de liberté est 2*1 = 2</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Table de loi du Chi 2</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Si $X$ suit une loi du $\chi^2$ de degré d, la valeur critique v est telle que : <br>$P(X < v)=1-\alpha$</p>
+							<table border="1" class="dataframe" style="font-size: 17px;">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th>$d \downarrow \alpha \rightarrow$</th>
+									<th>0.95</th>
+									<th>0.9</th>
+									<th>0.8</th>
+									<th>0.7</th>
+									<th>0.5</th>
+									<th>0.3</th>
+									<th>0.2</th>
+									<th>0.1</th>
+									<th>0.05</th>
+									<th>0.01</th>
+									<th>0.001</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th>1</th>
+									<td>0.003932</td>
+									<td>0.015791</td>
+									<td>0.064185</td>
+									<td>0.148472</td>
+									<td>0.454936</td>
+									<td>1.074194</td>
+									<td>1.642374</td>
+									<td>2.705543</td>
+									<td>3.841459</td>
+									<td>6.634897</td>
+									<td>10.827566</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>2</th>
+									<td>0.102587</td>
+									<td>0.210721</td>
+									<td>0.446287</td>
+									<td>0.713350</td>
+									<td>1.386294</td>
+									<td>2.407946</td>
+									<td>3.218876</td>
+									<td>4.605170</td>
+									<td>5.991465</td>
+									<td>9.210340</td>
+									<td>13.815511</td>
+								  </tr>
+								  <tr class="tr2">
+									<th>3</th>
+									<td>0.351846</td>
+									<td>0.584374</td>
+									<td>1.005174</td>
+									<td>1.423652</td>
+									<td>2.365974</td>
+									<td>3.664871</td>
+									<td>4.641628</td>
+									<td>6.251389</td>
+									<td>7.814728</td>
+									<td>11.344867</td>
+									<td>16.266236</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>4</th>
+									<td>0.710723</td>
+									<td>1.063623</td>
+									<td>1.648777</td>
+									<td>2.194698</td>
+									<td>3.356694</td>
+									<td>4.878433</td>
+									<td>5.988617</td>
+									<td>7.779440</td>
+									<td>9.487729</td>
+									<td>13.276704</td>
+									<td>18.466827</td>
+								  </tr>
+								  <tr class="tr2">
+									<th>5</th>
+									<td>1.145476</td>
+									<td>1.610308</td>
+									<td>2.342534</td>
+									<td>2.999908</td>
+									<td>4.351460</td>
+									<td>6.064430</td>
+									<td>7.289276</td>
+									<td>9.236357</td>
+									<td>11.070498</td>
+									<td>15.086272</td>
+									<td>20.515006</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>6</th>
+									<td>1.635383</td>
+									<td>2.204131</td>
+									<td>3.070088</td>
+									<td>3.827552</td>
+									<td>5.348121</td>
+									<td>7.231135</td>
+									<td>8.558060</td>
+									<td>10.644641</td>
+									<td>12.591587</td>
+									<td>16.811894</td>
+									<td>22.457744</td>
+								  </tr>
+								  <tr class="tr2">
+									<th>7</th>
+									<td>2.167350</td>
+									<td>2.833107</td>
+									<td>3.822322</td>
+									<td>4.671330</td>
+									<td>6.345811</td>
+									<td>8.383431</td>
+									<td>9.803250</td>
+									<td>12.017037</td>
+									<td>14.067140</td>
+									<td>18.475307</td>
+									<td>24.321886</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>8</th>
+									<td>2.732637</td>
+									<td>3.489539</td>
+									<td>4.593574</td>
+									<td>5.527422</td>
+									<td>7.344121</td>
+									<td>9.524458</td>
+									<td>11.030091</td>
+									<td>13.361566</td>
+									<td>15.507313</td>
+									<td>20.090235</td>
+									<td>26.124482</td>
+								  </tr>
+								  <tr class="tr2">
+									<th>9</th>
+									<td>3.325113</td>
+									<td>4.168159</td>
+									<td>5.380053</td>
+									<td>6.393306</td>
+									<td>8.342833</td>
+									<td>10.656372</td>
+									<td>12.242145</td>
+									<td>14.683657</td>
+									<td>16.918978</td>
+									<td>21.665994</td>
+									<td>27.877165</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>10</th>
+									<td>3.940299</td>
+									<td>4.865182</td>
+									<td>6.179079</td>
+									<td>7.267218</td>
+									<td>9.341818</td>
+									<td>11.780723</td>
+									<td>13.441958</td>
+									<td>15.987179</td>
+									<td>18.307038</td>
+									<td>23.209251</td>
+									<td>29.588298</td>
+								  </tr>
+								  <tr class="tr2">
+									<th>11</th>
+									<td>4.574813</td>
+									<td>5.577785</td>
+									<td>6.988674</td>
+									<td>8.147868</td>
+									<td>10.340998</td>
+									<td>12.898668</td>
+									<td>14.631421</td>
+									<td>17.275009</td>
+									<td>19.675138</td>
+									<td>24.724970</td>
+									<td>31.264134</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>12</th>
+									<td>5.226029</td>
+									<td>6.303796</td>
+									<td>7.807328</td>
+									<td>9.034277</td>
+									<td>11.340322</td>
+									<td>14.011100</td>
+									<td>15.811986</td>
+									<td>18.549348</td>
+									<td>21.026070</td>
+									<td>26.216967</td>
+									<td>32.909490</td>
+								  </tr>
+								  <tr class="tr2">
+									<th>13</th>
+									<td>5.891864</td>
+									<td>7.041505</td>
+									<td>8.633861</td>
+									<td>9.925682</td>
+									<td>12.339756</td>
+									<td>15.118722</td>
+									<td>16.984797</td>
+									<td>19.811929</td>
+									<td>22.362032</td>
+									<td>27.688250</td>
+									<td>34.528179</td>
+								  </tr>
+								  <tr class="tr1">
+									<th>14</th>
+									<td>6.570631</td>
+									<td>7.789534</td>
+									<td>9.467328</td>
+									<td>10.821478</td>
+									<td>13.339274</td>
+									<td>16.222099</td>
+									<td>18.150771</td>
+									<td>21.064144</td>
+									<td>23.684791</td>
+									<td>29.141238</td>
+									<td>36.123274</td>
+								  </tr>
+								</tbody>
+							  </table>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Interprétation du Chi 2</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>D’après le tableau de la loi du $\chi^2$, la valeur critique pour un test avec 5% de chances de se tromper est un degré de liberté de 2 vaut 5.991.</b></p>
+							<p>Si la valeur calculée du $\chi^2$ est <b>supérieure</b> à la valeur critique, on <b>rejette</b> $H_0$</b></p>
+							<p>Pour notre exemple: On rejette $H_0$, i.e. les deux variables sont <b>dépendantes</b>, car $\chi^2≈26>5.991$</p>
+							<p>Interprétation: «la forme est liée à la couleur dans cette population, nous pouvons l’affirmer avec un risque d’erreur d’au moins 5%»</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Les étapes du Chi 2</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li>Tableau de contingence</li>
+								<li>Sommes marginales<ul>
+									<li>Calcul des fréquences observées</li>
+									<li>Calcul des fréquences théoriques</li>
+								</ul></li>
+								<li>Tableau d’effectifs théoriques</li>
+								<li>Calcul de la valeur du test</li>
+								<li>Comparaison avec les valeurs de la table de Chi 2</li>
+							</ul>
+						</div>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Lien entre une variable qualitative et une variable quantitative.</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Représentation graphique</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Pas de moyen <b>simple</b> de calculer le lien entre une variable qualitative et une variable quantitative.</p>
+							<ul style="align-self: center;">
+								<li>corrélation de rang</li>
+								<li>régression logistique</li>
+								<li>analyse de la variance (ANOVA)</li>
+							</ul>
+							<p>⟹ Alors on fait un graphique !</p>
+							<p>La variable qualitative sert de <b>catégorie</b>, on fait varier la représentation graphique de la variable quantitative suivant cette catégorie.</p>
+							<p>2 possibilités :</p>
+							<ul style="align-self: center;">
+								<li>boîtes à moustaches</li>
+								<li>superposition d’histogrammes / densités</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Boxplot par catégories</h4>
+						<div style="width:100%; height:95%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Principe : on trace un boxplot par modalité de la variable qualitative</p>
+							<p>E.g. : consommation de véhicules par type (dataset mpg de R)</p>
+							<img src="img/images_bivariees/unnamed-chunk-2-1.png" width="100%">
+						</div>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				center: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<!-- Add JavaScript for tab functionality -->
+		<script>
+			function showTab(tabId) {
+			// Hide all tab content
+			document.querySelectorAll('section').forEach(section => {
+				if(section.querySelectorAll("."+tabId).length>0){
+					section.querySelectorAll('.tab-content').forEach(content => {
+						content.classList.remove('active');
+						content.classList.add('inactive')
+					});
+					section.querySelectorAll('.active').forEach(content => {
+						content.classList.remove('active');
+						content.classList.add('inactive')
+					});
+				
+					// Deactivate all tab buttons
+					section.querySelectorAll('.tab-button').forEach(button => {
+						button.classList.remove('active');
+					});
+				
+					// Show the selected tab content
+					section.querySelectorAll("."+tabId).forEach(content => {
+						content.classList.remove('inactive');
+						content.classList.add('active');
+					});
+				}
+			})
+			
+			
+
+			}
+		</script>
+	</body>
+</html>
