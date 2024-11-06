@@ -126,6 +126,34 @@
 		.hljs-comment{
 			color: wheat;
 		}
+		.fragment.border {
+			border:none;
+		}
+		.fragment.border.visible {
+			border: 2px solid #7a9e08;
+		}
+		.arrow-container {
+			position: absolute;
+			height: 80%; /* Match the height of your main container */
+			width: 100%;
+		}
+
+		#arrow1 {
+			animation: draw 2s forwards; /* Optional animation */
+		}
+
+		#arrow2 {
+			animation: draw 2s forwards; /* Optional animation */
+		}
+
+		@keyframes draw {
+			from {
+				stroke-dasharray: 0, 1000;
+			}
+			to {
+				stroke-dasharray: 1000, 0;
+			}
+		}
 	</style>
 	<body>
 		<div class="reveal">
@@ -666,7 +694,7 @@
 							<p>Si l'ensemble des US est regroupé en Q classes :</p>
 							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
 							<img src="img/images_multivariees/inertie.svg" style="align-self: center; width: 80%;">
-							<p>Une classe est homogène si son inertie est faible</p>
+							<p>Une classe est homogène si son inertie est faible.</p>
 						</div>
 					</section>
 					<section>
@@ -674,1158 +702,457 @@
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Si l'ensemble des US est regroupé en Q classes :</p>
 							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
-							<p style="align-self: center;">$\sum_{i=1}^N d(X_i, \bar{X})^2 = \sum_{q=1}^Q \sum_{X_i \in q} d(X_i, \bar{X_q})^2 + \sum_{q=1}^Q n_q d(\bar{X_q}, \bar{X})^2$</p>
+							<p style="align-self: center;">$\sum\limits_{i=1}^N d(X_i, \bar{X})^2 = \sum\limits_{q=1}^Q \sum_{X_i \in q} d(X_i, \bar{X_q})^2 + \sum\limits_{q=1}^Q n_q d(\bar{X_q}, \bar{X})^2$</p>
 							<p>avec $d(a, b)$ la distance entre $a$ et $b$, $\bar{X}$ la moyenne de $X$, $\bar{X_q}$ la moyenne des individus de la classe q.</p>
-							<p>Une classe est homogène si son inertie est faible</p>
-						</div>
-					</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-					<section>
-						<h4 class="top_bar">Classification non Supervisée</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p><span style="color:red;">Toujours en premier :</span> regarder l'aspect des données avec des graphiques (exploration visuelle)</p>
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">from sklearn.datasets import load_iris
-iris = load_iris()
-df = pd.DataFrame(iris.data, columns=iris.feature_names)
-pd.plotting.scatter_matrix(df, figsize=[20, 10], s=150)</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">data(iris)
-plot(iris)</code></pre>
-							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/plotIris-1_python.png">
-							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/plotIris-1.png">
-						
-							<p>Existe-t-il un lien entre les variables ?</p>
+							<p>Une classe est homogène si son inertie est faible.</p>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">différentes formes de relations entre variables</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<img style="align-self: center; width:80%;" src="img/images_bivariees/formes-1.png">
-							<p>En pratique, les formes sont beaucoup moins régulières.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Les étapes</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<ol>
-								<li>Tracer le nuage de points</li>
-								<li>Existe-t-il une relation ?</li>
-								<li>Est-elle de forme linéaire ? De quel sens ?</li>
-								<li>Si la liaison est de forme linéaire → faire une <b>régression</b></li>
-								<li>Si la liaison est non linéaire, est-elle <b>monotone</b> ? De forme connue ?→ Proposer un <b>modèle</b></li>
-							</ol>
-							<p>5bis. Réaliser un modèle <b>LOESS</b> avec prudence (uniquement descriptif , aucun pouvoir de généralisation)</p>
-							<p>cf le blog de Lise Vaudor [<a href="http://perso.ens-lyon.fr/lise.vaudor/regression-loess/" class="uri">http://perso.ens-lyon.fr/lise.vaudor/regression-loess/</a>]</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Régression linéaire</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">						
-							<p>Si la forme du nuage de points s’y prête, on peut faire une <b>régression linéaire</b> (aussi appelé <b>ajustement</b> linéaire).</p>
-							<p>On cherche la droite qui «passe au mieux» (=<em>ajustée</em>) dans le nuage de points de deux variables quantitatives $V_1$ et $V_2$, qui permet de visualiser :</p>
-								<li>l’<b>intensité</b> du lien / de la dépendance : points proche de la droite ou non ?</li>
-								<li>la <b>forme</b> de la dépendance : linéaire ou non ?</li>
-								<li>le <b>sens</b> de la dépendance : nulle, positive ou négative ?</li>
-							</ul>
-
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Régression linéaire</h4>
+						<h4 class="top_bar">Qualité de la partition</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<img style="align-self: center; width:80%;" src="img/images_bivariees/regline-1.png">
-							<p>«Droite qui passe au mieux» = qui minimise <b>la somme des écarts quadratiques</b> entre la droite et les points du nuage.</p>
+							<p>Une partition est dite de bonne qualité si :</p>
+							<ul>
+								<li>les caractéristiques des US de la même classe sont proches $\rightarrow$ variabilité intra-classe faible</li>
+								<li>les caractéristiques des US de deux classes différentes sont éloignées $\rightarrow$ variabilité inter classe forte</li>
+							</ul>
+							<p>La qualité d'une partition est mesurée par :</p>
+							<b>Q = Inertie inter classe / inertie totale</b>
+							<ul>
+								<li>Q=1, les individus de chaque classe sont identiques ou nb de classes=nb d’individus</li>
+								<li>Q=0, une seule partition ou la moyenne de chaque cluster est égale à celle de l'ensemble des données $\rightarrow$ les clusters ne séparent pas du tout les données</li>
+								<li>Q proche de 1 : meilleure partition</li>
+							</ul>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Régression linéaire : le modèle</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>L’<b>équation</b> de la droite est un <b>modèle linéaire</b> de la relation statistique qui lie $V_1$ et $V_2$;</p>
-							<p>Ici le modèle est : $\hat{V}_2 = a V_1 + b$</p>
-							<p>$a$ et $b$ sont les <b>paramètres</b> ou <b>coefficients</b> du modèle.<br></p>
-							<p>Si la régression linéaire est avérée, alors pour un individu $i$ dont on connait $V_{1}i$, on infère la valeur $V_{2}i$ par le modèle : $\hat{V}_2i=a V_1i+b$</p>
-							<p>On dit aussi que $V_1$ <b>explique</b> $V_2$, ou que le modèle <b>prédit</b> $V_2$ à partir de $V_1$ (on note les valeurs prédites $\hat{V}_2$)</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">La grande question</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
-							<p style="font-size: 40px;">Comment déterminer qu’une régression linéaire est «correcte» ?</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Comment evaluer la “validité” du modèle linaire ?</h4>
+						<h4 class="top_bar">Qualité de la partition - représentation</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>En pratique, il faut réunir deux critères :</p>
-							<ul>
-								<li>des coefficients avec des <b>p-values</b> associées <b>faibles</b> (e.g. <0.05) ↔ “on a peu de chances de se tromper”</li>
-								<li>un $R²$ <b>élevé</b> ↔ “le modèle prédit bien les observations”</li>
-							</ul>
+							<p>La qualité d'une partition est mesurée par :</p>
+							<b>Q = Inertie inter classe / inertie totale</b>
+							<p>Q doit être le plus proche de 1 sans avoir un nombre de classes élevé<br>$\rightarrow$s'arrêter après un dernier saut important</p>
+							<img src="img/images_multivariees/Q.png" style="align-self: center; width: 50%;">
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Le $R²$</h4>
+						<h4 class="top_bar">Choix d'une méthode de classification</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$R^2 \in [0, 1]$ est le <b> coefficient de détermination linéaire</b>.</p>
-							<p>Donne la <b>qualité de prédiction</b> de la régression.</p>
-							<p>“Proche de 1”" ≡ “très bonne qualité”</p>
-							<p>C’est le pourcentage de “variation” de $V_2$ due à la “variation” de $V_1$</p>
+							<img src="img/images_multivariees/Methodes_clustering.png" style="align-self: center; width: 80%;">
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Le $R²$</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Défini par $R^2 = 1-\dfrac{\sum_{i=1}^n\left(y_i-\hat{y_i}\right)^2}{\sum_{i=1}^n\left(y_i-\bar y\right)^2} $</p>
-
-							<p>si on note $\hat{V}_2$ les valeurs de $V_2$ prédites par le modèle linéaire, alors :</p>
-							<p>$R^2 = cor(V_2, \hat{V}_2)^2$</p>
-							<p>(au sens de la corrélation de Pearson)</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">La p-value</h4>
-						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Elle peut s’interpréter comme «la probabilité d’avoir un résultat de regression identique avec deux variables véritablement indépendantes»</p>
-							<p><br></p>
-							<p>La p-value est associée à la notion d’<b>hypothèses nulle</b>. Ici , l’hypothèse nulle est “les deux séries sont indépendantes”.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">La p-value</h4>
-						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Plus grossièrement : la p-value est le <b>pourcentage de chances de se tromper</b> en rejetant l’hypothèse nulle,</p>
-							<p><br></p>
-							<p>c'est-à-dire<br>se tromper en considérant que les deux séries ne sont pas indépendantes et qu’il existe une relation entre les deux (ici, linéaire car nous testons un modèle linéaire).</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">L'hypothèse nulle</h4>
-						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$H_0$ : «les deux variables sont indépendantes»</p>
+						<h4 class="top_bar">Principales familles de méthodes de regroupement</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<ul>
-								<li><b>conserver</b> $H_0$ : considérer les deux variables comme <b>indépendantes</b></li>
-								<li><b>rejeter</b> $H_0$ : considérer les deux variables comme <b>dépendantes</b> = ayant une relation statistique, un lien.</li>
+							<li><b>Méthodes hiérarchiques</b><br>	Consiste à créer une décomposition hiérarchique par agglomération ou division de groupes similaires ou dissimilaires</li>
+							<li><b>Méthodes par partitionnement</b><br>	Construire k partitions et les améliorer jusqu'à obtenir une similarité satisfaisante</li>
+							<div style="width: 100%; height: 1px; background-color: #97bf11;" class="fragment"  data-fragment-index="1"></div>
+							<li><b>Méthodes basées sur la densité<span class="fragment" style="color:red; text-align: right; font-size: 16px; margin-left: 10%;" data-fragment-index="1">Analyse de dynamiques spatiotemporelles</span></b><br> Consiste à grouper les US tant que la densité de voisinage excède une certaine limite</li>
+							<li><b>Méthodes basées sur la grille</b><br> Consiste à diviser l'espaces en cellules formant une grille multi-niveaux et grouper les cellules voisines en termes de distance</li>
+							<div style="width: 100%; height: 1px; background-color: #97bf11;" class="fragment"  data-fragment-index="1"></div>
+							<li><b>Autres : basées sur le modèle ou l'apprentissage</b><br>SOM, COBWEB, réseaux de neurones</li>
 							</ul>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Format des resultats donnés par <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import linregress
-linregress(df['petal length (cm)'], df['petal width (cm)'])</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">regression <- lm(iris$Petal.Length~iris$Petal.Width)
-summary(regression)</code></pre>
-
-							<p></p>
-							<pre class="numpy tab-content active"><code class="answer">LinregressResult(
-	slope=0.41575541635241114, intercept=-0.36307552131902776,
-	rvalue=0.9628654314027963, pvalue=4.6750039073255014e-86,
-	stderr=0.009582435790766206, intercept_stderr=0.03976198987309611
-	)</code></pre>
-							<pre class="r tab-content inactive"><code class="answer">## 
-## Call:
-## lm(formula = iris$Petal.Length ~ iris$Petal.Width)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.33542 -0.30347 -0.02955  0.25776  1.39453 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)       1.08356    0.07297   14.85   <2e-16 ***
-## iris$Petal.Width  2.22994    0.05140   43.39   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.4782 on 148 degrees of freedom
-## Multiple R-squared:  0.9271, Adjusted R-squared:  0.9266 
-## F-statistic:  1882 on 1 and 148 DF,  p-value: < 2.2e-16</code></pre>
-						
-						<p class="numpy text active">Coefficients du modèle ajusté, R (et non R²), la p-value, écart-type des erreurs sur les coefficients.</p>
-						<p class="r text inactive">Distribution des résidus, coefficients du modèle ajusté et leur p-value associée (ici sur un test de Student, notée Pr(>|t|) et R2)</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Bonus: Critères de significativité du lien linéaire</h4>
-						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Les <b>résidus</b> $\epsilon_i$ (écart entre valeur observée et valeur prédite $(V_2−\hat{V}_2)$ par le modèle pour l’individu i) doivent:</p>
-							<ul>
-								<li>être indépendants : covariance nulle ou très faible<br>$cov(x_i,\epsilon_i)=0$</li>
-								<li>être distribués selon un loi normale de moyenne nulle <br>$\epsilon  \sim \mathcal{N}(0,\sigma_{\epsilon})$</li>
-								<li>être distribués de façon homogène (homoscédasticité), i.e. de variance constante $var(\epsilon_i)=\sigma^2_\epsilon$ , indépendante de l’observation.</li>
-							</ul>
-						</div>	
-					</section>
-					<section>
-						<h4 class="top_bar">Bonus : évaluation de l'indépendance des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							
-						
-							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
-import matplotlib.pyplot as plt
-reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
-residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
-sm.graphics.tsa.plot_acf(residuals, lags=20)
-plt.show()</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
-acf(residuals(modele1))</code></pre>
-
-							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
-							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
-						
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Bonus : Évaluer l’homogénéité des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							
-						
-							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
-import matplotlib.pyplot as plt
-reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
-residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
-sm.graphics.tsa.plot_acf(residuals, lags=20)
-plt.show()</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
-acf(residuals(modele1))</code></pre>
-
-							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
-							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
-						
-						</div>
-					</section>
-				</section>
-
-
-				<section>
-					<section>
-						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
-							<h4>Corrélation de deux variables quantitatives</h4>
-							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Corrélation (linéaire)</h4>
-						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Dans le cas d’une liaison statistique linéaire entre deux variables, on peut calculer l’«intensité» de ce lien sans nécessairement trouver les coefficients modèle linéaire : c’est la <b>corrélation</b></p>
-							<p>$cor(x, y) \in [-1; 1]$ entre deux variables $x$ et $y$</p>
-							<ul>
-								<li>+1 : les deux variables croissent ou décroissent conjointement</li>
-								<li>-1 : quand l’une des variables croît, l’autre décroît.</li>
-								<li>0 : pas de relation <b>linéaire</b> entre les deux variables</li>
-							</ul>
-						</div>	
-					</section>
-					<section>
-						<h4 class="top_bar">Calcul direct du coefficient de corrélation (de Pearson)</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Soient deux variables $V_1$ et $V_2$</p>
-							<p>Le coefficient de corrélation $r$ de $V_1$ et $V_2$ est la normalisation de la covariance par le produit des écart-types des variables</p>
-							<p>$r = \frac{cov(V_1, V_2)}{\sigma_{V_1}\sigma_{V_2}}$</p>
-							<p>La covariance est la <b>moyenne du produit des écarts à la moyenne</b></p>
-							<p>$cov(V1,V2)=\mathbb{E}[(V1−\mathbb{E}[V1])(V2−\mathbb{E}[V2])]$</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Test de corrélation entre deux variables avec <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Version plus complète : c’est un <b>test</b>, on a plusieurs indicateurs statistiques sur ce test, notamment la <b>p-value</b> et <b>l’intervalle de confiance</b></p>
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import pearsonr
-result = pearsonr(df['petal length (cm)'], df['petal width (cm)'])
-print(result, result.confidence_interval(0.95))</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">cor.test(iris$Petal.Length, iris$Petal.Width)</code></pre>
-
-							<p></p>
-							<pre class="numpy tab-content active"><code class="answer">PearsonRResult(statistic=0.962865431402796, pvalue=4.675003907328653e-86)
-ConfidenceInterval(low=0.9490524593111143, high=0.972985317378797)</code></pre>
-							<pre class="r tab-content inactive"><code class="answer">## 
-##  Pearson's product-moment correlation
-## 
-## data:  iris$Petal.Length and iris$Petal.Width
-## t = 43.387, df = 148, p-value < 2.2e-16
-## alternative hypothesis: true correlation is not equal to 0
-## 95 percent confidence interval:
-##  0.9490525 0.9729853
-## sample estimates:
-##       cor 
-## 0.9628654</code></pre>
-							<p>Rappel : la p-value quantifie la <b>significativité</b> du test. En général, on considère le test significatif si elle est en dessous de 5%, soit 0.05.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Test de corrélation entre deux variables avec <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">df.corr(method='pearson')</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">cor(iris[,1:4])</code></pre>
-
-							  <table border="1" class="numpy dataframe active">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th></th>
-									<th>sepal length (cm)</th>
-									<th>sepal width (cm)</th>
-									<th>petal length (cm)</th>
-									<th>petal width (cm)</th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th>sepal length (cm)</th>
-									<td>1.000000</td>
-									<td>-0.117570</td>
-									<td>0.871754</td>
-									<td>0.817941</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>sepal width (cm)</th>
-									<td>-0.117570</td>
-									<td>1.000000</td>
-									<td>-0.428440</td>
-									<td>-0.366126</td>
-								  </tr>
-								  <tr class="tr2">
-									<th>petal length (cm)</th>
-									<td>0.871754</td>
-									<td>-0.428440</td>
-									<td>1.000000</td>
-									<td>0.962865</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>petal width (cm)</th>
-									<td>0.817941</td>
-									<td>-0.366126</td>
-									<td>0.962865</td>
-									<td>1.000000</td>
-								  </tr>
-								</tbody>
-							  </table>
-							<pre class="r tab-content inactive"><code class="answer">##              Sepal.Length Sepal.Width Petal.Length Petal.Width
-## Sepal.Length    1.0000000  -0.1175698    0.8717538   0.8179411
-## Sepal.Width    -0.1175698   1.0000000   -0.4284401  -0.3661259
-## Petal.Length    0.8717538  -0.4284401    1.0000000   0.9628654
-## Petal.Width     0.8179411  -0.3661259    0.9628654   1.0000000
-</code></pre>
-							<p>Présentation des corrélations entre les variables quantitatives d’un tableau, pour tous les couples de variables.</p>
-							<p>La matrice de corrélation est symétrique, et sa diagonale est constituée de 1.</p>
 						</div>
 					</section>
 					<section data-transition="slide-in fade-out">
-						<h4 class="top_bar">Sensibilité aux outliers</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-					
-					  		<!-- Python Code -->
-					  		<pre class="tab-content numpy r active"><code class="language-python">X = [3,2,3,4,1,2,3,4,5,2,3,4,3]
-Y = [1,2,2,2,3,3,3,3,3,4,4,4,5]
-plt.figure(figsize=(16, 6))
-plt.plot(X, Y, 'o')
-plt.xlim(0, 16)
-plt.ylim(0, 16)
-plt.show()</code></pre>
-							<p></p>
-							<img class="numpy r img active" style="align-self: center;" src="img/images_bivariees/sensitiveOut1-1_python.png">
-							<pre class="numpy r tab-content active"><code class="language-python">pearsonr(X, Y).statistic</code></pre>
-							<pre class="numpy r tab-content active"><code class="answer">0.00</code></pre>
-							
-						</div>
-					</section>
-					<section  data-transition="slide-out fade-in">
-						<h4 class="top_bar">Sensibilité aux outliers</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-					
-					  		<!-- Python Code -->
-					  		<pre class="tab-content numpy r active"><code class="language-python">X = [3,2,3,4,1,2,3,4,5,2,3,4,3, 15]
-Y = [1,2,2,2,3,3,3,3,3,4,4,4,5, 15]
-plt.figure(figsize=(16, 6))
-plt.plot(X, Y, 'o')
-plt.xlim(0, 16)
-plt.ylim(0, 16)
-plt.show()</code></pre>
-							<p></p>
-							<img class="numpy r img active" style="align-self: center;" src="img/images_bivariees/sensitiveOut2-1_python.png">
-							<pre class="numpy r tab-content active"><code class="language-python">pearsonr(X, Y).statistic</code></pre>
-							<pre class="numpy r tab-content active"><code class="answer">0.9052224371373307</code></pre>
-							
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Sensibilité aux outliers</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p><b>Outlier</b> : observation “anormale”, par sa valeur extrême, comparée aux autres</p>
-							<p>La corrélation et la régression linéaire sont très sensibles aux outliers.</p>
-							<p>→ s’interroger sur la nécessité de nettoyer/filtrer les données et des conséquences</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Que faire lorsque la relation n’est pas linéaire ?</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Quand les deux variables semblent corrélées, de façon <b>monotone</b> mais <b>non linéaire</b>,</p>
-							<p>→ <b>Coefficient de Spearman</b>, basé sur le rang des individus.</p>
-							<p style="align-self: center;">$\rho = 1 - \frac{6\Sigma_{i=1}^n (rg(X_i) - rg(Y_i) )^2 }{n^3 - n}$</p>
-							<p>avec :</p>
-							<p>$rg(X_i)$ le rang de $X_i$ (le classement de sa valeur) dans la distribution de $X$</p>
-							<p>$n$ le nombre d'individus</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Obtenir le coefficient de Spearman avec <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
+						<h4 class="top_bar">Clustering ascendant hierarchique (CAH)</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import spearmanr
-spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">cor.test(iris$Sepal.Length, iris$Sepal.Width, method="spearman", exact = FALSE)</code></pre>
+							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendogramme</b>) permettant :</p>
+							<ul>
+								<li>Un regroupement progressif, ne révise pas les classes regroupées</li>
+								<li>La mise en évidence de liens hiérarchiques entre US ou groupes d'US</li>
+								<li>La détection d'un nombre de classes intuitif et naturel au sein d'une population : distance inter classe est grande</li>
+							</ul>
+							<img src="img/images_multivariees/dendogramme1.svg" style="align-self: center; width: 80%;">
+						</div>
+					</section>
+					<section data-visibility="uncounted" data-transition="fade-in fade-out">
+						<h4 class="top_bar">Clustering ascendant hierarchique (CAH)</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendogramme</b>) permettant :</p>
+							<ul>
+								<li>Un regroupement progressif, ne révise pas les classes regroupées</li>
+								<li>La mise en évidence de liens hiérarchiques entre US ou groupes d'US</li>
+								<li>La détection d'un nombre de classes intuitif et naturel au sein d'une population : distance inter classe est grande</li>
+							</ul>
+							<img src="img/images_multivariees/dendogramme2.svg" style="align-self: center; width: 80%;">
+						</div>
+					</section>
+					<section data-visibility="uncounted" data-transition="fade-in slide-out">
+						<h4 class="top_bar">Clustering ascendant hierarchique (CAH)</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendogramme</b>) permettant :</p>
+							<ul>
+								<li>Un regroupement progressif, ne révise pas les classes regroupées</li>
+								<li>La mise en évidence de liens hiérarchiques entre US ou groupes d'US</li>
+								<li>La détection d'un nombre de classes intuitif et naturel au sein d'une population : distance inter classe est grande</li>
+							</ul>
+							<img src="img/images_multivariees/dendogramme3.svg" style="align-self: center; width: 80%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">CAH - Algorithme</h4>
+						<div class="arrow-container fragment" data-fragment-index="1">
+							<svg width="100%" height="100%" style="position:absolute; top:0; left:0; z-index:-1;">
+								<line id="arrow1" stroke="black" stroke-width="2" marker-end="url(#arrowhead)" x1="450" y1="120" x2="540" y2="260"></line>
+								<line id="arrow2" y1="318.45833587646484" stroke="black" stroke-width="2" marker-end="url(#arrowhead)" x1="200" x2="350" y2="300"></line>
+								<defs>
+									<marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+										<polygon points="0 0, 10 3.5, 0 7" fill="black" />
+									</marker>
+								</defs>
+							</svg>
+						</div>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li><b>Etape 1 : initialisation</b></li>
+								<ul>
+									<li>Partition en N singletons : chaque US constitue une <b>classe</b></li>
+									<li>Calculer la matrice de leur <span class="fragment custom border" id="distances" data-fragment-index="1">distances</span> deux à deux</li>
+									<ul>
+										<li>d(i,j) représente la <b>dissimilarité</b> entre les individus i et j.</li>
+										<li>matrice symétrique avec des zéros sur la diagonale $\rightarrow$ seule une moitié est nécessaire.</li>
+									</ul>
+								</ul>
+								<li><b>Itération :</b><span id="aggregation" class="fragment custom border" data-fragment-index="1" style="margin-left:20%;"><span class="fragment" data-fragment-index="1">besoin de : distance et indice d'agrégation</span></span></li>
+								<ul>
+									<li><span class="fragment custom border" id="regrouper" data-fragment-index="1">Regrouper</span> les deux classes les plus proches au sens de la <b>"distance"</b> entre les classes.</li>
+									<li>Mettre à jour la matrice des distances en remplaçant les deux classes regroupées par la nouvelle et en calculant sa <b>"distance"</b> avec chacune des autres classes.</li>
+								</ul>
+								<li><b>Etape finale :</b> l'algorithme s'arrête avec l'obtention d’une seule classe.</li>
+							</ul>
+							
+						</div>
+						
+						
+					</section>
+					<section>
+						<h4 class="top_bar">Indice d'agrégation</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_multivariees/agregation.svg" style="align-self: center; width: 80%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice d'agrégation</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On regroupe les classes en minimisant l'indice d'agrégation.<br>Soit A et B deux classes ou 2 US d'une partition donnée :</p>
+							<ul>
+								<li>Critère du <b>saut minimal</b> ou <b>minimal linkage</b> : la plus petite distance entre deux US de classes différentes<br>$d(A,B)=min(d_{ij}), i\in A, j\in B$</li>
+								<li>Critère du <b>saut maximal</b> ou <b>maximal linkage</b> : la plus grande distance entre deux US de classes différentes<br>$d(A,B)=max(d_{ij}), i\in A, j\in B$</li>
+								<li>Critère de la <b>moyenne</b> : la moyenne de toutes les distances calculées entre chaque US d’une classe A et chaque US d’une classe B<br>$d(A,B)=\frac{1}{card(A)card(B)}$$\sum_{i\in A, j\in B}$$ d_{ij}$</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice d'agrégation - exemple</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li>Unité spatiales : A, B, C, D, E, F, G</li>
+								<li>Déterminer le dendrogramme étant donné les distances entre les unités spatiales</li>
+								<li>Indice d'agrégation : <b>critère du saut minimal</b></li>
+							</ul>
+							<img src="img/images_multivariees/tableau_distance.svg" style="align-self: center; width: 100%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice d'agrégation</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li><b>Critère de Ward - Saut de Ward :</b></li>
+								<ul>
+									<li>Basé sur la notion d’inertie :  gain minimum d’inertie intra-classe à chaque agrégation et une perte d’inertie interclasse due à cette agrégation.</li>
+									<li>Le critère de Ward consiste à choisir à chaque étape le regroupement de deux classes A et B tel que l’augmentation de l’<b>inertie intra-classe soit minimale</b>.</li>
+									<span style="align-self: center;">$d(A,B)=\frac{card(A)card(B)}{card(A)+card(B)}d(g_A, g_B)^2$</span>
+									<li>$g_A$ et $g_B$ : les centres de gravité des classes A et B.</li>
+									<li>Minimiser $d(A, B)$ :</li>
+									<ul>
+										<li>choisir les classes dont les centres de gravité sont proches : $d(g_A,g_B)^2$ petit <b>ET</b></li>
+										<li>des classes d’effectifs faibles : $\frac{card(A)card(B)}{card(A)+card(B)}$ petit;</li>
+									</ul>
+								</ul>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice d'agrégation</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li style="font-size: 23px;"><b>Critère minimal :</b></li>
+								<ul>
+									<li style="font-size: 23px;">On regroupe des classes de proche en proche $\rightarrow$ souvent : un grand groupe comportant beaucoup d’individus et des petits groupes séparés.</li>
+									<li style="font-size: 23px;">Produit des dendrogrammes peu harmonieux</li>
+								</ul>
+								<li style="font-size: 23px;"><b>Critère maximal :</b></li>
+								<ul>
+									<li style="font-size: 23px;">On regroupe des classes de proche en proche.</li>
+									<li style="font-size: 23px;">Produit des dendrogrammes harmonieux c-a-d que les classes ont des effectifs pas trop différents</li>
+									<li style="font-size: 23px;">Sensible aux outliers</li>
+								</ul>
+								<li style="font-size: 23px;"><b>Critère de Ward :</b></li>
+								<ul>
+									<li style="font-size: 23px;">Optimisation pas à pas $\rightarrow$ Ne dépend pas d’un choix initial arbitraire</li>
+									<li style="font-size: 23px;">Produit des arbres harmonieux </li>
+								</ul>
+							</ul>
+							<img src="img/images_multivariees/indices_agregations.png" style="align-self: center; width: 85%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">CAH avec contraintes de proximité spatiale</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>CAH : forte dispersion géographique des classes obtenues.</p>
+							<p><b>CAH avec contraintes de proximité spatiale :</b> introduction de l'information spatiale dans la classification</p>
+							<ul>
+								<li>Matrice de voisinage entre les US : Vij = 1 si i et j sont voisins, 0 sinon.</li>
+								<li>Matrice de distances géographiques entre US.</li>
+							</ul>
+							<p>L'algorithme <b>HClustGeo</b> permet de prendre en compte l'information géographique :</p>
+							<ul>
+								<li>Introduction d’un coefficient <b>α</b> au sein de la CAH de Ward [ClustGeo, Labenne, 2015]</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">CAH avec contraintes de proximité spatiale</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li><b>Deux matrices de distances</b></li>
+								<ul>
+									<li  style="font-size: 23px;">$D_{1 [N\times N]}$ = matrice de distances euclidiennes entre les US, calculée à partir de la matrice de données décrite par les M variables quantitatives</li>
+									<li  style="font-size: 23px;">$D_{2 [N\times N]}$ = matrice de distances géographiques entre les US</li>
+								</ul>
+								<li><b>Deux mesures de Ward calculées pour $D_1$ et $D_2$</b></li>
+								<ul>
+									<li style="font-size: 23px;">$d_1(A, B) = \frac{card(A)card(B)}{card(A)+card(B)}d_1(g^1_A, g^1_B)^2$</li>
+									<li style="font-size: 23px;">$d_2(A, B) = \frac{card(A)card(B)}{card(A)+card(B)}d_2(g^2_A, g^2_B)^2$</li>
+								</ul>
+								<li><b>Mesure d'agrégation totale</b></li>
+							</ul>
+							<p style="align-self: center;">$d(A, B) = \alpha d_1(A, B) + (1 - \alpha) d_2(A, B)$</p>
+							<ul>
+								<ul>
+									<li style="font-size: 23px;">$\alpha = 0$, une CAH de Ward est calculée uniquement sur la matrice de distances $D_2$</li>
+									<li style="font-size: 23px;">$\alpha = 1$, une CAH de Ward est calculée uniquement sur la matrice de distances $D_1$</li>
+								</ul>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">CAH avec contraintes de proximité spatiale</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Le choix du paramètre $\alpha$ est très important :</p>
+							<ul>
+								<li>Caractériser chaque partition par les indices de qualités $Q_1$ et $Q_2$</li>
+								<li>Choisir comme référence la valeur de Q1 calculée avec α = 1 (CAH de Ward sur D1).</li>
+								<li>Choisir le plus petit $\alpha$ possible tel que la valeur de $Q_1$ soit la moins dégradée possible.</li>
+							</ul>
+							<img src="img/images_multivariees/hclustgeo.png" style="align-self: center; width: 95%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Algorithmes de partitionnement</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Classification par partition : </b>construit une partition en <b>K</b> classes à partir de l'ensemble des US</p>
+							<p>Principe :</p>
+							<ul>
+								<li>Nombre K de classes à choisir <i>a priori</i> (on peut utiliser une CAH pour choisir k)</li>
+								<li>Génération d'une partition initiale, puis révision : améliorer en attribuant les US d'une classe à l'autre.</li>
+								<li>Basée sur les maximums locaux en optimisant une fonction objectif</li>
+								<ul>
+									<li>Les US doivent être :</li>
+									<ul>
+										<li>"similaires" au sein d'une même classe.</li>
+										<li>"dissimilaires" entre deux classes différentes.</li>
+									</ul>
+								</ul>
+								
+							</ul>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">K-moyennes - Algorithme des centres mobiles</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_multivariees/K-moyenne.svg" style="align-self: center; width: 80%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Algorithmes de partitionnement</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>Avantages</p>
+							<ul>
+								<li>Simple à mettre en place</li>
+								<li>Compréhensible</li>
+								<li>Applicable à des données de grande taille</li>
+							</ul>
+							<p>Inconvéniants</p>
+							<ul>
+								<li>Le nomnbre de classes doit être choisi <i>a priori</i></li>
+								<li>Instable : dépendance au choix des centres initiaux</li>
+								<li>Mauvaise prise en compte des "outliers" : points extrêmes en dehors des groupes; peut fausser les moyennes et donc les centres.</li>
+								<li>Convergence plus ou moins rapide</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Algorithmes par densité : DBSCAN</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Avantages</b></p>
+							<ul>
+								<li>Algorithme simple, pas besoin de fournir le nombre de clusters.</li>
+								<li>Est capable de détecter et exclure les données abbérantes.</li>
+							</ul>
+							<p><b>Inconvéniants</b></p>
+							<ul>
+								<li>Les clusters sont supposés avoir la même densité.</li>
+								<li>Certains US ne sont pas clusterisés.</li>
+							</ul>
+							<p><b>Deux paramètres :</b></p>
+							<ul>
+								<li>$\epsilon$ la distance de recherche des voisins</li>
+								<li>Min_pts : le nombre minimal de voisins dans le rayon $\epsilon$ pour que le point soit attribué au cluster</li>
 
-							<p></p>
-							<pre class="numpy tab-content active"><code class="answer">SignificanceResult(statistic=-0.166777658283235, pvalue=0.04136799424884587)</code></pre>
-							<pre class="r tab-content inactive"><code class="answer">## 
-##  Spearman's rank correlation rho
-## 
-## data:  iris$Sepal.Length and iris$Sepal.Width
-## S = 656283, p-value = 0.04137
-## alternative hypothesis: true rho is not equal to 0
-## sample estimates:
-##        rho 
-## -0.1667777</code></pre>
-							<p class="r text inactive">l’argument exact doit être précisé en cas de valeurs ex aequo dans les données.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Utilisation conjointe des coefficients de Pearson et Spearman</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$r$ (Pearson) et $\rho$ (Spearman) sont deux moyens d'estimer la corrélation, lequel choisir ?</p>
-							<p>si $r=\rho$ : on garde r (plus simple à interpréter)</p>
-							<p>si $|r|<|\rho|$ : la relation est non-linéaire : prendre $\rho$</p>
-							<p>si $|r|>|\rho|$ : il y a un biais, prendre $\rho$ (plus robuste)</p>
-							<p>… et toujours <b>tracer le nuage de points</b> pour examiner la nature de la relation.</p>
-						</div>
-					</section>
-				</section>
-				<section>
-					<section>
-						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
-							<h4>“trucs” pour linéariser des relations non-linéaires</h4>
-							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Relation log-linéaire</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<img src="img/images_bivariees/loglin-1.png" style="align-self: center; width: 80%;">
-							<p>Relation de $y = ax^b$</p>
-							<p>Se linéarise par $ln(y) = b\times ln(x)+ln(a)$</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Relation géométrique (exponentielle)</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<img src="img/images_bivariees/expolin-1.png" style="align-self: center; width: 80%;">
-							<p>Relation de $y = e^{ax+b}$</p>
-							<p>Se linéarise par $ln(y) = ax+ln(b)$</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Relation logarithmique</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<img src="img/images_bivariees/logar-1.png" style="align-self: center; width: 80%;">
-							<p>Relation de $y = a \times ln(x)+b$</p>
-							<p>→ changement de variable</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Relation logistique</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<img src="img/images_bivariees/logistic-1.png" style="align-self: center; width: 80%;">
-							<p>Relation de $y = y_{min} + \frac{y_{max} - y_{min}}{1 + e^{ax+b}}$</p>
-							<p>Se linéarise par $ln(\frac{y_{max} - y}{y - y_{min}}) = ax+b$</p>
-						</div>
-					</section>
-				</section>
-
-				<section>
-					<section>
-						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
-							<h4>Liens entre deux variables qualitatives</h4>
-							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Représentation graphique</h4>
-						<div style="width:100%; height:85%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Pour deux variables qualitatives, on ne peut pas produire de nuages de points, ni de droites de régression.</p>
-							<p>→ On peut représenter la table de contingence (cf fonctions <span style="font-family: monospace;">statsmodels.graphics.mosaicplot.mosaic</span> et <span style="font-family: monospace;">pandas.crosstab</span>)</p>
-							<img src="img/images_bivariees/mosaic-1.png" style="align-self: center; width: 60%;">
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Test statistique dit du “Chi 2” ou “Chi carré”</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Le test du $\chi^2$ est un test d’indépendance, il mesure l’<b>écart</b>, la différence, entre deux distributions de <b>variables qualitatives</b>.</p>
-							<p>Il répond à la question : “Existe-t-il un lien statistique entre deux séries de valeurs qualitatives”</p>
-							<p>(La réponse est de type OUI/NON , le $\chi^2$ ne donne pas l’<b>intensité</b> du lien)</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Test statistique dit du “Chi 2” ou “Chi carré”</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<ul>
-								<li>Hypothèse nulle $H_0$ : les deux distributions sont indépendantes.</li>
-								<li>«Faire le test» permet de conserver ou de rejeter cette hypothèse</li>
 							</ul>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Principe du Chi 2</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<ul>
-								<li>On génère une <b>population théorique</b> à laquelle on va comparer la <b>population observée</b> en considérant leurs <b>distributions</b>.</li>
-								<li>Cette distribution théorique reflête ce qui se passerait si on suppose que $H_0$ est vraie.</li>
-								<li>Avec cette comparaison, on pourra conserver ou de rejeter l'hypothèse nulle.</li>
-							</ul>
-							<p>La création de cette distribution se fait à partir du <b>tableau de contingence</b>.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Tableau de contingence</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>C'est un tableau à double entrée qui croise deux <b>variables qualitatives</b>.<br>Dans une case on trouve l’<b>effectif</b> (= le nombre) des individus caractérisés par la conjonction des modalités en ligne et en colonnes.</p>
-							<p>Exemple sur des formes géométriques de couleurs :</p>
-							<table border="1" class="dataframe">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th></th>
-									<th><i>blanc</i></th>
-									<th><i>noir</i></th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th><i>carré</i></th>
-									<td>22</td>
-									<td>12</td>
-								  </tr>
-								  <tr class="tr1">
-									<th><i>rond</i></th>
-									<td>10</td>
-									<td>30</td>
-								  </tr>
-								  <tr class="tr2">
-									<th><i>triangle</i></th>
-									<td>26</td>
-									<td>5</td>
-								  </tr>
-								</tbody>
-							  </table>
-							  <p class="numpy text active">Avec pandas : fonction <span style="font-family: monospace;">crosstab</span></p>
-							  <p class="r text inactive">En R : fonction <span style="font-family: monospace;">table()</span></p>
-						</div>
-						
-					</section>
-					<section>
-						<h4 class="top_bar">Construction de la distribution théorique</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>On commence par sommer les effectifs selon les modalités (en ligne et en colonne)</p>
-							<table border="1" class="dataframe">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th></th>
-									<th><i>blanc</i></th>
-									<th><i>noir</i></th>
-									<th>total</th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th><i>carré</i></th>
-									<td>22</td>
-									<td>12</td>
-									<td>34</td>
-								  </tr>
-								  <tr class="tr1">
-									<th><i>rond</i></th>
-									<td>10</td>
-									<td>30</td>
-									<td>40</td>
-								  </tr>
-								  <tr class="tr2">
-									<th><i>triangle</i></th>
-									<td>26</td>
-									<td>5</td>
-									<td>31</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>total</th>
-									<td>58</td>
-									<td>47</td>
-									<td>105</td>
-								  </tr>
-								</tbody>
-							  </table>
-							<p>On appelle les sommes en lignes et en colonnes <b>sommes marginales</b>, elles sont mises dans les “marges” du tableau.</p>
-						</div>
-						
-					</section>
-					<section>
-						<h4 class="top_bar">Construction de la distribution théorique</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>En divisant par la taille de la population, on obtient <b>les fréquences observées</b></p>
-							<table border="1" class="dataframe">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th></th>
-									<th><i>blanc</i></th>
-									<th><i>noir</i></th>
-									<th>total</th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th><i>carré</i></th>
-									<td>0.20952381</td>
-									<td>0.11428571</td>
-									<td>0.3238095</td>
-								  </tr>
-								  <tr class="tr1">
-									<th><i>rond</i></th>
-									<td>0.09523810</td>
-									<td>0.28571429</td>
-									<td>0.3809524</td>
-								  </tr>
-								  <tr class="tr2">
-									<th><i>triangle</i></th>
-									<td>0.24761905</td>
-									<td>0.04761905</td>
-									<td>0.2952381</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>total</th>
-									<td>0.552381</td>
-									<td>0.447619</td>
-									<td>1</td>
-								  </tr>
-								</tbody>
-							  </table>
-							<p style="font-size: 20px;"> On obtient les <b>pourcentages de l’effectif</b> dans les cases du tableau.</p>
-							<p style="font-size: 20px;"> C’est également la <b>probabilité</b> qu’un individu de la <b>population observée</b> soit caractérisé par les modalités en ligne et en colonne. </p>
-						</div>
-						
-					</section>
-					<section>
-						<h4 class="top_bar">Construction de la distribution théorique</h4>
-						<div style="width:100%; height:85%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<table border="1" class="dataframe">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th></th>
-									<th><i>blanc</i></th>
-									<th><i>noir</i></th>
-									<th>total</th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th><i>carré</i></th>
-									<td>0.20952381</td>
-									<td>0.11428571</td>
-									<td><b>0.3238095</b></td>
-								  </tr>
-								  <tr class="tr1">
-									<th><i>rond</i></th>
-									<td>0.09523810</td>
-									<td>0.28571429</td>
-									<td><b>0.3809524</b></td>
-								  </tr>
-								  <tr class="tr2">
-									<th><i>triangle</i></th>
-									<td>0.24761905</td>
-									<td>0.04761905</td>
-									<td><b>0.2952381</b></td>
-								  </tr>
-								  <tr class="tr1">
-									<th>total</th>
-									<td><b>0.552381</b></td>
-									<td><b>0.447619</b></td>
-									<td><b>1</b></td>
-								  </tr>
-								</tbody>
-							  </table>
-							<p>De la même façon, les <b>fréquences marginales</b> (marges divisées par la taille de la pop.), donnent la <b>probabilité</b> d’observer un individu de la modalité correspondant à la ligne ou à la colonne considérée.</p>
-							<p style="font-size: 20px;"> Exemple : dans cette population , j’ai 29.5% de chances de tirer un triangle, et 55% de chances de tirer une pièce blanche. </p>
-						
-						</div>
-						
-					</section>
-					<section>
-						<h4 class="top_bar">Construction de la distribution théorique</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Rappel : probabilité conjointe de deux événements <b>indépendants</b> :<br> $P(A \cap B) = P(A) \times P(B)$</p>
-							<p>À partir des <b>fréquences marginales</b> précédentes, on obtient pour chaque couple de modalités, la probabilité <b>théorique</b>, celle qui suppose $H_0$, par un simple produit.</p>
-							<p style="font-size: 20px;"> Exemple : Si $H_0$ est vraie, la probabilité d’observer un triangle noir est donnée par:</p>
-							<p style="font-size: 20px;"> $P(triangle∩noir)=P(triangle)×P(noir)$</p>
-							<p style="font-size: 20px;"> $P(triangle∩noir)=0.447619×0.2952381=0.1321542$</p>
-							<p style="font-size: 20px;">La probabilité théorique d’observer un triangle noir est de 13,2%</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Construction de la distribution théorique</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>On crée un second tableau, dont chaque case vaut le produit des fréquences marginales calculées sur le tableau des observations.</p>
-							<table border="1" class="dataframe">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th></th>
-									<th><i>blanc</i></th>
-									<th><i>noir</i></th>
-									<th>total</th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th><i>carré</i></th>
-									<td>0.1788662</td>
-									<td>0.1449433</td>
-									<td>0.3238095</td>
-								  </tr>
-								  <tr class="tr1">
-									<th><i>rond</i></th>
-									<td>0.2104309</td>
-									<td>0.1705215</td>
-									<td>0.3809524</td>
-								  </tr>
-								  <tr class="tr2">
-									<th><i>triangle</i></th>
-									<td>0.1630839</td>
-									<td>0.1321542</td>
-									<td>0.2952381</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>total</th>
-									<td>0.552381</td>
-									<td>0.447619</td>
-									<td>1</td>
-								  </tr>
-								</tbody>
-							  </table>
-							<p>C'est le tableau des <b>fréquences théoriques</b>.</p>
 							
 						</div>
-						
 					</section>
 					<section>
-						<h4 class="top_bar">Tableau des effectifs théoriques</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>On l’obtient en multipliant les fréquences théoriques par la taille de la population observée (ici 105)</p>
-							<table border="1" class="dataframe">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th></th>
-									<th><i>blanc</i></th>
-									<th><i>noir</i></th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th><i>carré</i></th>
-									<td>18.78095</td>
-									<td>15.21905</td>
-								  </tr>
-								  <tr class="tr1">
-									<th><i>rond</i></th>
-									<td>22.09524</td>
-									<td>17.90476</td>
-								  </tr>
-								  <tr class="tr2">
-									<th><i>triangle</i></th>
-									<td>17.12381</td>
-									<td>13.87619</td>
-								  </tr>
-								</tbody>
-							  </table>
-							<p>N.B. Il n’est pas nécessaire d’arrondir les effectifs théoriques.</p>
-						</div>
-						
-					</section>
-					<section>
-						<h4 class="top_bar">Calcul du Chi 2</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>C’est la somme, pour chaque case du tableau de contingence (i.e. pour chaque couple de modalités), des écarts carrés entre effectif observé et effectif théorique, divisés par l’effectif théorique.</p>
-							<p>Soient $T^{obs}$ le tableau des effectifs observés, $T^{theo}$ le tableau des effectifs théoriques,</p>
-							<p style="align-self: center;">$\chi^2 = \sum_{i, j}\frac{(T^{obs}_{i,j}−T^{theo}_{i,j})^2}{T^{theo}_{i,j}}$</p>
-							<p>Ici : $\chi^2=26.30329$</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Interprétation du Chi 2</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Il faut comparer la valeur du $\chi^2$ calculée avec la valeur <b>critique</b> qu’on trouve dans une <b>table de loi du chi 2.</b></p>
-							<p>C’est un tableau à double entrée : une <b>valeur de quantile</b>, et un <b>degré de liberté.</b></p>
-							<p>On peut considérer que la valeur de quantile est le pourcentage d’erreur qu’on s’autorise de faire. On prend souvent <b>5%</b> : la colonne 1-0.05 = 0.95</p>
-							<p>Le degré de liberté est obtenu en calculant la valeur :<br> $(nb_{lignes}−1)∗(nb_{colonnes}−1)$.</p>
-							<p>Dans notre exemple , le degré de liberté est 2*1 = 2</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Table de loi du Chi 2</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Si $X$ suit une loi du $\chi^2$ de degré d, la valeur critique v est telle que : <br>$P(X < v)=1-\alpha$</p>
-							<table border="1" class="dataframe" style="font-size: 17px;">
-								<thead>
-								  <tr style="text-align: right;" class="tr1">
-									<th>$d \downarrow \alpha \rightarrow$</th>
-									<th>0.95</th>
-									<th>0.9</th>
-									<th>0.8</th>
-									<th>0.7</th>
-									<th>0.5</th>
-									<th>0.3</th>
-									<th>0.2</th>
-									<th>0.1</th>
-									<th>0.05</th>
-									<th>0.01</th>
-									<th>0.001</th>
-								  </tr>
-								</thead>
-								<tbody>
-								  <tr class="tr2">
-									<th>1</th>
-									<td>0.003932</td>
-									<td>0.015791</td>
-									<td>0.064185</td>
-									<td>0.148472</td>
-									<td>0.454936</td>
-									<td>1.074194</td>
-									<td>1.642374</td>
-									<td>2.705543</td>
-									<td>3.841459</td>
-									<td>6.634897</td>
-									<td>10.827566</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>2</th>
-									<td>0.102587</td>
-									<td>0.210721</td>
-									<td>0.446287</td>
-									<td>0.713350</td>
-									<td>1.386294</td>
-									<td>2.407946</td>
-									<td>3.218876</td>
-									<td>4.605170</td>
-									<td>5.991465</td>
-									<td>9.210340</td>
-									<td>13.815511</td>
-								  </tr>
-								  <tr class="tr2">
-									<th>3</th>
-									<td>0.351846</td>
-									<td>0.584374</td>
-									<td>1.005174</td>
-									<td>1.423652</td>
-									<td>2.365974</td>
-									<td>3.664871</td>
-									<td>4.641628</td>
-									<td>6.251389</td>
-									<td>7.814728</td>
-									<td>11.344867</td>
-									<td>16.266236</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>4</th>
-									<td>0.710723</td>
-									<td>1.063623</td>
-									<td>1.648777</td>
-									<td>2.194698</td>
-									<td>3.356694</td>
-									<td>4.878433</td>
-									<td>5.988617</td>
-									<td>7.779440</td>
-									<td>9.487729</td>
-									<td>13.276704</td>
-									<td>18.466827</td>
-								  </tr>
-								  <tr class="tr2">
-									<th>5</th>
-									<td>1.145476</td>
-									<td>1.610308</td>
-									<td>2.342534</td>
-									<td>2.999908</td>
-									<td>4.351460</td>
-									<td>6.064430</td>
-									<td>7.289276</td>
-									<td>9.236357</td>
-									<td>11.070498</td>
-									<td>15.086272</td>
-									<td>20.515006</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>6</th>
-									<td>1.635383</td>
-									<td>2.204131</td>
-									<td>3.070088</td>
-									<td>3.827552</td>
-									<td>5.348121</td>
-									<td>7.231135</td>
-									<td>8.558060</td>
-									<td>10.644641</td>
-									<td>12.591587</td>
-									<td>16.811894</td>
-									<td>22.457744</td>
-								  </tr>
-								  <tr class="tr2">
-									<th>7</th>
-									<td>2.167350</td>
-									<td>2.833107</td>
-									<td>3.822322</td>
-									<td>4.671330</td>
-									<td>6.345811</td>
-									<td>8.383431</td>
-									<td>9.803250</td>
-									<td>12.017037</td>
-									<td>14.067140</td>
-									<td>18.475307</td>
-									<td>24.321886</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>8</th>
-									<td>2.732637</td>
-									<td>3.489539</td>
-									<td>4.593574</td>
-									<td>5.527422</td>
-									<td>7.344121</td>
-									<td>9.524458</td>
-									<td>11.030091</td>
-									<td>13.361566</td>
-									<td>15.507313</td>
-									<td>20.090235</td>
-									<td>26.124482</td>
-								  </tr>
-								  <tr class="tr2">
-									<th>9</th>
-									<td>3.325113</td>
-									<td>4.168159</td>
-									<td>5.380053</td>
-									<td>6.393306</td>
-									<td>8.342833</td>
-									<td>10.656372</td>
-									<td>12.242145</td>
-									<td>14.683657</td>
-									<td>16.918978</td>
-									<td>21.665994</td>
-									<td>27.877165</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>10</th>
-									<td>3.940299</td>
-									<td>4.865182</td>
-									<td>6.179079</td>
-									<td>7.267218</td>
-									<td>9.341818</td>
-									<td>11.780723</td>
-									<td>13.441958</td>
-									<td>15.987179</td>
-									<td>18.307038</td>
-									<td>23.209251</td>
-									<td>29.588298</td>
-								  </tr>
-								  <tr class="tr2">
-									<th>11</th>
-									<td>4.574813</td>
-									<td>5.577785</td>
-									<td>6.988674</td>
-									<td>8.147868</td>
-									<td>10.340998</td>
-									<td>12.898668</td>
-									<td>14.631421</td>
-									<td>17.275009</td>
-									<td>19.675138</td>
-									<td>24.724970</td>
-									<td>31.264134</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>12</th>
-									<td>5.226029</td>
-									<td>6.303796</td>
-									<td>7.807328</td>
-									<td>9.034277</td>
-									<td>11.340322</td>
-									<td>14.011100</td>
-									<td>15.811986</td>
-									<td>18.549348</td>
-									<td>21.026070</td>
-									<td>26.216967</td>
-									<td>32.909490</td>
-								  </tr>
-								  <tr class="tr2">
-									<th>13</th>
-									<td>5.891864</td>
-									<td>7.041505</td>
-									<td>8.633861</td>
-									<td>9.925682</td>
-									<td>12.339756</td>
-									<td>15.118722</td>
-									<td>16.984797</td>
-									<td>19.811929</td>
-									<td>22.362032</td>
-									<td>27.688250</td>
-									<td>34.528179</td>
-								  </tr>
-								  <tr class="tr1">
-									<th>14</th>
-									<td>6.570631</td>
-									<td>7.789534</td>
-									<td>9.467328</td>
-									<td>10.821478</td>
-									<td>13.339274</td>
-									<td>16.222099</td>
-									<td>18.150771</td>
-									<td>21.064144</td>
-									<td>23.684791</td>
-									<td>29.141238</td>
-									<td>36.123274</td>
-								  </tr>
-								</tbody>
-							  </table>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Interprétation du Chi 2</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>D’après le tableau de la loi du $\chi^2$, la valeur critique pour un test avec 5% de chances de se tromper est un degré de liberté de 2 vaut 5.991.</b></p>
-							<p>Si la valeur calculée du $\chi^2$ est <b>supérieure</b> à la valeur critique, on <b>rejette</b> $H_0$</b></p>
-							<p>Pour notre exemple: On rejette $H_0$, i.e. les deux variables sont <b>dépendantes</b>, car $\chi^2≈26>5.991$</p>
-							<p>Interprétation: «la forme est liée à la couleur dans cette population, nous pouvons l’affirmer avec un risque d’erreur d’au moins 5%»</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Les étapes du Chi 2</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+						<h4 class="top_bar">Algorithme de DBSCAN</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p style="font-size: 18px;"><b>initialisation</b></p>
 							<ul>
-								<li>Tableau de contingence</li>
-								<li>Sommes marginales<ul>
-									<li>Calcul des fréquences observées</li>
-									<li>Calcul des fréquences théoriques</li>
-								</ul></li>
-								<li>Tableau d’effectifs théoriques</li>
-								<li>Calcul de la valeur du test</li>
-								<li>Comparaison avec les valeurs de la table de Chi 2</li>
+								<li style="font-size: 18px;">Marquer tous les points comme non-visités.</li>
 							</ul>
+							<p style="font-size: 18px;"><b>Parcours des points</b></p>
+							<ul>
+								<li style="font-size: 18px;">Pour chaque point non visité, le marquer comme visité et trouver ses voisins dans le rayon $\epsilon$.</li>
+							</ul>
+							<p style="font-size: 18px;"><b>Formation de cluster</b></p>
+							<ul>
+								<li style="font-size: 18px;">Si le nombre de voisins est inférieur à Min_pts, marquer le point comme bruit (point isolé ou "noise")</li>
+								<li style="font-size: 18px;">Sinon, commencer un nouveau cluster en assignant ce point et en ajoutant ses voisins directs à un "queue" à explorer.</li>
+
+							</ul>
+							<p style="font-size: 18px;"><b>Expansion du cluster</b></p>
+							<ul>
+								<li style="font-size: 18px;">Pour chaque point de la "queue", s'il n'a pas été visité, le marquer comme visité et rechercher ses voisins.</li>
+								<li style="font-size: 18px;">Si ce point a au moins Min_pts voisins, les ajouter à la "queue" pour continuer l'expansion.</li>
+								<li style="font-size: 18px;">Assigner tous ces points non encore attribués au cluster en cours.</li>
+							</ul>
+							<p style="font-size: 18px;"><b>Réitération</b></p>
+							<ul>
+								<li style="font-size: 18px;">Recommencer le processus jusqu'à ce que tous les points soient visités.</li>
+							</ul>
+							<p style="font-size: 18px;"><b>Résultat final</b></p>
+							<ul>
+								<li style="font-size: 18px;">Les points non assignés à des clusters sont considérés comme du bruit.</li>
+								<li style="font-size: 18px;">Les clusters finaux sont formés par les points densément connectés.</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Algorithme de DBSCAN</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/images_multivariees/dbscan_visualization.gif" style="align-self: center; width: 80%;">
 						</div>
 					</section>
 				</section>
 
+
+
+
+
 				<section>
 					<section>
 						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
-							<h4>Lien entre une variable qualitative et une variable quantitative.</h4>
+							<h4>Classification Supervisée</h4>
 							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Représentation graphique</h4>
-						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Pas de moyen <b>simple</b> de calculer le lien entre une variable qualitative et une variable quantitative.</p>
-							<ul style="align-self: center;">
-								<li>corrélation de rang</li>
-								<li>régression logistique</li>
-								<li>analyse de la variance (ANOVA)</li>
+						<h4 class="top_bar">Classification Supervisée - Principe</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On veut classifier des données en K classes <b>connues</b>, pour lesquelles on dispose d'<b>exemples</b>.</p>
+							<p>Un <b>algorithme d'apprentissage automatique</b> est <b>entrainé</b> sur ces exemples, puis est utilisé pour <b>inférer</b> la classe des individus.</p>
+							<ul>
+								<li><b>Jeu d'entrainement</b> = jeu de données sur lequel est entrainé le modèle.</li>
+								<li><b>Jeu de validation</b> = jeu sur lequel on ajuste les <b>hyperparamètres</b> du modèle (<i>hyperparameter tuning</i>).</li>
+								<li><b>Jeu de test</b> (ou d'évaluation) = jeu sur lequel la qualité du classifieur est évaluée.<br> Le jeu de test doit être strictement distinct du jeu d'entrainement, pour éviter la "fuite de données" (<i>data leakage</i>) qui biaise le test.</li>
 							</ul>
-							<p>⟹ Alors on fait un graphique !</p>
-							<p>La variable qualitative sert de <b>catégorie</b>, on fait varier la représentation graphique de la variable quantitative suivant cette catégorie.</p>
-							<p>2 possibilités :</p>
-							<ul style="align-self: center;">
-								<li>boîtes à moustaches</li>
-								<li>superposition d’histogrammes / densités</li>
+							<p style="color:red">Attention à l'autocorrélation spatiale ! <span style="color:black;">[Karasiak 2022]</span></p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Métriques d'évaluation</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Matrice de confusion</b> $M_{i,j}$ = nombre d'individus de la classe i prédits dans la classe j</p>
+							<p><b>Métriques par classe :</b><br></p>
+							<ul>
+								<li>Rappel (Producer accuracy) ${PA}_i=\frac{M_{i,i}}{\sum_{j} M_{i,j}}$</li>
+								<li>Précision (User accuracy) ${UA}_i=\frac{M_{i,i}}{\sum_{j} M_{j,i}}$</li>
+								<li>F1-score ${F1}_i\ =\ 2\frac{{UA}_i\ \times\ {PA}_i}{{UA}_i\ +\ {PA}_i}=\frac{2\ \ast\ M_{i,i}}{\sum_{j} M_{i,j}+\ \sum_{j} M_{j,i}}$</li>
+								<li>...</li>
+							</ul>
+							<p><b>Métriques globales :</b><br>Rappel moyen $PA = \frac{1}{n}\sum_{i=1}^{n}{PA_i}$, Precision moyenne, F-1 score moyen, Exactitude (Overall accuracy) $OA = \frac{\sum_{i} M_{i,i}}{N}$...</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Familles d'algorithmes supervisés</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Les algorithmes de classification supervisée se divisent en plusieurs familles basées sur des approches distinctes :</p>
+							<ul>
+								<li><b>Modèles Linéaires :</b> Ex : Régression Logistique, Analyse Discriminante Linéaire (LDA)</li>
+								<li><b>Modèles Basés sur les Arbres :</b> Ex : Arbres de Décision, Forêt Aléatoire, Gradient Boosting</li>
+								<li><b>Machines à Vecteurs de Support (SVM) :</b> Classifieurs avec des marges maximales</li>
+								<li><b>Apprentissage Instance-Based :</b> Ex : k-Nearest Neighbors (k-NN)</li>
+								<li><b>Algorithmes Bayésiens :</b> Ex : Naive Bayes, Réseaux Bayésiens</li>
+								<li><b>Réseaux de Neurones :</b> Ex : Multilayer Perceptron (MLP), CNN, RNN</li>
+								<li><b>Méthodes Ensemble :</b> Ex : Bagging (Forêt Aléatoire), Boosting (XGBoost)</li>
+								<li><b>Algorithmes Basés sur des Règles :</b> Ex : Classifieurs basés sur des règles (RIPPER)</li>
 							</ul>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Boxplot par catégories</h4>
-						<div style="width:100%; height:95%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Principe : on trace un boxplot par modalité de la variable qualitative</p>
-							<p>E.g. : consommation de véhicules par type (dataset mpg de R)</p>
-							<img src="img/images_bivariees/unnamed-chunk-2-1.png" width="100%">
+						<h4 class="top_bar">Exemple d'Algorithme : Random Forest</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Random Forest</b> est un modèle d'<b>ensemble d'arbres de décision</b> qui utilise le <i>bagging</i> pour améliorer la précision.</p>
+							<p>Caractéristiques principales :</p>
+							<ul>
+								<li><b>Ensemble de plusieurs arbres de décision :</b> Chaque arbre est construit sur un échantillon aléatoire du jeu de données.</li>
+								<li><b>Décisions basées sur le vote majoritaire :</b> La classe prédite est celle choisie par la majorité des arbres.</li>
+								<li><b>Réduction de l'overfitting :</b> En combinant plusieurs modèles, Random Forest augmente la robustesse et la généralisation.</li>
+								<li><b>Importance des caractéristiques :</b> Permet de mesurer l'influence de chaque variable sur la prédiction.</li>
+							</ul>
+							<p><b>Avantages :</b> Résistant au bruit, flexible, et performant pour des problèmes non linéaires.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Fonctionnement de Random Forest</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Etapes :</p>
+							<ol>
+								<li>Créer <b>plusieurs sous-échantillons</b> du jeu de données (échantillonnage bootstrap).</li>
+								<li>Construire un arbre de décision sur chaque échantillon.</li>
+								<li>Prédire une nouvelle instance en <b>faisant voter</b> tous les arbres et choisir la classe majoritaire.</li>
+							</ol>
+							<p>Chaque arbre est ainsi légèrement différent, ce qui réduit la corrélation entre eux et augmente la <b>robustesse globale</b> du modèle.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Construction d'un Arbre de Décision dans Random Forest</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>La construction d'un arbre de décision dans une <b>Random Forest</b> se fait de la manière suivante :</p>
+							<ol>
+								<li><b>Échantillonnage Bootstrap :</b> Créer un échantillon aléatoire avec remplacement à partir du jeu de données d'origine.</li>
+								<li><b>Construction de l'arbre :</b> Pour chaque nœud de l'arbre :
+									<ul>
+										<li>Sélectionner aléatoirement un sous-ensemble de variables (features).</li>
+										<li>Évaluer la meilleure variable parmi ce sous-ensemble pour séparer les données.</li>
+										<li>Diviser le nœud en utilisant cette variable.</li>
+									</ul>
+								</li>
+								<li><b>Arrêt de la construction :</b> Continuer la division jusqu'à atteindre un critère d'arrêt (profondeur maximale, nombre minimum d'échantillons).</li>
+							</ol>
 						</div>
 					</section>
 				</section>
@@ -1881,5 +1208,7 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 
 			}
 		</script>
+		
+
 	</body>
 </html>
