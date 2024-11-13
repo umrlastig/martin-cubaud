@@ -756,7 +756,7 @@
 					<section data-transition="slide-in fade-out">
 						<h4 class="top_bar">Clustering ascendant hierarchique (CAH)</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendogramme</b>) permettant :</p>
+							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendrogramme</b>) permettant :</p>
 							<ul>
 								<li>Un regroupement progressif, ne révise pas les classes regroupées</li>
 								<li>La mise en évidence de liens hiérarchiques entre US ou groupes d'US</li>
@@ -768,7 +768,7 @@
 					<section data-visibility="uncounted" data-transition="fade-in fade-out">
 						<h4 class="top_bar">Clustering ascendant hierarchique (CAH)</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendogramme</b>) permettant :</p>
+							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendrogramme</b>) permettant :</p>
 							<ul>
 								<li>Un regroupement progressif, ne révise pas les classes regroupées</li>
 								<li>La mise en évidence de liens hiérarchiques entre US ou groupes d'US</li>
@@ -780,7 +780,7 @@
 					<section data-visibility="uncounted" data-transition="fade-in slide-out">
 						<h4 class="top_bar">Clustering ascendant hierarchique (CAH)</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendogramme</b>) permettant :</p>
+							<p><b>Objectif :</b>Définir un arbre hierarchique (<b>dendrogramme</b>) permettant :</p>
 							<ul>
 								<li>Un regroupement progressif, ne révise pas les classes regroupées</li>
 								<li>La mise en évidence de liens hiérarchiques entre US ou groupes d'US</li>
@@ -897,6 +897,48 @@
 						</div>
 					</section>
 					<section>
+						<h4 class="top_bar">Dendrogramme en Python</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from sklearn.datasets import load_iris
+from scipy.cluster.hierarchy import dendrogram, linkage
+from matplotlib import pyplot as plt
+iris = load_iris()
+Z = linkage(iris.data, 'ward')
+plt.figure(figsize=(18, 8))
+dn = dendrogram(Z)
+plt.show()</code></pre>
+
+						<img src="img/images_multivariees/dendrogramme_python.png" style="width: 85%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">CAH en Python</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from sklearn.datasets import load_iris
+from sklearn.cluster import AgglomerativeClustering
+iris = load_iris()
+model = AgglomerativeClustering(n_clusters=3)
+labels = model.fit_predict(iris.data)
+plt.scatter(iris.data[:,0], iris.data[:,2], c=labels)
+plt.xlabel(iris.feature_names[0])
+plt.ylabel(iris.feature_names[2])</code></pre>
+
+						<img src="img/images_multivariees/cah_clustering.png" style="align-self: center; width: 50%;">
+						</div>
+					</section>
+					<section>
 						<h4 class="top_bar">CAH avec contraintes de proximité spatiale</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>CAH : forte dispersion géographique des classes obtenues.</p>
@@ -976,18 +1018,39 @@
 						</div>
 					</section>
 					<section>
+						<h4 class="top_bar">K-moyennes en Python</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from sklearn.datasets import load_iris
+from sklearn.cluster import KMeans
+iris = load_iris()
+k_means = KMeans(n_clusters=3)
+labels = k_means.fit_predict(iris.data)
+plt.scatter(iris.data[:,0], iris.data[:,2], c=labels)
+plt.xlabel(iris.feature_names[0])
+plt.ylabel(iris.feature_names[2])</code></pre>
+
+						<img src="img/images_multivariees/kmeans.png" style="align-self: center; width: 50%;">
+						</div>
+					</section>
+					<section>
 						<h4 class="top_bar">Algorithmes de partitionnement</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							
-							<p>Avantages</p>
+							<p><b>Avantages</b></p>
 							<ul>
 								<li>Simple à mettre en place</li>
 								<li>Compréhensible</li>
 								<li>Applicable à des données de grande taille</li>
 							</ul>
-							<p>Inconvéniants</p>
+							<p><b>Inconvénients</b></p>
 							<ul>
-								<li>Le nomnbre de classes doit être choisi <i>a priori</i></li>
+								<li>Le nombre de classes doit être choisi <i>a priori</i></li>
 								<li>Instable : dépendance au choix des centres initiaux</li>
 								<li>Mauvaise prise en compte des "outliers" : points extrêmes en dehors des groupes; peut fausser les moyennes et donc les centres.</li>
 								<li>Convergence plus ou moins rapide</li>
@@ -1002,7 +1065,7 @@
 								<li>Algorithme simple, pas besoin de fournir le nombre de clusters.</li>
 								<li>Est capable de détecter et exclure les données abbérantes.</li>
 							</ul>
-							<p><b>Inconvéniants</b></p>
+							<p><b>Inconvénients</b></p>
 							<ul>
 								<li>Les clusters sont supposés avoir la même densité.</li>
 								<li>Certains US ne sont pas clusterisés.</li>
@@ -1054,6 +1117,14 @@
 						<h4 class="top_bar">Algorithme de DBSCAN</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<img src="img/images_multivariees/dbscan_visualization.gif" style="align-self: center; width: 80%;">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Quel algorithme de clustering choisir ?</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p style="font-size: 22px;">Certains algorithmes sont plus ou moins adaptés à certaines formes de groupe $\rightarrow$ Regarder la forme des groupe sur le nuage de points des deux premières composantes de l'ACP.</p>
+							<img src="img/images_multivariees/sphx_glr_plot_cluster_comparison_001.png" style="align-self: center; width: 70%;">
+							<p style="font-size: 15px; align-self: center;">[scikit-learn documentation]</p>
 						</div>
 					</section>
 				</section>
@@ -1146,12 +1217,106 @@
 								<li><b>Construction de l'arbre :</b> Pour chaque nœud de l'arbre :
 									<ul>
 										<li>Sélectionner aléatoirement un sous-ensemble de variables (features).</li>
-										<li>Évaluer la meilleure variable parmi ce sous-ensemble pour séparer les données.</li>
+										<li>Évaluer la meilleure variable et le seuil parmi ce sous-ensemble pour séparer les données.</li>
 										<li>Diviser le nœud en utilisant cette variable.</li>
 									</ul>
 								</li>
 								<li><b>Arrêt de la construction :</b> Continuer la division jusqu'à atteindre un critère d'arrêt (profondeur maximale, nombre minimum d'échantillons).</li>
 							</ol>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple : Construction d'un Arbre de Décision</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<table border="1" class="dataframe" style="width: 80%;">
+								<thead>
+								<tr class="tr1">
+									<th>Longueur des pétales</th>
+									<th>Largeur des pétales</th>
+									<th>Espèce</th>
+								</tr>
+								</thead>
+								<tr  class="tr2"><td>1.4</td><td>0.2</td><td>Setosa</td></tr>
+								<tr  class="tr1"><td>4.7</td><td>1.4</td><td>Versicolor</td></tr>
+								<tr  class="tr2"><td>5.1</td><td>1.8</td><td>Versicolor</td></tr>
+								<tr  class="tr1"><td>1.5</td><td>0.1</td><td>Setosa</td></tr>
+								<tr  class="tr2"><td>4.9</td><td>1.5</td><td>Versicolor</td></tr>
+								<tr  class="tr1"><td>5.8</td><td>2.2</td><td>Virginica</td></tr>
+							</table>
+						</div>
+					</section>
+				
+					<section>
+						<h4 class="top_bar">Indice de Gini</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>L'<b>indice de Gini</b> mesure l'<b>impureté</b> d'un nœud. Il est défini par :</p>
+							<p style="text-align:center;">$Gini = 1 - \sum_{i=1}^{C} p_i^2$</p>
+							<ul>
+								<li><b>p<sub>i</sub></b> est la proportion des instances appartenant à la classe <i>i</i> dans le nœud.</li>
+								<li>Un Gini de <b>0</b> indique que le nœud est <b>pur</b> (toutes les instances appartiennent à une seule classe).</li>
+								<li>Un Gini proche de <b>0.5</b> indique une forte impureté (les classes sont mélangées).</li>
+							</ul>
+						</div>
+					</section>
+				
+					<section>
+						<h4 class="top_bar">Calcul de l'Indice de Gini : Exemple</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Exemple : on sépare le jeu de données en fonction de la <b>longueur du pétale &lt; 1.6</b>:</p>
+							<ul>
+								<li><b>Nœud de gauche:</b> 2 instances (2 Setosa)</li>
+								<li><b>Nœud de droite:</b> 4 instances (3 Versicolor, 1 Virginica)</li>
+							</ul>
+							<p><b>Calcul du Gini pour le nœud gauche :</b></p>
+							<p style="text-align:center;">$Gini = 1 - (2/2)^2 = 0 \rightarrow$<b> Ce nœud est pur !</b></p>
+							
+							<p><b>Calcul du Gini pour le nœud droit :</b></p>
+							<p style="text-align:center;">$Gini = 1 - (3/4)^2 - (1/4)^2 = 0.375$</p>
+							<p>Le Gini total pour cette division est la moyenne pondérée des deux nœuds =0.25.</p>
+						</div>
+					</section>
+				
+					<section>
+						<h4 class="top_bar">Choix de la Division</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Parmi toutes les divisions possibles, l'arbre de décision choisit celle qui <b>minimise l'indice de Gini</b>.</p>
+							<p>Dans cet exemple, si la division par la longueur du pétale minimise le Gini, alors l'arbre utilisera cette caractéristique pour créer un nœud de décision.</p>
+							<p><b>Itération :</b> Le processus se répète jusqu'à ce qu'un critère d'arrêt soit atteint (profondeur maximale, impureté minimale, etc.).</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Random Forest en Python</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+iris = load_iris()#Load the dataset
+clf = RandomForestClassifier()#construct the classifier
+X_train, X_test, y_train, y_test = train_test_split(
+	iris.data, iris.target,
+	train_size=0.5)
+clf.fit(X_train, y_train)#train the classifier
+y_pred = clf.predict(X_test)
+print(classification_report(y_test, y_pred))</code></pre>
+<p></p>
+<pre class="numpy tab-content active"><code class="language-python">              precision    recall  f1-score   support
+
+	  setosa       1.00      1.00      1.00        27
+versicolor       0.96      0.96      0.96        27
+ virginica       0.95      0.95      0.95        21
+
+  accuracy                           0.97        75
+ macro avg       0.97      0.97      0.97        75
+weighted avg     0.97      0.97      0.97        75
+</code></pre>
 						</div>
 					</section>
 				</section>
