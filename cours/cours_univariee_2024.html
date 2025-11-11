@@ -111,7 +111,7 @@
 							<small>
 							<p>Martin Cubaud</p>
 							<p>LASTIG-UGE-IGN/ENSG</p>
-							<p>2024-2025</p>
+							<p>2025-2026</p>
 							</small>
 						</div>
 						<img src="logo_ENSG.png" alt="reveal.js logo" style="height: 100px; margin: 0 auto 4rem auto; background: transparent; position: absolute;top: 0px;right: 0px;" class="demo-logo">
@@ -244,9 +244,9 @@ plot1</code></pre>
 						<h4 class="top_bar">Cas particulier : Moyenne glissante</h4>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							
-							<p>Moyenne calculée sur une fenètre de n valeurs consécutives.</p>
+							<p>Moyenne calculée sur une fenêtre de n valeurs consécutives.</p>
 							<p>e.g. on reçoit une mesure chaque seconde, très bruitée, et on désire afficher 10 minutes de signal lissé dans le temps</p>
-							<p>→ on calcule pour chaque point du signal, la moyenne sur 10 valeurs consécutives (5 en avant , 5 en arrière)</p>
+							<p>→ on calcule pour chaque point du signal, la moyenne sur 10 valeurs consécutives (5 en avant, 5 en arrière)</p>
 
 						</div>
 					</section>
@@ -687,6 +687,7 @@ lines(density(B), col="red")</code></pre>
 							<p>Deux moyens simples d'estimer l'asymétrie</p>
 							<p>$C_1 = \frac{\bar{x} - mode(X)}{\sigma_x}$</p>
 							<p>$C_2 = \frac{3(\bar{x} - mediane(X))}{\sigma_x}$</p>
+							<img width="50%" src="img/images_univariees/asym1-1.png" style=" align-self: center;">
 						</div>
 					</section>
 					<section>
@@ -697,6 +698,7 @@ lines(density(B), col="red")</code></pre>
 								<li>Si le coefficient est <b>négatif</b>, la distribution est <b>déformée à gauche</b> de la médiane (sur-représentation de valeurs faibles, à gauche)</li>
 								<li>Si le coefficient est <b>positif</b>, la distribution est <b>déformée à droite</b> de la médiane (sur-représentation de valeurs fortes, à droite)</li>
 							</ul>
+							<img width="50%" src="img/images_univariees/asym1-1.png" style=" align-self: center;">
 						</div>
 					</section>
 					<section>
@@ -704,7 +706,8 @@ lines(density(B), col="red")</code></pre>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							
 							<p>Ce coefficient est le moment d’ordre 3 de la variable $X$ ( de moyenne $\mu$ et d’écart-type $\sigma$) <b>centrée réduite</b></p>
-							<p>$skewness = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right] = \frac{\Sigma_{i=0}^n(x_i - \bar{x})^3}{n\sigma^3}$</p>
+							<p>$skewness = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right] = \frac{\sum\limits_{i=0}^n(x_i - \bar{x})^3}{n\sigma^3}$</p>
+							<img width="50%" src="img/images_univariees/asym1-1.png" style=" align-self: center;">
 						</div>
 					</section>
 					<section>
