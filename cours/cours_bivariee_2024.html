@@ -139,7 +139,7 @@
 							<small>
 							<p>Martin Cubaud</p>
 							<p>LASTIG-UGE-IGN/ENSG</p>
-							<p>2024-2025</p>
+							<p>2025-2026</p>
 							</small>
 						</div>
 						<img src="logo_ENSG.png" alt="reveal.js logo" style="height: 100px; margin: 0 auto 4rem auto; background: transparent; position: absolute;top: 0px;right: 0px;" class="demo-logo">
@@ -1344,6 +1344,97 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 							</ul>
 						</div>
 					</section>
+					<section>
+						<h4 class="top_bar">Bonus : Information Mutuelle</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li><b>Quantifie</b> la dépendance statistique entre les variables.</li>
+								<li>Basée sur la <b>théorie de l'information de Shannon</b>.</li>
+								<li>A partir du tableau des <b>fréquences observées</b>.<ul>
+							</ul>
+							<p>$I(X; Y) = \sum_{x, y}P(X=x, Y=y) log_2 \frac{P(X=x, Y=y)}{P(X=x)P(X=y)}$</p>
+							<ul>
+								<li>$I(X; Y) = 0 \Leftrightarrow$ X et Y sont indépendants.</li>
+								<li>Plus I est grand, plus la dépendance entre les variables est importante.</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple</h4>
+						<div style="width:100%; height:95%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Soient deux variables X et Y suivant une loi uniforme sur {"pile", "face"}, et complétement dépendantes (X=Y).<br>On construit la table des fréquences observées :</p>
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>pile</i></th>
+									<th><i>face</i></th>
+									<th>total</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>pile</i></th>
+									<td>0.5</td>
+									<td>0</td>
+									<td>0.5</td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>face</i></th>
+									<td>0</td>
+									<td>0.5</td>
+									<td>0.5</td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>total</i></th>
+									<td>0.5</td>
+									<td>0.5</td>
+									<td>1</td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p>$I(X; Y) = 0.5\times log_2\frac{0.5}{0.5 \times 0.5} + 0 + 0.5\times log_2\frac{0.5}{0.5 \times 0.5} + 0$<br>$I(X; Y) = 0.5\times log_2(2) + 0.5\times log_2(2)$<br>$I(X; Y) = log_2(2) = 1$<br><p style="font-size: 10px; margin-top: 0px;">Que se serait-il passé si X et Y avaient été uniformes sur n modalités ?</p></p>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple</h4>
+						<div style="width:100%; height:95%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Soient deux variables X et Y suivant une loi uniforme sur {"pile", "face"}, et complétement indépendantes.<br>On construit la table des fréquences observées :</p>
+							<table border="1" class="dataframe">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th></th>
+									<th><i>pile</i></th>
+									<th><i>face</i></th>
+									<th>total</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th><i>pile</i></th>
+									<td>0.25</td>
+									<td>0.25</td>
+									<td>0.5</td>
+								  </tr>
+								  <tr class="tr1">
+									<th><i>face</i></th>
+									<td>0.25</td>
+									<td>0.25</td>
+									<td>0.5</td>
+								  </tr>
+								  <tr class="tr2">
+									<th><i>total</i></th>
+									<td>0.5</td>
+									<td>0.5</td>
+									<td>1</td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p>$I(X; Y) = 4 \times (0.25\times log_2\frac{0.25}{0.5 \times 0.5})$<br>$I(X; Y) = 1\times log_2(1)$<br>$I(X; Y) = 0$<br><p></p></p>
+							
+						</div>
+					</section>
 				</section>
 
 				<section>
@@ -1377,6 +1468,32 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 							<p>Principe : on trace un boxplot par modalité de la variable qualitative</p>
 							<p>E.g. : consommation de véhicules par type (dataset mpg de R)</p>
 							<img src="img/images_bivariees/unnamed-chunk-2-1.png" width="100%">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus : ANOVA (Analyse de la Variance)</h4>
+						<div style="width:100%; height:95%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Test pour vérifier si les moyennes de la variable quantitative pour les différentes modalités de la variable qualitative sont significativement différentes.</p>
+							<ul>
+								<li><b>Hypothèse nulle (H<sub>0</sub>) :</b> Toutes les moyennes des groupes sont égales.</li>
+								<li><b>Hypothèse alternative (H<sub>a</sub>) :</b> Au moins une moyenne est différente.</li>
+								<li>On compare la variance entre les groupes à la variance à l'intérieur des groupes.</li>
+							</ul>
+							<p>$V_{inter-groupes} = \frac{1}{p-1}\sum_{i=1}^p n_i(\bar{x_i}-\bar{x})^2$<br>$V_{intra-groupes} = \frac{1}{N-p}\sum_{i=1}^p \sum_{j=1}^{n_i} (x_i^j-\bar{x_i})^2$<br><span style="font-size: 15px;">Avec $p$ le nombre de groupes, $N$ le nombre d'individu, $\bar{x}$ la moyenne de toute la population, $\bar{x_i}$ la moyenne du groupe i, $n_i$ le nombre d'individu du groupe i et $x_i^j$ le $j^e$ individu du groupe i.</span></p>
+							<p>On calcule le rapport <b>$F = \frac{\text{Variance entre les groupes}}{\text{Variance intra-groupe}}$</b></p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus : ANOVA (Analyse de la Variance)</h4>
+						<div style="width:100%; height:95%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li>Si (H<sub>0</sub>), F est faible.</li>
+								<li>Si les moyennes des groupes sont très différentes de la moyenne de la population, F augmente.</li>
+								<li>Si les groupes ont une grande dispersion, F dimiminue.</li>
+							</ul>
+							<p>Si (H<sub>0</sub>), F suit une <b>loi de Fischer de degrés (p-1, N-p)</b>.</p>
+							<p>La p-value est la probabilité qu'une loi de  Fischer de degrés (p-1, N-p) ait une valeur $\geq$ F. Si la p-value est faible ($<$0.05), on peut rejeter (H<sub>0</sub>).</p>
+							<p><span style="color: red;">⚠Limite du test : pour que l'ANOVA ait un sens, il faut que les populations de chaque groupe (1) suivent <b>une loi normale</b> et (2) aient <b>la même variance</b>⚠</span><br>
 						</div>
 					</section>
 				</section>
