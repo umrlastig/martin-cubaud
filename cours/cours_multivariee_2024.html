@@ -167,7 +167,7 @@
 							<small>
 							<p>Martin Cubaud</p>
 							<p>LASTIG-UGE-IGN/ENSG</p>
-							<p>2024-2025</p>
+							<p>2025-2026</p>
 							</small>
 						</div>
 						<img src="logo_ENSG.png" alt="reveal.js logo" style="height: 100px; margin: 0 auto 4rem auto; background: transparent; position: absolute;top: 0px;right: 0px;" class="demo-logo">
@@ -692,7 +692,7 @@
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>On choisit en général l'<b>inertie</b>.</p>
 							<p>Si l'ensemble des US est regroupé en Q classes :</p>
-							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">inter-classe</span></p>
+							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
 							<img src="img/images_multivariees/inertie.svg" style="align-self: center; width: 80%;">
 							<p>Une classe est homogène si son inertie est faible.</p>
 						</div>
@@ -701,7 +701,7 @@
 						<h4 class="top_bar">Inertie</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Si l'ensemble des US est regroupé en Q classes :</p>
-							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">inter-classe</span></p>
+							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
 							<p style="align-self: center;">$\sum\limits_{i=1}^N d(X_i, \bar{X})^2 = \sum\limits_{q=1}^Q \sum_{X_i \in q} d(X_i, \bar{X_q})^2 + \sum\limits_{q=1}^Q n_q d(\bar{X_q}, \bar{X})^2$</p>
 							<p>avec $d(a, b)$ la distance entre $a$ et $b$, $\bar{X}$ la moyenne de $X$, $\bar{X_q}$ la moyenne des individus de la classe q.</p>
 							<p>Une classe est homogène si son inertie est faible.</p>
@@ -1168,6 +1168,36 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 						</div>
 					</section>
 					<section>
+						<h4 class="top_bar">Exemple: classification sur 3 classes</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+						<table border="1" class="dataframe active" style="align-self: center;">
+							<tr class="tr1">
+								<th style="padding:5px;">Classe réelle ↓ / prédite →</th>
+								<th style="padding:5px;"><b>A</b></th>
+								<th style="padding:5px;"><b>B</b></th>
+								<th style="padding:5px;"><b>C</b></th>
+							</tr>
+							<tr class="tr2"><td><b>A</b></td><td>95</td><td>0</td><td>5</td></tr>
+							<tr class="tr1"><td><b>B</b></td><td>3</td><td>30</td><td>17</td></tr>
+							<tr class="tr2"><td><b>C</b></td><td>2</td><td>4</td><td>44</td></tr>
+						</table>
+						<br>
+						<p>Sur un total de N = 200 échantillons.</p>
+
+						<ul  class="fragment"  data-fragment-index="1">
+							<li><b>Rappel (PA)</b> : A = 95/100 = 0.95, B = 30/50 = 0.60, C = 44/50 = 0.88</li>
+							<li><b>Précision (UA)</b> : A = 95/50 = 0.100, B = 30/34 = 0.88, C = 44/66 = 0.67</li>
+							<li><b>F1-score</b> : A = $\frac{2\times 95}{100+100}$=0.95, B = 0.71, C = 0.76</li>
+						</ul>
+
+						<p  class="fragment"  data-fragment-index="2"><b>Métriques globales :</b></p>
+						<ul  class="fragment"  data-fragment-index="2">
+							<li>Exactitude (Overall Accuracy) OA = $\frac{95+30+44}{150}$ = 0.85</li>
+							<li>F1-score moyen = $\frac{0.95+0.71+0.76}{3}$ =  0.81</li>
+						</ul>
+						</div>
+					</section>
+					<section>
 						<h4 class="top_bar">Familles d'algorithmes supervisés</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Les algorithmes de classification supervisée se divisent en plusieurs familles basées sur des approches distinctes :</p>
@@ -1251,7 +1281,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 						<h4 class="top_bar">Indice de Gini</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>L'<b>indice de Gini</b> mesure l'<b>impureté</b> d'un nœud. Il est défini par :</p>
-							<p style="text-align:center;">$Gini = 1 - \sum_{i=1}^{C} p_i^2$</p>
+							<p style="text-align:center;">$Gini = \sum_{i=1}^{C} p_i(1 - p_i) = 1 - \sum_{i=1}^{C} p_i^2$</p>
 							<ul>
 								<li><b>p<sub>i</sub></b> est la proportion des instances appartenant à la classe <i>i</i> dans le nœud.</li>
 								<li>Un Gini de <b>0</b> indique que le nœud est <b>pur</b> (toutes les instances appartiennent à une seule classe).</li>
@@ -1264,6 +1294,21 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 						<h4 class="top_bar">Calcul de l'Indice de Gini : Exemple</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Exemple : on sépare le jeu de données en fonction de la <b>longueur du pétale &lt; 1.6</b>:</p>
+								<table border="1" class="dataframe" style="position: absolute; right:0%; top: 20%;width: 20%; font-size:0.3em; margin-bottom: 15px;">
+								<thead>
+								<tr class="tr1">
+									<th>Longueur des pétales</th>
+									<th>Largeur des pétales</th>
+									<th>Espèce</th>
+								</tr>
+								</thead>
+								<tr  class="tr2"><td><b>1.4</b></td><td>0.2</td><td>Setosa</td></tr>
+								<tr  class="tr1"><td>4.7</td><td>1.4</td><td>Versicolor</td></tr>
+								<tr  class="tr2"><td>5.1</td><td>1.8</td><td>Versicolor</td></tr>
+								<tr  class="tr1"><td><b>1.5</b></td><td>0.1</td><td>Setosa</td></tr>
+								<tr  class="tr2"><td>4.9</td><td>1.5</td><td>Versicolor</td></tr>
+								<tr  class="tr1"><td>5.8</td><td>2.2</td><td>Virginica</td></tr>
+							</table>
 							<ul>
 								<li><b>Nœud de gauche:</b> 2 instances (2 Setosa)</li>
 								<li><b>Nœud de droite:</b> 4 instances (3 Versicolor, 1 Virginica)</li>
