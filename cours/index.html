@@ -42,7 +42,7 @@
 			list-style: inside "\1F4BB    ";
 		}
 	</style>
-    <body>
+    <body style="margin: 10px;">
         <h1>Cours de statistiques IGAST</h1>
         <p>Cours en très grande partie construit à partir du <a href="https://www.umr-lastig.fr/paul-chapron/resources/cours_site/index.html">cours IGAST 2020-2021</a> de Paul Chapron.</p>
         <h2>Plan du cours</h2>
@@ -51,8 +51,9 @@
             <li class="cours"><a href="cours_univariee_2024.html">Analyse univariée</a></li>
 			<li class="TP">TP1 Analyse univariée : <a href="TP1_analyse_univariee/Support_TP1.pdf">sujet</a> ; <a id="data_1" href="">données</a> ; <a href="TP1_analyse_univariee/Analyse_univariee.html">corrigé</a> ;</li>
 			<li class="cours"><a href="cours_bivariee_2024.html">Analyse bivariée</a></li>
-			<li class="TP">TP2 Analyse bivariée : <a href="TP_2_analyse_bivariee/TP2_support.pdf">sujet</a> ; <a  id="data_2" href="">données</a> ;<a href="">corrigé</a> ;</li>
+			<li class="TP">TP2 Analyse bivariée : <a href="TP2_analyse_bivariee/TP2_support.pdf">sujet</a> ; <a  id="data_2" href="">données</a> ; <a href="TP2_analyse_bivariee/TP2_analyse_bivariee.html">corrigé</a> ;</li>
 			<li class="cours"><a href="cours_multivariee_2024.html">Analyse multivariée</a></li>
+			<li class="TP">TP3 Analyse multivariée : <a href="TP2_analyse_bivariee/support_TP3.pdf">sujet</a> ; <a  id="data_3" href="">données</a> ; <a href="">corrigé</a> ;</li>
         </ul>
     </body>
 	<script>
@@ -64,6 +65,11 @@
 		document.getElementById("data_2").onclick=function(){
 			window.open('https://www.insee.fr/fr/statistiques/7655475?sommaire=7655515');
 			window.open('https://geoservices.ign.fr/ocsge');
+		}
+		document.getElementById("data_3").onclick=function(){
+			window.open('https://ourworldindata.org/search');
+			window.open('https://github.com/datasets/geo-countries/blob/main/data/countries.geojson');
+			window.open('https://ourworldindata.org/grapher/political-regime');
 		}
 	</script>
 </html>
