@@ -184,7 +184,7 @@
 					<h4 class="top_bar">Dans ce module</h4>
 					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
 						<p>Nous ferons majoritairement de la statistique <b>descriptive</b></p>
-						<p>(même si, pour bien décrire, il faut parfois inférer).</p>
+						<p>(Même si, pour bien décrire, il faut parfois inférer).</p>
 					</div>
 				</section>
 				
@@ -200,7 +200,7 @@
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
 							<p><b>Ensemble</b> d'individus</p>
 							<p>"données", "corpus", "échantillon", "data"</p>
-							<p>très souvent <b>tabulaires</b></p>
+							<p>Très souvent <b>tabulaires</b></p>
 						</div>
 					</section>
 					<section>
@@ -208,6 +208,7 @@
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
 							<p><b>Unité</b> statistique <b>élémentaire</b> : personnes, logements...</p>
 							<p>→ "les lignes du tableau"</p>
+							<p></p>
 						</div>
 					</section>
 					<section>
@@ -315,6 +316,161 @@
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
 							<b style="font-size: 60px;">Représenter/Tracer/Cartographier les variables de la population !</b>
 						</div>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Introduction à Pandas</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+							<a href="https://pandas.pydata.org/docs/reference/index.html">Documentation de Pandas</a>
+							<a href="https://pandas.pydata.org/docs/user_guide/10min.html">Guide Pandas en 10 minutes</a>
+						</div>
+					</section>
+					<section>
+					<h4 class="top_bar">Pandas ?</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start;">
+							<p>Librairie python pour manipuler, explorer, visualiser, nettoyer, traiter... <b>intuitivement</b> des <b>données tabulaires</b> :</p>
+							<img src="img/01_table_dataframe.svg" style="height : 100%; align-self: center;"></img>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Importer Pandas</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">
+import numpy as np
+import pandas as pd
+							</code></pre>
+
+							<p>Deux structures de données de base dans Pandas (Classes Python)</p>
+							<ul>
+								<li><b>Series</b>: Données unidimensionnelles de n'importe quel type</li>
+								<li><b>DataFrame</b>: Données tabulaires</li>
+							</ul>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Creation d'un Dataframe</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">
+df = pd.dataframe(data, index=index_names, columns=columns_names)
+							</code></pre>
+
+							<ul>
+								<li><b>df</b>: la variable Python qui va contenir le dataframe.</li>
+								<li><b>data</b>: les données sous forme de tableau Python, de dictionnaire ou d'array de Numpy.</li>
+								<li><b>index</b>: (optionnel) la liste des indices des individus</li>
+								<li><b>columns</b>: (optionnel) la liste des noms des variables (statistiques)</li>
+							</ul>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">
+data = [[20, "F", 1.64], [21, "M", 1.52], [21, "F", 1.72]]
+names = ["Alice", "Bob", "Eve"]
+variables = ["age", "genre", "taille"]
+df = pd.DataFrame(data, columns=variables, index=names)
+df
+							</code></pre>
+						<img src="img/alicebobeve.png" style="height : 100%; align-self: center;"></img>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Lecture / Ecriture de données</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/02_io_readwrite.svg" style="height : 100%; align-self: center;"></img>
+							<p>Exemple : <code>df = pd.read_csv("chemin/vers/le/fichier.csv")</code></p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Sélection d'un sous-ensemble des données</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img src="img/selection.svg" style="align-self: center;"></img>
+							<p>Toutes ces méthodes renvoient une nouvelle table, elles ne modifient pas <code>df</code></p>
+							<p style="font-size: medium; margin:5px;">Modifier l'age d'Alice : <code>df.loc["Alice", "age"] = 21</code> (modifie vraiment <code>df</code>)</p>
+							<p style="font-size: medium; margin:5px;">Modifier l'age de tout le monde : <code>df.loc[:, "age"] = df.loc[:, "age"] + 1</code></p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Ajouts de nouvelles colonnes</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">
+df["envergure des bras"] = [1.60, 1.76, 1.74]
+df["Indice Ape"] = df["envergure des bras"]/df["taille"]
+df
+							</code></pre>
+						<table border="1" class="dataframe">
+						<thead>
+							<tr style="text-align: right;">
+							<th></th>
+							<th>age</th>
+							<th>genre</th>
+							<th>taille</th>
+							<th>envergure des bras</th>
+							<th>Indice Ape</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							<th>Alice</th>
+							<td>20</td>
+							<td>F</td>
+							<td>1.64</td>
+							<td>1.60</td>
+							<td>0.975610</td>
+							</tr>
+							<tr>
+							<th>Bob</th>
+							<td>21</td>
+							<td>M</td>
+							<td>1.52</td>
+							<td>1.76</td>
+							<td>1.157895</td>
+							</tr>
+							<tr>
+							<th>Eve</th>
+							<td>21</td>
+							<td>F</td>
+							<td>1.72</td>
+							<td>1.74</td>
+							<td>1.011628</td>
+							</tr>
+						</tbody>
+						</table>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Autres fonctionnalités</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ul>
+								<li>Jointures (fusionner des tables)</li>
+								<li>Groupements</li>
+								<li>Aggrégation</li>
+								<li>Méthodes statistiques</li>
+								<li>Visualisation de données</li>
+								<li>Transformations sur les lignes et les colonnes</li>
+								<li>...</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Cas particulier des données géographiques</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>La librairie <b>GeoPandas</b> étend Pandas pour les données géographiques (vecteurs)</p>
+							<p>Lecture de divers formats de fichiers géospatialisés (shapefile, geojson...)</p>
+							<p>Colonne <b>geometry</b> qui stocke les unités spatiales (Shapely)</p>
+							<p>Opérations géométriques et topologiques</p>
+						</div>
+					</section>
 				</section>
 			</div>
 		</div>
