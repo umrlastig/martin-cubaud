@@ -692,7 +692,7 @@
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>On choisit en général l'<b>inertie</b>.</p>
 							<p>Si l'ensemble des US est regroupé en Q classes :</p>
-							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
+							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">inter-classe</span></p>
 							<img src="img/images_multivariees/inertie.svg" style="align-self: center; width: 80%;">
 							<p>Une classe est homogène si son inertie est faible.</p>
 						</div>
@@ -701,7 +701,7 @@
 						<h4 class="top_bar">Inertie</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Si l'ensemble des US est regroupé en Q classes :</p>
-							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">intra-classe</span></p>
+							<p style="align-self: center;" >Inertie totale     =    inertie <span style="color: #00b050;">intra-classe</span> + inertie <span style="color: rgb(201, 37, 173);">inter-classe</span></p>
 							<p style="align-self: center;">$\sum\limits_{i=1}^N d(X_i, \bar{X})^2 = \sum\limits_{q=1}^Q \sum_{X_i \in q} d(X_i, \bar{X_q})^2 + \sum\limits_{q=1}^Q n_q d(\bar{X_q}, \bar{X})^2$</p>
 							<p>avec $d(a, b)$ la distance entre $a$ et $b$, $\bar{X}$ la moyenne de $X$, $\bar{X_q}$ la moyenne des individus de la classe q.</p>
 							<p>Une classe est homogène si son inertie est faible.</p>
@@ -884,7 +884,7 @@
 								<li style="font-size: 23px;"><b>Critère maximal :</b></li>
 								<ul>
 									<li style="font-size: 23px;">On regroupe des classes de proche en proche.</li>
-									<li style="font-size: 23px;">Produit des dendrogrammes harmonieux c-a-d que les classes ont des effectifs pas trop différents</li>
+									<li style="font-size: 23px;">Produit des dendrogrammes harmonieux c-à-d que les classes ont des effectifs pas trop différents</li>
 									<li style="font-size: 23px;">Sensible aux outliers</li>
 								</ul>
 								<li style="font-size: 23px;"><b>Critère de Ward :</b></li>
@@ -1192,7 +1192,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 
 						<p  class="fragment"  data-fragment-index="2"><b>Métriques globales :</b></p>
 						<ul  class="fragment"  data-fragment-index="2">
-							<li>Exactitude (Overall Accuracy) OA = $\frac{95+30+44}{150}$ = 0.85</li>
+							<li>Exactitude (Overall Accuracy) OA = $\frac{95+30+44}{200}$ = 0.85</li>
 							<li>F1-score moyen = $\frac{0.95+0.71+0.76}{3}$ =  0.81</li>
 						</ul>
 						</div>
