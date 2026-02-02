@@ -245,7 +245,7 @@
 				<section>
 					<section>
 						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
-							<h4>Régression linéaire</h4>
+							<h4>Corrélation de deux variables quantitatives</h4>
 							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
 						</div>
 					</section>
@@ -279,239 +279,6 @@ plot(iris)</code></pre>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<img style="align-self: center; width:80%;" src="img/images_bivariees/formes-1.png">
 							<p>En pratique, les formes sont beaucoup moins régulières.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Les étapes</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<ol>
-								<li>Tracer le nuage de points</li>
-								<li>Existe-t-il une relation ?</li>
-								<li>Est-elle de forme linéaire ? De quel sens ?</li>
-								<li>Si la liaison est de forme linéaire → faire une <b>régression</b></li>
-								<li>Si la liaison est non linéaire, est-elle <b>monotone</b> ? De forme connue ?→ Proposer un <b>modèle</b></li>
-							</ol>
-							<p>5bis. Réaliser un modèle <b>LOESS</b> avec prudence (uniquement descriptif , aucun pouvoir de généralisation)</p>
-							<p>cf le blog de Lise Vaudor [<a href="http://perso.ens-lyon.fr/lise.vaudor/regression-loess/" class="uri">http://perso.ens-lyon.fr/lise.vaudor/regression-loess/</a>]</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Régression linéaire</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">						
-							<p>Si la forme du nuage de points s’y prête, on peut faire une <b>régression linéaire</b> (aussi appelé <b>ajustement</b> linéaire).</p>
-							<p>On cherche la droite qui «passe au mieux» (=<em>ajustée</em>) dans le nuage de points de deux variables quantitatives $V_1$ et $V_2$, qui permet de visualiser :</p>
-								<li>l’<b>intensité</b> du lien / de la dépendance : points proche de la droite ou non ?</li>
-								<li>la <b>forme</b> de la dépendance : linéaire ou non ?</li>
-								<li>le <b>sens</b> de la dépendance : nulle, positive ou négative ?</li>
-							</ul>
-
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Régression linéaire</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<img style="align-self: center; width:80%;" src="img/images_bivariees/regline-1.png">
-							<p>«Droite qui passe au mieux» = qui minimise <b>la somme des écarts quadratiques</b> entre la droite et les points du nuage.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Régression linéaire : le modèle</h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>L’<b>équation</b> de la droite est un <b>modèle linéaire</b> de la relation statistique qui lie $V_1$ et $V_2$;</p>
-							<p>Ici le modèle est : $\hat{V}_2 = a V_1 + b$</p>
-							<p>$a$ et $b$ sont les <b>paramètres</b> ou <b>coefficients</b> du modèle.<br></p>
-							<p>Si la régression linéaire est avérée, alors pour un individu $i$ dont on connait $V_{1}i$, on infère la valeur $V_{2}i$ par le modèle : $\hat{V}_2i=a V_1i+b$</p>
-							<p>On dit aussi que $V_1$ <b>explique</b> $V_2$, ou que le modèle <b>prédit</b> $V_2$ à partir de $V_1$ (on note les valeurs prédites $\hat{V}_2$)</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">La grande question</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
-							<p style="font-size: 40px;">Comment déterminer qu’une régression linéaire est «correcte» ?</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Comment evaluer la “validité” du modèle linaire ?</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>En pratique, il faut réunir deux critères :</p>
-							<ul>
-								<li>des coefficients avec des <b>p-values</b> associées <b>faibles</b> (e.g. <0.05) ↔ “on a peu de chances de se tromper”</li>
-								<li>un $R²$ <b>élevé</b> ↔ “le modèle prédit bien les observations”</li>
-							</ul>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Le $R²$</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$R^2 \in [0, 1]$ est le <b> coefficient de détermination linéaire</b>.</p>
-							<p>Donne la <b>qualité de prédiction</b> de la régression.</p>
-							<p>“Proche de 1”" ≡ “très bonne qualité”</p>
-							<p>C’est le pourcentage de “variation” de $V_2$ due à la “variation” de $V_1$</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Le $R²$</h4>
-						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Défini par $R^2 = 1-\dfrac{\sum_{i=1}^n\left(y_i-\hat{y_i}\right)^2}{\sum_{i=1}^n\left(y_i-\bar y\right)^2} $</p>
-
-							<p>si on note $\hat{V}_2$ les valeurs de $V_2$ prédites par le modèle linéaire, alors :</p>
-							<p>$R^2 = cor(V_2, \hat{V}_2)^2$</p>
-							<p>(au sens de la corrélation de Pearson)</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">La p-value</h4>
-						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Elle peut s’interpréter comme «la probabilité d’avoir un résultat de regression identique avec deux variables véritablement indépendantes»</p>
-							<p><br></p>
-							<p>La p-value est associée à la notion d’<b>hypothèses nulle</b>. Ici , l’hypothèse nulle est “les deux séries sont indépendantes”.</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">La p-value</h4>
-						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Plus grossièrement : la p-value est le <b>pourcentage de chances de se tromper</b> en rejetant l’hypothèse nulle,</p>
-							<p><br></p>
-							<p>c'est-à-dire<br>se tromper en considérant que les deux séries ne sont pas indépendantes et qu’il existe une relation entre les deux (ici, linéaire car nous testons un modèle linéaire).</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">L'hypothèse nulle</h4>
-						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$H_0$ : «les deux variables sont indépendantes»</p>
-							<ul>
-								<li><b>conserver</b> $H_0$ : considérer les deux variables comme <b>indépendantes</b></li>
-								<li><b>rejeter</b> $H_0$ : considérer les deux variables comme <b>dépendantes</b> = ayant une relation statistique, un lien.</li>
-							</ul>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Format des resultats donnés par <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import linregress
-linregress(df['petal length (cm)'], df['petal width (cm)'])</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">regression <- lm(iris$Petal.Length~iris$Petal.Width)
-summary(regression)</code></pre>
-
-							<p></p>
-							<pre class="numpy tab-content active"><code class="answer">LinregressResult(
-	slope=0.41575541635241114, intercept=-0.36307552131902776,
-	rvalue=0.9628654314027963, pvalue=4.6750039073255014e-86,
-	stderr=0.009582435790766206, intercept_stderr=0.03976198987309611
-	)</code></pre>
-							<pre class="r tab-content inactive"><code class="answer">## 
-## Call:
-## lm(formula = iris$Petal.Length ~ iris$Petal.Width)
-## 
-## Residuals:
-##      Min       1Q   Median       3Q      Max 
-## -1.33542 -0.30347 -0.02955  0.25776  1.39453 
-## 
-## Coefficients:
-##                  Estimate Std. Error t value Pr(>|t|)    
-## (Intercept)       1.08356    0.07297   14.85   <2e-16 ***
-## iris$Petal.Width  2.22994    0.05140   43.39   <2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 0.4782 on 148 degrees of freedom
-## Multiple R-squared:  0.9271, Adjusted R-squared:  0.9266 
-## F-statistic:  1882 on 1 and 148 DF,  p-value: < 2.2e-16</code></pre>
-						
-						<p class="numpy text active">Coefficients du modèle ajusté, R (et non R²), la p-value, écart-type des erreurs sur les coefficients.</p>
-						<p class="r text inactive">Distribution des résidus, coefficients du modèle ajusté et leur p-value associée (ici sur un test de Student, notée Pr(>|t|) et R2)</p>
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Bonus: Critères de significativité du lien linéaire</h4>
-						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Les <b>résidus</b> $\epsilon_i$ (écart entre valeur observée et valeur prédite $(V_2−\hat{V}_2)$ par le modèle pour l’individu i) doivent:</p>
-							<ul>
-								<li>être indépendants : covariance nulle ou très faible<br>$cov(x_i,\epsilon_i)=0$</li>
-								<li>être distribués selon un loi normale de moyenne nulle <br>$\epsilon  \sim \mathcal{N}(0,\sigma_{\epsilon})$</li>
-								<li>être distribués de façon homogène (homoscédasticité), i.e. de variance constante $var(\epsilon_i)=\sigma^2_\epsilon$ , indépendante de l’observation.</li>
-							</ul>
-						</div>	
-					</section>
-					<section>
-						<h4 class="top_bar">Bonus : évaluation de l'indépendance des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							
-						
-							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
-import matplotlib.pyplot as plt
-reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
-residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
-sm.graphics.tsa.plot_acf(residuals, lags=20)
-plt.show()</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
-acf(residuals(modele1))</code></pre>
-
-							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
-							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
-						
-						</div>
-					</section>
-					<section>
-						<h4 class="top_bar">Bonus : Évaluer l’homogénéité des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
-						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							
-						
-							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
-							
-							<!-- Tab Navigation -->
-							<div class="tabs">
-								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
-								<button class="tab-button r" onclick="showTab('r')">R</button>
-							</div>
-					
-					  		<!-- Python Code -->
-					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
-import matplotlib.pyplot as plt
-reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
-residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
-sm.graphics.tsa.plot_acf(residuals, lags=20)
-plt.show()</code></pre>
-					  
-					  		<!-- R Code -->
-					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
-acf(residuals(modele1))</code></pre>
-
-							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
-							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
-						
-						</div>
-					</section>
-				</section>
-
-
-				<section>
-					<section>
-						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
-							<h4>Corrélation de deux variables quantitatives</h4>
-							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
 						</div>
 					</section>
 					<section>
@@ -568,7 +335,33 @@ ConfidenceInterval(low=0.9490524593111143, high=0.972985317378797)</code></pre>
 ## sample estimates:
 ##       cor 
 ## 0.9628654</code></pre>
-							<p>Rappel : la p-value quantifie la <b>significativité</b> du test. En général, on considère le test significatif si elle est en dessous de 5%, soit 0.05.</p>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La p-value</h4>
+						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Elle peut s’interpréter comme «la probabilité d’avoir un résultat de corrélation identique avec deux variables véritablement indépendantes»</p>
+							<p><br></p>
+							<p>La p-value est associée à la notion d’<b>hypothèses nulle</b>. Ici , l’hypothèse nulle est “les deux séries sont indépendantes”.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La p-value</h4>
+						<div style="width:100%; height:70%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Plus grossièrement : la p-value est le <b>pourcentage de chances de se tromper</b> en rejetant l’hypothèse nulle,</p>
+							<p><br></p>
+							<p>c'est-à-dire<br>se tromper en considérant que les deux séries ne sont pas indépendantes et qu’il existe une relation entre les deux (ici, linéaire car nous testons la corrélation linéaire).</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">L'hypothèse nulle</h4>
+						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$H_0$ : «les deux variables sont indépendantes»</p>
+							<ul>
+								<li><b>conserver</b> $H_0$ : considérer les deux variables comme <b>indépendantes</b></li>
+								<li><b>rejeter</b> $H_0$ : considérer les deux variables comme <b>dépendantes</b> = ayant une relation statistique, un lien.</li>
+							</ul>
 						</div>
 					</section>
 					<section>
@@ -734,6 +527,226 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 							<p>… et toujours <b>tracer le nuage de points</b> pour examiner la nature de la relation.</p>
 						</div>
 					</section>
+				</section>
+
+
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Régression linéaire</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Objectif</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Expliquer</b> les valeurs d'une variable $V_2$ (variable <b>expliquée</b>) à partir d'une variable <b>explicative</b> $V_1$, à l'aide d'un modèle linéaire.</p>
+							<ul>
+								<li><b>Prédire</b> les valeurs de $V_2$ (si par exemple elles sont difficiles à mesurer) à partir de celles de $V_1$</li>
+								<li><b>Modéliser</b> la relation entre les deux variables</li>
+								<li>Déterminer les paramètres de ces modèles (par exemple des constantes physiques) → problème inverse</li>
+							</ul>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Les étapes</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<ol>
+								<li><b>Tracer le nuage de points</b></li>
+								<li>Existe-t-il une relation ?</li>
+								<li>Est-elle de forme linéaire ? De quel sens ?</li>
+								<li>Si la liaison est de forme linéaire → faire une <b>régression</b></li>
+								<li>Si la liaison est non linéaire, est-elle <b>monotone</b> ? De forme connue ?→ Proposer un <b>modèle</b></li>
+							</ol>
+							<p>5bis. Réaliser un modèle <b>LOESS</b> avec prudence (uniquement descriptif , aucun pouvoir de généralisation)</p>
+							<p>cf le blog de Lise Vaudor [<a href="http://perso.ens-lyon.fr/lise.vaudor/regression-loess/" class="uri">http://perso.ens-lyon.fr/lise.vaudor/regression-loess/</a>]</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression linéaire</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">						
+							<p>Si la forme du nuage de points s’y prête, on peut faire une <b>régression linéaire</b> (aussi appelé <b>ajustement</b> linéaire).</p>
+							<p>On cherche la droite qui «passe au mieux» (=<em>ajustée</em>) dans le nuage de points de deux variables quantitatives $V_1$ et $V_2$, qui permet de visualiser :</p>
+								<li>l’<b>intensité</b> du lien / de la dépendance : points proche de la droite ou non ?</li>
+								<li>la <b>forme</b> de la dépendance : linéaire ou non ?</li>
+								<li>le <b>sens</b> de la dépendance : nulle, positive ou négative ?</li>
+							</ul>
+
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression linéaire</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width:80%;" src="img/images_bivariees/regline-1.png">
+							<p>«Droite qui passe au mieux» = qui minimise <b>la somme des écarts quadratiques</b> entre la droite et les points du nuage.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression linéaire : le modèle</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>L’<b>équation</b> de la droite est un <b>modèle linéaire</b> de la relation statistique qui lie $V_1$ et $V_2$;</p>
+							<p>Ici le modèle est : $\hat{V}_2 = a V_1 + b$</p>
+							<p>$a$ et $b$ sont les <b>paramètres</b> ou <b>coefficients</b> du modèle.<br></p>
+							<p>Si la régression linéaire est avérée, alors pour un individu $i$ dont on connait $V_{1}i$, on infère la valeur $V_{2}i$ par le modèle : $\hat{V}_2i=a V_1i+b$</p>
+							<p>On dit aussi que $V_1$ <b>explique</b> $V_2$, ou que le modèle <b>prédit</b> $V_2$ à partir de $V_1$ (on note les valeurs prédites $\hat{V}_2$)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">La grande question</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:center; text-align: justify;">
+							<p style="font-size: 40px;">Comment déterminer qu’une régression linéaire est «correcte» ?</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Comment evaluer la “validité” du modèle linaire ?</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>En pratique, il faut réunir deux critères :</p>
+							<ul>
+								<li>des coefficients avec des <b>p-values</b> associées <b>faibles</b> (e.g. <0.05) ↔ “on a peu de chances de se tromper”</li>
+								<li>un $R²$ <b>élevé</b> ↔ “le modèle prédit bien les observations”</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Le $R²$</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$R^2 \in [0, 1]$ est le <b> coefficient de détermination linéaire</b>.</p>
+							<p>Donne la <b>qualité de prédiction</b> de la régression.</p>
+							<p>“Proche de 1”" ≡ “très bonne qualité”</p>
+							<p>C’est le pourcentage de “variation” de $V_2$ due à la “variation” de $V_1$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Le $R²$</h4>
+						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Défini par $R^2 = 1-\dfrac{\sum_{i=1}^n\left(y_i-\hat{y_i}\right)^2}{\sum_{i=1}^n\left(y_i-\bar y\right)^2} $</p>
+
+							<p>si on note $\hat{V}_2$ les valeurs de $V_2$ prédites par le modèle linéaire, alors :</p>
+							<p>$R^2 = cor(V_2, \hat{V}_2)^2$</p>
+							<p>(au sens de la corrélation de Pearson)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Format des resultats donnés par <span class="numpy text head active">scipy</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import linregress
+linregress(df['petal length (cm)'], df['petal width (cm)'])</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">regression <- lm(iris$Petal.Length~iris$Petal.Width)
+summary(regression)</code></pre>
+
+							<p></p>
+							<pre class="numpy tab-content active"><code class="answer">LinregressResult(
+	slope=0.41575541635241114, intercept=-0.36307552131902776,
+	rvalue=0.9628654314027963, pvalue=4.6750039073255014e-86,
+	stderr=0.009582435790766206, intercept_stderr=0.03976198987309611
+	)</code></pre>
+							<pre class="r tab-content inactive"><code class="answer">## 
+## Call:
+## lm(formula = iris$Petal.Length ~ iris$Petal.Width)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1.33542 -0.30347 -0.02955  0.25776  1.39453 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)       1.08356    0.07297   14.85   <2e-16 ***
+## iris$Petal.Width  2.22994    0.05140   43.39   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.4782 on 148 degrees of freedom
+## Multiple R-squared:  0.9271, Adjusted R-squared:  0.9266 
+## F-statistic:  1882 on 1 and 148 DF,  p-value: < 2.2e-16</code></pre>
+						
+						<p class="numpy text active">Coefficients du modèle ajusté, R (et non R²), la p-value, écart-type des erreurs sur les coefficients.</p>
+						<p class="r text inactive">Distribution des résidus, coefficients du modèle ajusté et leur p-value associée (ici sur un test de Student, notée Pr(>|t|) et R2)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus: Critères de significativité du lien linéaire</h4>
+						<div style="width:100%; height:50%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Les <b>résidus</b> $\epsilon_i$ (écart entre valeur observée et valeur prédite $(V_2−\hat{V}_2)$ par le modèle pour l’individu i) doivent:</p>
+							<ul>
+								<li>être indépendants : covariance nulle ou très faible<br>$cov(x_i,\epsilon_i)=0$</li>
+								<li>être distribués selon un loi normale de moyenne nulle <br>$\epsilon  \sim \mathcal{N}(0,\sigma_{\epsilon})$</li>
+								<li>être distribués de façon homogène (homoscédasticité), i.e. de variance constante $var(\epsilon_i)=\sigma^2_\epsilon$ , indépendante de l’observation.</li>
+							</ul>
+						</div>	
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus : évaluation de l'indépendance des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+						
+							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
+import matplotlib.pyplot as plt
+reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
+residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
+sm.graphics.tsa.plot_acf(residuals, lags=20)
+plt.show()</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
+acf(residuals(modele1))</code></pre>
+
+							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
+							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
+						
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Bonus : Évaluer l’homogénéité des résidus avec <span class="numpy text head active">statsmodels</span><span class="r text head inactive">R</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+						
+							<p class="numpy text active">Graphique de la fonction <i>plot_acf</i> :<br>Si une barre (exceptée la première) dépasse la zone bleutée, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							<p class="r text inactive">Graphique de la fonction <i>acf</i> :<br>Si une barre (exceptée la première) dépasse la ligne en pointillés, on peut remettre en cause l’indépendance des résidus. Ici, c’est le cas.</p>
+							
+							<!-- Tab Navigation -->
+							<div class="tabs">
+								<button class="tab-button numpy active" onclick="showTab('numpy')">Python</button>
+								<button class="tab-button r" onclick="showTab('r')">R</button>
+							</div>
+					
+					  		<!-- Python Code -->
+					  		<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
+import matplotlib.pyplot as plt
+reg = linregress(df['petal length (cm)'], df['petal width (cm)'])
+residuals = df['petal width (cm)'] - ( reg.intercept + reg.slope * df['petal length (cm)'] )
+sm.graphics.tsa.plot_acf(residuals, lags=20)
+plt.show()</code></pre>
+					  
+					  		<!-- R Code -->
+					  		<pre class="r tab-content inactive"><code class="language-r">modele1 <- lm(iris$Petal.Length~ iris$Petal.Width)
+acf(residuals(modele1))</code></pre>
+
+							<img class="numpy img active" style="align-self: center;" src="img/images_bivariees/residualSigni3-1_python.png">
+							<img class="r img inactive" style="align-self: center;" src="img/images_bivariees/residualSigni3-1.png">
+						
+						</div>
+					</section>
+					
 				</section>
 				<section>
 					<section>
