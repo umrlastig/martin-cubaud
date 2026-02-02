@@ -205,11 +205,11 @@ plot1</code></pre>
 					<section>
 						<h4 class="top_bar">Moyenne</h4>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
-							<p>\(\displaystyle \bar{x} = \frac{1}{n}\sum_{i=0}^{n} x_i\)</p>
+							<p>\(\displaystyle \bar{x} = \frac{1}{N}\sum_{i=1}^{N} x_i\)</p>
 							<h4 class="top_bar fragment"  data-fragment-index="1">Moyenne pondérée</h4>
 							<p style="align-self: flex-start;"class="fragment"  data-fragment-index="1">Lorsque les valeurs n'ont pas le même poids</p>
 							<p style="align-self: flex-start;"class="fragment"  data-fragment-index="1">Par exemple : poids = effectif de la valeur dans la population.</p>
-							<p class="fragment"  data-fragment-index="1">\(\displaystyle \bar{x} = \frac{1}{\sum_{i=0}^{n} p_i}\sum_{i=0}^{n} p_i x_i\)</p>
+							<p class="fragment"  data-fragment-index="1">\(\displaystyle \bar{x} = \frac{1}{\sum_{i=1}^{N} p_i}\sum_{i=1}^{N} p_i x_i\)</p>
 						</div>
 					</section>
 					<section>
@@ -234,10 +234,10 @@ plot1</code></pre>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center;">
 							
 							<h4 class="top_bar fragment"  data-fragment-index="1">Moyenne géométrique</h4>
-							<p class="fragment"  data-fragment-index="1">\(\displaystyle \bar{x} = \sqrt[n]{\prod _{i=0}^{n} x_i}\)</p>
+							<p class="fragment"  data-fragment-index="1">\(\displaystyle \bar{x} = \sqrt[N]{\prod _{i=1}^{N} x_i}\)</p>
 							<p style="align-self: flex-start;" class="fragment"  data-fragment-index="1">Moins sensible à la présence de valeurs extrêmes</p>
 							<h4 class="top_bar fragment"  data-fragment-index="2">Moyenne quadratique (RMS)</h4>
-							<p class="fragment"  data-fragment-index="2">\(\displaystyle \bar{x} = \sqrt{\frac{1}{n}\sum_{i=0}^{n} x_i^2}\)</p>
+							<p class="fragment"  data-fragment-index="2">\(\displaystyle \bar{x} = \sqrt{\frac{1}{N}\sum_{i=1}^{N} x_i^2}\)</p>
 						</div>
 					</section>
 					<section>
@@ -1369,7 +1369,7 @@ plot_mass</code></pre>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Les distributions très asymétriques et très étendues sont délicates à résumer.</p>
 							<p>Les indicateurs traditionnels sont plus efficaces lorsque la variabilité des valeurs est moindre, et leur distribution plus symétrique.</p>
-							<p>e.g. Considérer la population moyenne des villes de France a-t’elle du sens ? <img src="img/images_univariees/histoVillesPop-1.png" width="768" style="display: block; margin: auto;" /></p>
+							<p>e.g. Considérer la population moyenne des villes de France a-t-elle du sens ? <img src="img/images_univariees/histoVillesPop-1.png" width="768" style="display: block; margin: auto;" /></p>
 						</div>
 					</section>
 					<section id="distribution-rang-taille-des-villes-de-france" class="slide level2">
