@@ -160,7 +160,7 @@
 			<div class="slides">
 				<section>
 					<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
-						<h2>Analyse Multivariée</h2>
+						<h2>Analyse Multivariée : analyse factorielle et classification</h2>
 						<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
 						<h4>M1 Géomatique - M2 IGAST</h4>
 						<div>
@@ -368,7 +368,7 @@
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p><b>Objectifs de l'ACP :</b></p>
 							<ul>
-								<li>Permet de résumer un grand nombre de variables en 2-3 dimensions.</li>								</li>
+								<li>Permet de résumer un grand nombre de variables en un nombre plus petit (ex : 2-3) de dimensions.</li>								</li>
 								<li>Fournit des nouvelles variables, <b>composantes principales</b>, non corrélées entre elles.</li>
 								<li>Décrire et visualiser le lien entre les données.</li>
 								<li>Réduire le nombre de dimensions = de variables à utiliser.</li>
@@ -1213,41 +1213,51 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Exemple d'Algorithme : Random Forest</h4>
+						<h4 class="top_bar">Exemple d'Algorithme n°1 : Arbre de décision</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p><b>Random Forest</b> est un modèle d'<b>ensemble d'arbres de décision</b> qui utilise le <i>bagging</i> pour améliorer la précision.</p>
-							<p>Caractéristiques principales :</p>
+							<p>Modèle de classification qui repose sur la séparation progressive des données à l'aide de seuils.</p>
+							<p><b>Avantages</b></p>
 							<ul>
-								<li><b>Ensemble de plusieurs arbres de décision :</b> Chaque arbre est construit sur un échantillon aléatoire du jeu de données.</li>
-								<li><b>Décisions basées sur le vote majoritaire :</b> La classe prédite est celle choisie par la majorité des arbres.</li>
-								<li><b>Réduction de l'overfitting :</b> En combinant plusieurs modèles, Random Forest augmente la robustesse et la généralisation.</li>
-								<li><b>Importance des caractéristiques :</b> Permet de mesurer l'influence de chaque variable sur la prédiction.</li>
+								<li>Facile à <b>intérpréter</b> c-à-d qu'on peut facilement comprendre les sorties du modèle à partir de ces entrées.</li>
+								<li>Capable de faire des séparations non linéaires</li>
 							</ul>
-							<p><b>Avantages :</b> Résistant au bruit, flexible, et performant pour des problèmes non linéaires.</p>
+							<p><b>Inconvénients</b></p>
+							<ul>
+								<li>Fortement tendance à surapprendre (overfitting)</li>
+								<li>Se généralise mal à de nouvelles données.</li>
+							</ul>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Fonctionnement de Random Forest</h4>
+						<h4 class="top_bar">Arbre de décision</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Etapes :</p>
-							<ol>
-								<li>Créer <b>plusieurs sous-échantillons</b> du jeu de données (échantillonnage bootstrap).</li>
-								<li>Construire un arbre de décision sur chaque échantillon.</li>
-								<li>Prédire une nouvelle instance en <b>faisant voter</b> tous les arbres et choisir la classe majoritaire.</li>
-							</ol>
-							<p>Chaque arbre est ainsi légèrement différent, ce qui réduit la corrélation entre eux et augmente la <b>robustesse globale</b> du modèle.</p>
+							<img src="img/images_multivariees/arbre.svg" style="align-self: center; width: 65%;">
+							<p>Au court de l'entrainement :</p>
+							<ul>
+								<li>On associe à chaque nœud une variable et un seuil sur les valeurs de cette variable.</li>
+								<li>On associe à chaque feuille une classe.</li>
+							</ul>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Construction d'un Arbre de Décision dans Random Forest</h4>
+						<h4 class="top_bar">Arbre de décision</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>La construction d'un arbre de décision dans une <b>Random Forest</b> se fait de la manière suivante :</p>
+							<img src="img/images_multivariees/arbre.svg" style="align-self: center; width: 65%;">
+							<p>Pour l'inférence d'un individu :</p>
+							<ul>
+								<li>Les comparaison de la valeur prise par variable pour l'individu à prédire et le seuil indique de quel côté du nœud aller.</li>
+								<li>La feuille dans laquelle on arrive détermine la classe prédite.</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Construction d'un Arbre de Décision</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<ol>
-								<li><b>Échantillonnage Bootstrap :</b> Créer un échantillon aléatoire avec remplacement à partir du jeu de données d'origine.</li>
 								<li><b>Construction de l'arbre :</b> Pour chaque nœud de l'arbre :
 									<ul>
-										<li>Sélectionner aléatoirement un sous-ensemble de variables (features).</li>
-										<li>Évaluer la meilleure variable et le seuil parmi ce sous-ensemble pour séparer les données.</li>
+										<li>Sélectionner aléatoirement un sous-ensemble de variables.</li>
+										<li>Évaluer la meilleure variable et le meilleur seuil parmi ce sous-ensemble pour séparer les données.</li>
 										<li>Diviser le nœud en utilisant cette variable.</li>
 									</ul>
 								</li>
@@ -1283,8 +1293,8 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<p>L'<b>indice de Gini</b> mesure l'<b>impureté</b> d'un nœud. Il est défini par :</p>
 							<p style="text-align:center;">$Gini = \sum_{i=1}^{C} p_i(1 - p_i) = 1 - \sum_{i=1}^{C} p_i^2$</p>
 							<ul>
-								<li><b>p<sub>i</sub></b> est la proportion des instances appartenant à la classe <i>i</i> dans le nœud.</li>
-								<li>Un Gini de <b>0</b> indique que le nœud est <b>pur</b> (toutes les instances appartiennent à une seule classe).</li>
+								<li><b>p<sub>i</sub></b> est la proportion des individus appartenant à la classe <i>i</i> dans le nœud.</li>
+								<li>Un Gini de <b>0</b> indique que le nœud est <b>pur</b> (toutes les individus appartiennent à une seule classe).</li>
 								<li>Un Gini proche de <b>0.5</b> indique une forte impureté (les classes sont mélangées).</li>
 							</ul>
 						</div>
@@ -1310,8 +1320,8 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 								<tr  class="tr1"><td>5.8</td><td>2.2</td><td>Virginica</td></tr>
 							</table>
 							<ul>
-								<li><b>Nœud de gauche:</b> 2 instances (2 Setosa)</li>
-								<li><b>Nœud de droite:</b> 4 instances (3 Versicolor, 1 Virginica)</li>
+								<li><b>Nœud de gauche:</b> 2 individus (2 Setosa)</li>
+								<li><b>Nœud de droite:</b> 4 individus (3 Versicolor, 1 Virginica)</li>
 							</ul>
 							<p><b>Calcul du Gini pour le nœud gauche :</b></p>
 							<p style="text-align:center;">$Gini = 1 - (2/2)^2 = 0 \rightarrow$<b> Ce nœud est pur !</b></p>
@@ -1330,6 +1340,61 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<p><b>Itération :</b> Le processus se répète jusqu'à ce qu'un critère d'arrêt soit atteint (profondeur maximale, impureté minimale, etc.).</p>
 						</div>
 					</section>
+					<section>
+						<h4 class="top_bar">Construction d'un arbre</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:row; justify-content: center; align-items:start; text-align: justify;">
+							<div style="width: 50%;"></div> 
+							<img style="width: 50%;" src="img/images_multivariees/decision_tree_scatter_0.png">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Construction d'un arbre</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:row; justify-content: center; align-items:start; text-align: justify;">
+							<img style="width: 50%;" src="img/images_multivariees/decision_tree_tree_1.png">
+							<img style="width: 50%;" src="img/images_multivariees/decision_tree_scatter_1.png">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Construction d'un arbre</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:row; justify-content: center; align-items:start; text-align: justify;">
+							<img style="width: 50%;" src="img/images_multivariees/decision_tree_tree_2.png">
+							<img style="width: 50%;" src="img/images_multivariees/decision_tree_scatter_2.png">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Construction d'un arbre</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:row; justify-content: center; align-items:start; text-align: justify;">
+							<img style="width: 50%;" src="img/images_multivariees/decision_tree_tree_3.png">
+							<img style="width: 50%;" src="img/images_multivariees/decision_tree_scatter_3.png">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple d'Algorithme n°2 : Random Forest</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Random Forest</b> est un modèle d'<b>ensemble d'arbres de décision</b> qui utilise le <i>bagging</i> pour améliorer la précision.</p>
+							<p>Caractéristiques principales :</p>
+							<ul>
+								<li><b>Ensemble de plusieurs arbres de décision :</b> Chaque arbre est construit sur un sous-échantillon aléatoire du jeu de données.</li>
+								<li><b>Décisions basées sur le vote majoritaire :</b> La classe prédite est celle choisie par la majorité des arbres.</li>
+								<li><b>Réduction de l'overfitting :</b> En combinant plusieurs modèles, Random Forest augmente la robustesse et la généralisation.</li>
+								<li><b>Importance des caractéristiques :</b> Permet de mesurer l'influence de chaque variable sur la prédiction.</li>
+							</ul>
+							<p><b>Avantages :</b> Résistant au bruit, flexible, et performant pour des problèmes non linéaires.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Fonctionnement de Random Forest</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Etapes :</p>
+							<ol>
+								<li>Créer <b>plusieurs sous-échantillons</b> du jeu de données (échantillonnage bootstrap).</li>
+								<li>Construire un arbre de décision sur chaque échantillon.</li>
+								<li>Prédire une nouvelle individu en <b>faisant voter</b> tous les arbres et choisir la classe majoritaire.</li>
+							</ol>
+							<p>Chaque arbre est ainsi légèrement différent, ce qui réduit la corrélation entre eux et augmente la <b>robustesse globale</b> du modèle.</p>
+						</div>
+					</section>
+					
 					<section>
 						<h4 class="top_bar">Random Forest en Python</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">

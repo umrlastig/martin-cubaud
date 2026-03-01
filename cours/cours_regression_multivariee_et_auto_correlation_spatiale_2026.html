@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Analyse Multivariée</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/white.css">
+		<link rel="stylesheet" href="plugin/tabs/tabs.css">
+		<link rel="icon" type="image/png" href="logo_ENSG.png" />
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<style>
+		.top_bar {
+			width: 100%;
+			background-color: #97bf11;
+			top: 0px;
+			font-size: 35px;
+		}
+		
+		p, a {
+			font-size: 30px;
+		}
+		li {
+			font-size: 30px;
+		}
+		code{
+			font-size: 15px;
+			line-height: 1.2em;
+			max-height: 30%;
+		}
+		section {
+			height: 100%;
+		}
+		b, strong {
+		color: #7a9e08;
+		}
+		i {
+		font-style: italic;
+		}
+		.tabs {
+		margin: 0px;
+		display: flex;
+		}
+		.tab-button {
+		padding: 10px 20px;
+		border-radius: 10px 10px 0px 0px;
+		cursor: pointer;
+		background-color: #ddd;
+		border: none;
+		outline: none;
+		}
+		.tab-button:hover{
+			padding: 9px 19px;
+			border: 1px solid black;
+		}
+		.tab-button.active {
+		background-color: #666;
+		color: white;
+		}
+		.tab-content.inactive{
+		display: none;
+		visibility: hidden;
+		height: 0px;
+		margin: 0px;
+		}
+		.tab-content.active {
+		display: block;
+		visibility: visible;
+		height: fit-content;
+		margin: 0px;
+		}
+		.img.active{
+			visibility: visible;
+			margin: 0px;
+			max-height: 50%;
+			height: auto;
+		}
+		.img.inactive{
+			visibility: hidden;
+			margin: 0px;
+			height: 0px;
+		}
+		.text.active{
+			visibility: visible;
+			font-size: 30px;
+			margin: 20px 0px;
+		}
+		.text.inactive{
+			visibility: hidden;
+			color:white;
+			font-size: 1px;
+			margin: 0px 0px;
+		}
+
+		.dataframe.active{
+			font-size: 20px;
+			visibility: visible;
+			margin: 20px;
+		}
+		.dataframe.inactive{
+			font-size: 0px;
+			visibility: hidden;
+			margin: 8px;
+		}
+
+		.tr1{
+			background-color: #272822;
+			color: #c3c3c3;
+		}
+		.tr2{
+			background-color: #454545;
+			color: #c3c3c3;
+		}
+
+		.head.text.active{
+			font-size: inherit;
+		}
+		.answer{
+			background-color: #454545;
+		}
+
+		.hljs-comment{
+			color: wheat;
+		}
+		.fragment.border {
+			border:none;
+		}
+		.fragment.border.visible {
+			border: 2px solid #7a9e08;
+		}
+		.arrow-container {
+			position: absolute;
+			height: 80%; /* Match the height of your main container */
+			width: 100%;
+		}
+
+		#arrow1 {
+			animation: draw 2s forwards; /* Optional animation */
+		}
+
+		#arrow2 {
+			animation: draw 2s forwards; /* Optional animation */
+		}
+
+		@keyframes draw {
+			from {
+				stroke-dasharray: 0, 1000;
+			}
+			to {
+				stroke-dasharray: 1000, 0;
+			}
+		}
+	</style>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+						<h2>Analyse Multivariée : régression multivariée</h2>
+						<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						<h4>M1 Géomatique - M2 IGAST</h4>
+						<div>
+							<small>
+							<p>Martin Cubaud</p>
+							<p>LASTIG-UGE-IGN/Géodata Paris</p>
+							<p>2025-2026</p>
+							</small>
+						</div>
+						<img src="geodata_paris_logo.png" alt="reveal.js logo" style="height: 100px; margin: 0 auto 4rem auto; background: transparent; position: absolute;top: 0px;right: 0px;" class="demo-logo">
+					</div>
+				</section>
+				<section>
+					<h4 class="top_bar">Plan du cours</h4>
+					<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+						<p>Cours construit à partir de ceux de <a href="https://www.umr-lastig.fr/paul-chapron/resources/cours_site/anaspat.html">Paul Chapron</a>, <a href="https://marie-chavent.perso.math.cnrs.fr/wp-content/uploads/2013/10/ModStat_C2.pdf&ved=2ahUKEwj6jcz59tOSAxWBUqQEHZotNXEQFnoECBYQAQ&usg=AOvVaw3uXrt0-cCSVcBIpzSBeiSp">Marie Chavent</a> et <a href="https://www.insee.fr/fr/statistiques/fichier/3635442/imet131-g-chapitre-3.pdf&ved=2ahUKEwiThs2B5tOSAxUTZqQEHVD9E40QFnoECBgQAQ&usg=AOvVaw3irzWlqlvGd3K2tB9IThyR">Bouayad Agha Salima</a></p>
+						<ul>
+							<li><b>Introduction et rappels</b></li>
+							<li><b>Régression linéaire multiple</b></li>
+							<li><b>Cartographie des résidus et auto-corrélation spatiale</b></li>
+							<li><b>Régression Pondérée Géographiquement (GWR)</b></li>
+						</ul>
+					</div>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Introduction et rappels</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Analyse multivariée - principes</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Analyse multivariée = les données sont <b>multidimensionnelles</b>.</p>
+							<table border="1" class="dataframe active" style="align-self: center;">
+								<thead>
+								  <tr style="text-align: right;" class="tr1">
+									<th>gid</th>
+									<th>nom</th>
+									<th>Code insee</th>
+									<th>Alt_moy</th>
+									<th>Pente_moy</th>
+									<th>De_relig</th>
+									<th>...</th>
+								  </tr>
+								</thead>
+								<tbody>
+								  <tr class="tr2">
+									<th>1</th>
+									<td>RENCUREL</td>
+									<td>38333</td>
+									<td>1114</td>
+									<td>74</td>
+									<td>0,02893089</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr1">
+									<th>2</th>
+									<td>MALLEVAL-EN-VERCORS</td>
+									<td>38216</td>
+									<td>1114</td>
+									<td>74</td>
+									<td>0,07057872</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr2">
+									<th>3</th>
+									<td>MURIANETTE</td>
+									<td>38271</td>
+									<td>1027</td>
+									<td>73</td>
+									<td>0</td>
+									<td></td>
+								  </tr>
+								  <tr class="tr1">
+									<th>4</th>
+									<td>CHAMP-SUR-DRAC</td>
+									<td>38071</td>
+									<td>215</td>
+									<td>2</td>
+									<td>0,4742854</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr2">
+									<th>5</th>
+									<td>JARRIE</td>
+									<td>38200</td>
+									<td><span class="fragment shrink fade-out" data-fragment-index="1">385</span><span class="fragment" data-fragment-index="1"><b>$X_{ij}$</b></span></td>
+									<td>46</td>
+									<td>0,22279623</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr1">
+									<th>6</th>
+									<td>AUTRANS</td>
+									<td>38021</td>
+									<td>1305</td>
+									<td>42</td>
+									<td>0,02277919</td>
+									<td> </td>
+								  </tr>
+								  <tr class="tr2">
+									<th>7</th>
+									<td>MONTCHABOUD</td>
+									<td>38252</td>
+									<td>518</td>
+									<td>71</td>
+									<td>0,50559645</td>
+									<td></td>
+								  </tr>
+								  <tr class="tr1">
+									<th>8</th>
+									<td>PONT-EN-ROYANS</td>
+									<td>38319</td>
+									<td>409</td>
+									<td>43</td>
+									<td>0</td>
+									<td> </td>
+								  </tr>
+								</tbody>
+							  </table>
+							<p><b>Classification :</b> Quelles sont les communes (individus) qui se ressemblent ?<b>Analyse factorielle :</b> Quelles sont les variables qui ont des comportements similaires ou opposés ?</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Analyse Multi-Variée - Principes</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>A chaque individu (unité spatiale), on associe son vecteur $X_i$, contenant la $i^{ème}$ ligne :</p>
+							<p>$X_i = (X_{i,1} ... X_{i,M})$</p>
+							<p>A chaque variable, on associe son vecteur $V_j$, contenant la $j^{ème}$ colonne :</p>
+							<p>$V_j = \begin{pmatrix}X_{1,j}\\...\\X_{N,j}\end{pmatrix} \rightarrow$ Moyenne, écart-type, variance</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Rappels : régression linéaire</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Statistiques <b>inférentielles</b></p>
+							<p>On veut prédire la variable $V_2$ à partir d'une variable <b>explicative</b> $V_1$.</p>
+							<p>Le modèle est : $\hat{V}_2 = a \times V_1 + b$, où $a$ et $b$ sont les paramètres ou coefficients du modèle.</p> 
+							<p>a et b sont obtenus par moindres carrés.</p>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Rappels : régression linéaire</h4>
+						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>$R^2=cor(V_1, V_2)^2=cor(\hat{V}_2, V_2)^2$ $\rightarrow$ est-ce que le modèle prédit bien les observations ?</p>
+							<p>$R^2$ $\rightarrow$ Quelle pourcentage de la variabilité de $V_2$ est expliquée par celle de $V_1$ ?</p>
+							<p><b>Significativité :</b> p-value  $\rightarrow$ probabilité d'obtenir un $R^2$ au moins aussi fort si les 2 variables étaient indépendantes.</p>
+							<p>On note les <b>résidus</b> $\epsilon$ : $\epsilon_i = V_{2, i} - \hat{V}_{2, i}$.</p>
+							<p>Erreur quadratique moyenne $MSE=\frac{1}{n}\sum_{i=1}^n \epsilon_i^2$,<span style="margin-right: 10px;"></span> $RMSE = \sqrt{MSE}$</p>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							
+							<p>On veut prédire le niveau de vie moyen par carreaux de 1 km à partir de la surface moyenne des logements :</p>
+							<div style="display: flex; flex-direction:row;">
+								<img src="img/images_regression_multiple/regression_simple.png">
+								<ul style="width: 100%;">
+									<li style="font-size: 25px;">snv_moy_pred = 104 * surf_moy + 17044</li>
+									<li style="font-size: 25px;">R² = 0.25 : niveau de vie élevé corrélé à grandes surfaces, mais variabilité pour une surface donnée.</li>
+									<li style="font-size: 25px;">p-value très faible $\rightarrow$ significatif</li>
+								</ul>
+							</div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Exemple</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center;" src="img/images_regression_multiple/carte_prediction.png">
+						</div>
+					</section>
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Régression linéaire multiple</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression linéaire multiple</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Objectifs de la régression linéaire multiple :</b></p>
+							<ul>
+								<li>On souhaite prédire une variable quantitative $Y$ à partir de m variables explicatives.</li>
+								<li>On suppose une relation linéaire entre $Y$ et les variables explicatives.</li>
+								<ul>
+								<li>S'il y a des liens plus complexes, on peut créer de nouvelles variables $\rightarrow$ par exemple transformation non-linéaire d'une variable, produit de plusieurs variables</li>
+								<li><span style="color: red;">⚠</span> Aucune variable explicative ne doit être une combinaison linéaire d'autres variables explicatives.</li>
+								</ul>
+							</ul>
+						
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Modèle de la régression linéaire multiple</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$Y_i = \beta_0 + \beta_1 X_{i,1} + \dots + \beta_m X_{i,m} + \epsilon_i = \beta_0 + \sum_{j=1}^m \beta_j X_{i,j}$</p>
+							<p>Ecriture matricielle :</p>
+							<p style="align-self: center;">$Y =  \tilde{X} \beta + \epsilon$</p>
+							<p>Avec $Y = \begin{pmatrix} Y_1 \\ \dots \\ Y_n \end{pmatrix}$, $\tilde{X}= \begin{pmatrix} 1 & X_{1,1} & \dots & X_{1,m} \\ \dots & \dots & \dots & \dots  \\  1 & X_{n,1} & \dots & X_{n,m} \end{pmatrix}$, $\beta = \begin{pmatrix} \beta_0 \\ \dots \\ \beta_m \end{pmatrix}$, $\epsilon = \begin{pmatrix} \epsilon_1 \\ \dots \\ \epsilon_n \end{pmatrix}$</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Méthode des moindres carrés</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>On veut trouver les valeurs de $\beta$ qui minimisent les résidus $\epsilon$.</p>
+							<p>En particulier, on veut minimiser la somme des carrés des résidus :</p>
+							<p>$\phi(\beta) = \sum_{i=1}^n \epsilon_i^2 = \epsilon^T \epsilon$</p>
+					</section>
+					<section>
+						<h4 class="top_bar">Méthode des moindres carrés</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p style="font-size: 20px;">$\phi(\beta) = (Y-\tilde{X}\beta)^T(Y-\tilde{X}\beta) = Y^TY -2Y^T\tilde{X}\beta +\beta^T\tilde{X}^T\tilde{X}\beta$</p>
+							<p style="font-size: 20px;">On veut trouver $\hat{\beta}$ tel que $\frac{d\phi}{d\beta}(\hat{\beta})=\vec{0}$ </p>
+							<p style="font-size: 20px;"> $\frac{d\phi}{d\beta} = 2\tilde{X}^T(\tilde{X}\beta - Y) =0 \Leftrightarrow \tilde{X}^TY = \tilde{X}^T\tilde{X}\beta$</p>
+							<p>Si la matrice $\tilde{X}^T\tilde{X}$ est inversible, alors $\hat{\beta} = (\tilde{X}^T\tilde{X})^{-1}\tilde{X}^TY$ minimise les résidus.</p>
+							<p style="font-size: 20px;">La même formule marche pour la régression linéaire simple.</p>
+							<p style="align-self: center;">$\hat{Y} = \tilde{X}\hat{\beta}$</p>
+					</section>
+					<section>
+						<h4 class="top_bar">Interprétation des <span style="text-transform: none;">$\beta_j$</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Les coefficients sont ceux de l'hyperplan qui passe au mieux dans les données.</p>
+							<p>Chaque $\beta_j$ indique comment évolue Y en fonction de la variable j <b>toutes choses égales par ailleurs</b>, c'est à dire si les autres variables sont fixées.</p>
+							<img style="align-self: center; width: 70%;" src="img/images_regression_multiple/regression_bilinéaire.png">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Résultats avec statsmodels</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
+X = sm.add_constant(gdf[explicative_vars])
+y = gdf[target]
+#Ordinary Least Square
+model = sm.OLS(y, X)
+results = model.fit()
+print(results.summary())</code></pre>
+<p></p>
+<pre class="numpy tab-content active" style="font-size: smaller;"><code class="language-text">                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                snv_moy   R-squared:                       0.295 
+Model:                            OLS   Adj. R-squared:                  0.295
+Method:                 Least Squares   F-statistic:                     1727.
+Date:                Thu, 12 Feb 2026   Prob (F-statistic):               0.00
+Time:                        15:38:32   Log-Likelihood:                -81103.
+No. Observations:                8267   AIC:                         1.622e+05
+Df Residuals:                    8264   BIC:                         1.622e+05
+Df Model:                           2                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const       1.669e+04    207.718     80.334      0.000    1.63e+04    1.71e+04
+surf_moy     147.9457      2.737     54.049      0.000     142.580     153.311
+prop_mais  -5385.5465    239.789    -22.460      0.000   -5855.594   -4915.500
+==============================================================================
+Omnibus:                      702.389   Durbin-Watson:                   0.777
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1606.003
+Skew:                           0.530   Prob(JB):                         0.00
+Kurtosis:                       4.881   Cond. No.                         539.
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Résultats avec statsmodels</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify; font-size: 26px;">
+							<ul>
+								<li style="font-size: 26px;"><code style="font-size: 26px;">R-squared</code> Le $R^2$</li>
+								<li style="font-size: 26px;"><code style="font-size: 26px;">Adj. R-squared</code> Le $R^2$ ajusté du fait qu'il augmente "automatiquement" en augmentant le nombre de variables $R^2 = 1 - \frac{(1-R^2)(n-1)}{n-m-1}$</li>
+								<li style="font-size: 26px;"><code style="font-size: 26px;">Prob (F-statistic)</code> La probabilité que tous les $\beta_j$=0.</li>
+							</ul>
+							<p></p>
+							<ul>
+								<li style="font-size: 26px;"><code style="font-size: 26px;">coef</code> La valeur de $\beta_j$</li>
+								<li style="font-size: 26px;"><code style="font-size: 26px;">std err</code> L'écart-type de l'estimation de $\beta_j$</li>
+								<li style="font-size: 26px;"><code style="font-size: 26px;">P>|t|</code>La probabilité que ce $\beta_j$=0</li>
+								<li style="font-size: 26px;"><code style="font-size: 26px;">[0.025   0.975]</code>L'intervale de confiance de $\beta_j$</li>
+							</ul>
+							<p>Des indicateurs sur la normalité des résidus $\rightarrow$ ici il est très confiant sur le fait que les résisus ne suivent pas une loi normale (ce qui a un impact sur la validité des intervales de confiance).</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Recommandations</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Toujours commencer par cartographier les variables, et par afficher des scatter plots entre chaque variable explicative et la variable expliquée.</p>
+							<p>Effectuer des transformations des variables si le lien est non linéaire.</p>
+							<p><span style="color: red;">⚠</span>La régression par moindres carrés est très sensible aux données abbérantes !!! Mais elle permet parfois aussi de les identifier, c'est souvent ceux qui ont une grande valeur de résidu (si l'erreur de mesure n'est pas sur toutes les variables).</p>
+						</div>
+					</section>
+					
+				</section>
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Cartographie des résidus et auto-corrélation spatiale</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+
+					<section>
+						<h4 class="top_bar">Pourquoi s'intéresser à la spatialité ?</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Première loi de la géographie :</p>
+							<blockquote>"Tout intéragit avec tout, mais les objets proches ont plus de relations que les objets éloignés"</blockquote>
+							<p>[Tobler, 1970]</p>
+							<p>En particulier, les résidus de régressions ont souvent une structure spatiale, qui vient des différences de celles des variables explicatives et expliquée.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Cartographie des résidus</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<pre class="numpy tab-content active"><code class="language-python">import statsmodels.api as sm
+X = sm.add_constant(df[explicative_vars])
+y = gdf[target]
+model = sm.OLS(y, X)#Ordinary Least Square
+results = model.fit()
+ax = gdf.plot(column=results.resid, cmap="coolwarm", legend=True)#On choisit une colormap divergente
+departements_idf.boundary.plot(ax=ax, color="black")
+ax.set_title("carte des résidus")</code></pre>
+							<img style="align-self: center; width: 50%;" src="img/images_regression_multiple/carte_residus_3.png">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Auto-corrélation spatiale</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><b>Principe</b> : à quel point les valeurs d'une variable pour une unité spatiale donnée ressemblent aux valeurs dans les unités spatiales voisines ?</p>
+							<p>Peut s'appliquer à n'importe quelle variable, pas seulement les résidus.</p>
+							<p>Notion de <b>voisinage</b> : on va le représenter sous la forme d'une matrice $W$.</p>
+							<p>Pour toutes unités spatiales i et j, $W_{i,j}$=1 si i et j sont voisins, 0 sinon.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Choix du voisinage</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Les mesures d'auto-corrélation spatiale sont sensible à ce choix, toujours comparer des variables avec les mêmes unités spatiales et la même définition du voisinage.</p>
+							<p>Analyser les résultats selon plusieurs choix est souvent intéressant aussi.</p>
+							<p>Pour des points :</p>
+							<ul>
+								<li>Tous les points à moins d'une distance seuil</li>
+								<li>Les k points les plus proches</li>
+								<li>Triangulation de Delaunay</li>
+							</ul>
+							<p>Pour des polygones :</p>
+							<ul>
+								<li>Polygones adjacents</li>
+								<li>Méthodes pour points appliquées au centroïde des polygones (⚠ si polygone non convexe)</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Choix du voisinage - comparaison</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width: 100%;" src="img/images_regression_multiple/exemples_voisinages.png">
+							<p>Connexité ? Différences de nombre de voisins ? De distances aux voisins ?</p>
+							<p>Globalement, plus de voisins tends à faire diminuer les valeurs des indices d'auto-corrélation.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Choix du voisinage - Python (pas idéal en complexité)</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Points à moins d'une distance seuil :</p>
+							<pre class="numpy tab-content active"><code class="language-python">distances = gdf.geometry.apply(lambda geom: gdf.geometry.distance(geom)
+W = (distances < threshold).astype(int)
+W = W - np.eye(len(W))#la diagonale ne doit pas contenir des 1
+</code></pre>
+							<p>k points les plus proches :</p>
+							<pre class="numpy tab-content active"><code class="language-python">W = (distances.rank(axis=0) <= k+1).astype(int)
+W = W - np.eye(len(W))</code></pre>
+							<p>Polygones adjacents</p>
+							<pre class="numpy tab-content active"><code class="language-python">W = gdf.geometry.apply(lambda geom: gdf.geometry.touches(geom)).astype(int)</code></pre>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Diagramme de Moran</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Pour une variable $x$, en notant $x_c = x - \bar{x}$ et $\tilde{W}$ la matrice $W$ normalisée par ligne.</p>
+							<p>$(\tilde{W} x_c)_i = \frac{\sum_{j=1}^n w_{i,j} {x_c}_i}{\sum_{j=1}^n w_{i,j}}$ est la moyenne de $x_c$ dans les unités voisines.</p>
+							<p>On va tracer le nuage de point de $\tilde{W} x_c$ en fonction de $x_c$.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Diagramme de Moran</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width: 60%;" src="img/images_regression_multiple/diagramme_moran.png">
+							<ul>
+								<li>Quadrant 1 (et 3) : x a des valeurs similaires pour i et pour ses voisins, supérieures (resp. infér.) à la moyenne $\rightarrow$ auto-corrélation positive</li>
+								<li>Quadrant 2 et 4 : x a des valeurs différentes pour i et pour ses voisins, le voisinage ne ressemble pas à i $\rightarrow$ auto-corrélation négative</li>
+							</ul>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice I de Moran</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$I = \frac{n}{\sum_i \sum_j w_{i,j}} \frac{\sum_i \sum_j w_{i,j}(x_i -\hat{x})(x_j -\hat{x}) }{\sum_i (x_i -\hat{x})^2}$</p>
+							<p>$I=1$ $\rightarrow$ auto-corrélation spatiale parfaite</p>
+							<p>$I=-1$ $\rightarrow$ dispersion parfaite</p>
+							<p>$I=0$ $\rightarrow$ structure spatiale aléatoire</p>
+							<p>Associé à une p-value qui permet de rejeter (ou non) l'hypothèse d'absence d'auto-corrélation spatiale.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice I de Moran</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width: 50%;" src="img/images_regression_multiple/Moran's_I_example.png">
+							<p>Source : wikipedia</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice C de Geary</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$C = \frac{n-1}{2\sum_i \sum_j w_{i,j}} \frac{\sum_i \sum_j w_{i,j}(x_i - x_j)^2 }{\sum_i (x_i -\hat{x})^2}$</p>
+							<p>$C = 0$ $\rightarrow$ auto-corrélation spatiale parfaite</p>
+							<p>$C > 1$ $\rightarrow$ dispersion</p>
+							<p>$C = 1$ $\rightarrow$ structure spatiale aléatoire</p>
+							<p>Associé à une p-value qui permet de rejeter (ou non) l'hypothèse d'absence d'auto-corrélation spatiale.</p>
+							<p>Le C de Geary est considéré moins robuste que le I de Moran, mais donne une information plus locale.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Indice C de Geary</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width: 50%;" src="img/images_regression_multiple/Geary_example.png">
+							<p>Source : wikipedia</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Cartographier la dépendance locale</h4>
+						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Local Indicators of Spatial Association (LISA)</p>
+							<p><b>I de Moran local</b> $I_i = \frac{n (x_i - \bar{x})}{\sum_j (x_j - \bar{x} )^2 } \sum_j w_{i,j} (x_j - \bar{x})$</p>
+							<p>$I=\frac{\sum_i I_i}{\sum_{i,j}w_{i,j}}$</p>
+							<p><b>C de Geary local</b> $C_i = \frac{(n-1)}{\sum_j (x_j - \bar{x} )^2 } \sum_j w_{i,j} (x_i - x_j)^2$</p>
+							<p> $C=\frac{\sum_i C_i}{2\sum_{i,j}w_{i,j}}$</p>
+						</div>
+					</section>
+				</section>
+
+
+
+
+
+				<section>
+					<section>
+						<div style="width:100%; height:100%; display: flex; flex-direction:column; justify-content: center;">
+							<h4>Régression géographiquement pondérée (GWR)</h4>
+							<div style="width: 100%; height: 1px; background-color: #97bf11"></div>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression géographiquement pondérée - Principe</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Utilisation conseillée que si les résidus sont géographiquement dépendants.</p>
+							<p>Dans ce modèle, les coefficients de chaque variable explicative vont <b>dépendre de la position</b>.</p>
+							<p>On va les estimer localement les coefficients en donnant plus d'importance au observations proches et moins aux observations lointaines.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Régression géographiquement pondérée - Formule</h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>$y_i = \beta_0(i) \sum_{j=1}^m \beta_j(i) \times X_{i,j} + \epsilon_i$</p>
+							<p>Les coefficients $\beta$ dépendents de i</p>
+							<p>On estime le vecteur $\beta(i)$ par $\hat{\beta}(i) = (\tilde{X}^TW_i\tilde{X})^{-1}\tilde{X}^TW_iy$</p>
+							<p>Où $W_i$ est une matrice de taille $[n \times n]$ qui exprime l'importance à donner à chaque observation pour estimer $\beta(i)$, en fonction de leur distance à l'observation i.</p>
+							<p style="font-size: 20px;"> Pour rappel, $\tilde{X}$ est la matrice X avec une colonne de 1 au début.</p>
+							<p>Il y a une matrice $W_i$ différente pour chaque observation $i$.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Calcul de <span style="text-transform: none;">$W_i$</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p><span style="color: red;">⚠</span> C'est une matrice différente de celle utilisée pour l'auto-corrélation spatiale.</p>
+							<p>$W_i = \begin{pmatrix} w_{i,1} & 0 & \dots & 0 \\ 0 & w_{i,2} & \dots & 0\\ \dots & \dots & \dots & \dots\\ 0 & 0 & \dots & w_{i, n} \end{pmatrix}$, $w_{i,k}$ porte la dépendance spatiale locale.</p>
+							<p>$w_{i,k} = K(\frac{d(i, k)}{h})$, avec $d(i, k)$ la <b>distance</b> (spatiale) entre les 2 observations, h la <b>largeur de bande</b> et K une <b>fonction noyau</b> (kernel), par exemple $K(x)=e^{-0.5x^2}$</p>
+							
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Calcul de <span style="text-transform: none;">$W_i$</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width: 65%;" src="img/images_regression_multiple/w_ik.png">
+							<p>On choisit h en fonction de l'échelle du phénomène et de son hétérogénéité spatiale $\rightarrow$ distance d'influence.</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Choix de h</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>h petit :</p>
+							<ul>
+								<li>Phénomène très local</li>
+								<li>Faibles capacités de généralisation</li>
+								<li>Sensible au bruit</li>
+								<li>Risque d'instabilité de l'inversion de $\tilde{X}^TW_i\tilde{X}$</li>
+							</ul>
+							<p>h grand :</p>
+							<ul>
+								<li>Phénomène moins local, tend vers la régression non pondérée géographiquement</li>
+								<li>Plus facile à interpréter</li>
+								<li>Moins bonnes prédictions (résidus plus grands)</li>
+							</ul>
+							<p  style="margin-top: 20px; font-size: 20px;">Choix à la main ou choix automatique (ex: minimisation des résidus sur un jeu d'évaluation, Akaike Information Criterion (AIC) [Akaike, 1973])</p>
+							<p style="margin-top: 0px; font-size: 20px;">Si la densité des observations varie beaucoup, on peut utiliser une bande adaptative (h varie en fonction de la distance des plus proches voisins de i)</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Choix de h</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width: 100%;" src="img/images_regression_multiple/gwr_animation.gif">
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Analyse des coefficients <span style="text-transform: none;">$\beta_j(i)$</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<p>Intéressant de cartographier les valeurs de $\beta_j(i)$</p>
+							<p>Plusieurs comportements locaux différents</p>
+							<p>Relations locales plus ou moins fortes et avec des sens qui peuvent varier</p>
+							<p>à comparer aux coefficients de la régression globale</p>
+							<p style="color: red;">⚠ Peut ne pas avoir beaucoup de sens quand h est petit : valeurs très élevées, grande variabilité...</p>
+						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Analyse des coefficients <span style="text-transform: none;">$\beta_j(i)$</span></h4>
+						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
+							<img style="align-self: center; width: 100%;" src="img/images_regression_multiple/betas.gif">
+						</div>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				slideNumber: true,
+				center: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			});
+		</script>
+		<!-- Add JavaScript for tab functionality -->
+		<script>
+			function showTab(tabId) {
+			// Hide all tab content
+			document.querySelectorAll('section').forEach(section => {
+				if(section.querySelectorAll("."+tabId).length>0){
+					section.querySelectorAll('.tab-content').forEach(content => {
+						content.classList.remove('active');
+						content.classList.add('inactive')
+					});
+					section.querySelectorAll('.active').forEach(content => {
+						content.classList.remove('active');
+						content.classList.add('inactive')
+					});
+				
+					// Deactivate all tab buttons
+					section.querySelectorAll('.tab-button').forEach(button => {
+						button.classList.remove('active');
+					});
+				
+					// Show the selected tab content
+					section.querySelectorAll("."+tabId).forEach(content => {
+						content.classList.remove('inactive');
+						content.classList.add('active');
+					});
+				}
+			})
+			
+			
+
+			}
+		</script>
+		
+
+	</body>
+</html>
