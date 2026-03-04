@@ -364,10 +364,10 @@
 					<section>
 						<h4 class="top_bar">Modèle de la régression linéaire multiple</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$Y_i = \beta_0 + \beta_1 X_{i,1} + \dots + \beta_m X_{i,m} + \epsilon_i = \beta_0 + \sum_{j=1}^m \beta_j X_{i,j}$</p>
+							<p>$Y_i = \beta_0 + \beta_1 X_{i,1} + \dots + \beta_m X_{i,m} + \epsilon_i = \beta_0 + \sum_{j=1}^m \beta_j X_{i,j} + \epsilon_i$</p>
 							<p>Ecriture matricielle :</p>
 							<p style="align-self: center;">$Y =  \tilde{X} \beta + \epsilon$</p>
-							<p>Avec $Y = \begin{pmatrix} Y_1 \\ \dots \\ Y_n \end{pmatrix}$, $\tilde{X}= \begin{pmatrix} 1 & X_{1,1} & \dots & X_{1,m} \\ \dots & \dots & \dots & \dots  \\  1 & X_{n,1} & \dots & X_{n,m} \end{pmatrix}$, $\beta = \begin{pmatrix} \beta_0 \\ \dots \\ \beta_m \end{pmatrix}$, $\epsilon = \begin{pmatrix} \epsilon_1 \\ \dots \\ \epsilon_n \end{pmatrix}$</p>
+							<p>Avec $Y = \begin{pmatrix} Y_1 \\ \dots \\ Y_n \end{pmatrix}$, $\tilde{X}= \begin{pmatrix} 1 & X_{1,1} & \dots & X_{1,m} \\ \dots & \dots & \dots & \dots  \\  1 & X_{n,1} & \dots & X_{n,m} \end{pmatrix}$, $\beta = \begin{pmatrix} \beta_0 \\ \dots \\ \beta_m \end{pmatrix}$, $\epsilon = \begin{pmatrix} \epsilon_1 \\ \dots \\ \epsilon_n \end{pmatrix}$ vecteur des résidus</p>
 						</div>
 					</section>
 					<section>
@@ -565,7 +565,7 @@ W = W - np.eye(len(W))</code></pre>
 					<section>
 						<h4 class="top_bar">Indice I de Moran</h4>
 						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$I = \frac{n}{\sum_i \sum_j w_{i,j}} \frac{\sum_i \sum_j w_{i,j}(x_i -\hat{x})(x_j -\hat{x}) }{\sum_i (x_i -\hat{x})^2}$</p>
+							<p>$I = \frac{n}{\sum_i \sum_j w_{i,j}} \frac{\sum_i \sum_j w_{i,j}(x_i -\bar{x})(x_j -\bar{x}) }{\sum_i (x_i -\bar{x})^2}$</p>
 							<p>$I=1$ $\rightarrow$ auto-corrélation spatiale parfaite</p>
 							<p>$I=-1$ $\rightarrow$ dispersion parfaite</p>
 							<p>$I=0$ $\rightarrow$ structure spatiale aléatoire</p>
@@ -582,7 +582,7 @@ W = W - np.eye(len(W))</code></pre>
 					<section>
 						<h4 class="top_bar">Indice C de Geary</h4>
 						<div style="width:100%; height: 80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$C = \frac{n-1}{2\sum_i \sum_j w_{i,j}} \frac{\sum_i \sum_j w_{i,j}(x_i - x_j)^2 }{\sum_i (x_i -\hat{x})^2}$</p>
+							<p>$C = \frac{n-1}{2\sum_i \sum_j w_{i,j}} \frac{\sum_i \sum_j w_{i,j}(x_i - x_j)^2 }{\sum_i (x_i -\bar{x})^2}$</p>
 							<p>$C = 0$ $\rightarrow$ auto-corrélation spatiale parfaite</p>
 							<p>$C > 1$ $\rightarrow$ dispersion</p>
 							<p>$C = 1$ $\rightarrow$ structure spatiale aléatoire</p>
@@ -631,7 +631,7 @@ W = W - np.eye(len(W))</code></pre>
 					<section>
 						<h4 class="top_bar">Régression géographiquement pondérée - Formule</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>$y_i = \beta_0(i) \sum_{j=1}^m \beta_j(i) \times X_{i,j} + \epsilon_i$</p>
+							<p>$y_i = \beta_0(i) + \sum_{j=1}^m \beta_j(i) \times X_{i,j} + \epsilon_i$</p>
 							<p>Les coefficients $\beta$ dépendents de i</p>
 							<p>On estime le vecteur $\beta(i)$ par $\hat{\beta}(i) = (\tilde{X}^TW_i\tilde{X})^{-1}\tilde{X}^TW_iy$</p>
 							<p>Où $W_i$ est une matrice de taille $[n \times n]$ qui exprime l'importance à donner à chaque observation pour estimer $\beta(i)$, en fonction de leur distance à l'observation i.</p>
