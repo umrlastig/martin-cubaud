@@ -1159,8 +1159,8 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<p><b>Matrice de confusion</b> $M_{i,j}$ = nombre d'individus de la classe i prédits dans la classe j</p>
 							<p><b>Métriques par classe :</b><br></p>
 							<ul>
-								<li>Rappel (Producer accuracy) ${PA}_i=\frac{M_{i,i}}{\sum_{j} M_{i,j}}$</li>
-								<li>Précision (User accuracy) ${UA}_i=\frac{M_{i,i}}{\sum_{j} M_{j,i}}$</li>
+								<li>Rappel (Producer accuracy) ${PA}_i=\frac{M_{i,i}}{\sum_{j} M_{i,j}}=\frac{\text{nb correctement prédits i}}{\text{vrai nb de i}}$</li>
+								<li>Précision (User accuracy) ${UA}_i=\frac{M_{i,i}}{\sum_{j} M_{j,i}}=\frac{\text{nb correctement prédits i}}{\text{nb prédits i}}$</li>
 								<li>F1-score ${F1}_i\ =\ 2\frac{{UA}_i\ \times\ {PA}_i}{{UA}_i\ +\ {PA}_i}=\frac{2\ \ast\ M_{i,i}}{\sum_{j} M_{i,j}+\ \sum_{j} M_{j,i}}$</li>
 								<li>...</li>
 							</ul>
