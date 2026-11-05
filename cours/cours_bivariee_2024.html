@@ -559,7 +559,7 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 								<li>Si la liaison est de forme linéaire → faire une <b>régression</b></li>
 								<li>Si la liaison est non linéaire, est-elle <b>monotone</b> ? De forme connue ?→ Proposer un <b>modèle</b></li>
 							</ol>
-							<p>5bis. Réaliser un modèle <b>LOESS</b> avec prudence (uniquement descriptif , aucun pouvoir de généralisation)</p>
+							<p>5bis. Réaliser un modèle <b>LOESS</b> avec prudence (uniquement descriptif, aucun pouvoir de généralisation)</p>
 							<p>cf le blog de Lise Vaudor [<a href="http://perso.ens-lyon.fr/lise.vaudor/regression-loess/" class="uri">http://perso.ens-lyon.fr/lise.vaudor/regression-loess/</a>]</p>
 						</div>
 					</section>
@@ -568,7 +568,8 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">						
 							<p>Si la forme du nuage de points s’y prête, on peut faire une <b>régression linéaire</b> (aussi appelé <b>ajustement</b> linéaire).</p>
 							<p>On cherche la droite qui «passe au mieux» (=<em>ajustée</em>) dans le nuage de points de deux variables quantitatives $V_1$ et $V_2$, qui permet de visualiser :</p>
-								<li>l’<b>intensité</b> du lien / de la dépendance : points proche de la droite ou non ?</li>
+							<ul>
+								<li>l’<b>intensité</b> du lien / de la dépendance : points proches de la droite ou non ?</li>
 								<li>la <b>forme</b> de la dépendance : linéaire ou non ?</li>
 								<li>le <b>sens</b> de la dépendance : nulle, positive ou négative ?</li>
 							</ul>
@@ -599,7 +600,7 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Comment evaluer la “validité” du modèle linaire ?</h4>
+						<h4 class="top_bar">Comment évaluer la “validité” du modèle linaire ?</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>En pratique, il faut réunir deux critères :</p>
 							<ul>
@@ -680,7 +681,7 @@ summary(regression)</code></pre>
 							<p>Les <b>résidus</b> $\epsilon_i$ (écart entre valeur observée et valeur prédite $(V_2−\hat{V}_2)$ par le modèle pour l’individu i) doivent:</p>
 							<ul>
 								<li>être indépendants : covariance nulle ou très faible<br>$cov(x_i,\epsilon_i)=0$</li>
-								<li>être distribués selon un loi normale de moyenne nulle <br>$\epsilon  \sim \mathcal{N}(0,\sigma_{\epsilon})$</li>
+								<li>être distribués selon une loi normale de moyenne nulle <br>$\epsilon  \sim \mathcal{N}(0,\sigma_{\epsilon})$</li>
 								<li>être distribués de façon homogène (homoscédasticité), i.e. de variance constante $var(\epsilon_i)=\sigma^2_\epsilon$ , indépendante de l’observation.</li>
 							</ul>
 						</div>	
@@ -815,7 +816,7 @@ acf(residuals(modele1))</code></pre>
 						</div>
 					</section>
 					<section>
-						<h4 class="top_bar">Test statistique dit du “Chi 2” ou “Chi carré”</h4>
+						<h4 class="top_bar">Test statistique dit du “Chi 2” ou “Chi carré” (ou “Khi 2”)</h4>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<ul>
 								<li>Hypothèse nulle $H_0$ : les deux distributions sont indépendantes.</li>
@@ -828,7 +829,7 @@ acf(residuals(modele1))</code></pre>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<ul>
 								<li>On génère une <b>population théorique</b> à laquelle on va comparer la <b>population observée</b> en considérant leurs <b>distributions</b>.</li>
-								<li>Cette distribution théorique reflête ce qui se passerait si on suppose que $H_0$ est vraie.</li>
+								<li>Cette distribution théorique reflète ce qui se passerait si on suppose que $H_0$ est vraie.</li>
 								<li>Avec cette comparaison, on pourra conserver ou de rejeter l'hypothèse nulle.</li>
 							</ul>
 							<p>La création de cette distribution se fait à partir du <b>tableau de contingence</b>.</p>
@@ -837,7 +838,7 @@ acf(residuals(modele1))</code></pre>
 					<section>
 						<h4 class="top_bar">Tableau de contingence</h4>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>C'est un tableau à double entrée qui croise deux <b>variables qualitatives</b>.<br>Dans une case on trouve l’<b>effectif</b> (= le nombre) des individus caractérisés par la conjonction des modalités en ligne et en colonnes.</p>
+							<p>C'est un tableau à double entrée qui croise deux <b>variables qualitatives</b>.<br>Dans une case on trouve l’<b>effectif</b> (= le nombre) des individus caractérisés par la conjonction des modalités en ligne et en colonne.</p>
 							<p>Exemple sur des formes géométriques de couleurs :</p>
 							<table border="1" class="dataframe">
 								<thead>
@@ -1108,7 +1109,7 @@ acf(residuals(modele1))</code></pre>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Il faut comparer la valeur du $\chi^2$ calculée avec la valeur <b>critique</b> qu’on trouve dans une <b>table de loi du chi 2.</b></p>
 							<p>C’est un tableau à double entrée : une <b>valeur de quantile</b>, et un <b>degré de liberté.</b></p>
-							<p>On peut considérer que la valeur de quantile est le pourcentage d’erreur qu’on s’autorise de faire. On prend souvent <b>5%</b> : la colonne 1-0.05 = 0.95</p>
+							<p>On peut considérer que la valeur de quantile est le pourcentage d’erreurs qu’on s’autorise de faire. On prend souvent <b>5%</b> : la colonne 1-0.05 = 0.95</p>
 							<p>Le degré de liberté est obtenu en calculant la valeur :<br> $(nb_{lignes}−1)∗(nb_{colonnes}−1)$.</p>
 							<p>Dans notre exemple , le degré de liberté est 2*1 = 2</p>
 						</div>
@@ -1377,7 +1378,7 @@ acf(residuals(modele1))</code></pre>
 					<section>
 						<h4 class="top_bar">Exemple</h4>
 						<div style="width:100%; height:95%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p>Soient deux variables X et Y suivant une loi uniforme sur {"pile", "face"}, et complétement dépendantes (X=Y).<br>On construit la table des fréquences observées :</p>
+							<p>Soient deux variables X et Y suivant une loi uniforme sur {"pile", "face"}, et complètement dépendantes (X=Y).<br>On construit la table des fréquences observées :</p>
 							<table border="1" class="dataframe">
 								<thead>
 								  <tr style="text-align: right;" class="tr1">
@@ -1494,7 +1495,7 @@ acf(residuals(modele1))</code></pre>
 								<li><b>Hypothèse alternative (H<sub>a</sub>) :</b> Au moins une moyenne est différente.</li>
 								<li>On compare la variance entre les groupes à la variance à l'intérieur des groupes.</li>
 							</ul>
-							<p>$V_{inter-groupes} = \frac{1}{p-1}\sum_{i=1}^p n_i(\bar{x_i}-\bar{x})^2$<br>$V_{intra-groupes} = \frac{1}{N-p}\sum_{i=1}^p \sum_{j=1}^{n_i} (x_i^j-\bar{x_i})^2$<br><span style="font-size: 15px;">Avec $p$ le nombre de groupes, $N$ le nombre d'individu, $\bar{x}$ la moyenne de toute la population, $\bar{x_i}$ la moyenne du groupe i, $n_i$ le nombre d'individu du groupe i et $x_i^j$ le $j^e$ individu du groupe i.</span></p>
+							<p>$V_{inter-groupes} = \frac{1}{p-1}\sum_{i=1}^p n_i(\bar{x_i}-\bar{x})^2$<br>$V_{intra-groupes} = \frac{1}{N-p}\sum_{i=1}^p \sum_{j=1}^{n_i} (x_i^j-\bar{x_i})^2$<br><span style="font-size: 15px;">Avec $p$ le nombre de groupes, $N$ le nombre d'individus, $\bar{x}$ la moyenne de toute la population, $\bar{x_i}$ la moyenne du groupe i, $n_i$ le nombre d'individu du groupe i et $x_i^j$ le $j^e$ individu du groupe i.</span></p>
 							<p>On calcule le rapport <b>$F = \frac{\text{Variance entre les groupes}}{\text{Variance intra-groupe}}$</b></p>
 						</div>
 					</section>
@@ -1504,7 +1505,7 @@ acf(residuals(modele1))</code></pre>
 							<ul>
 								<li>Si (H<sub>0</sub>), F est faible.</li>
 								<li>Si les moyennes des groupes sont très différentes de la moyenne de la population, F augmente.</li>
-								<li>Si les groupes ont une grande dispersion, F dimiminue.</li>
+								<li>Si les groupes ont une grande dispersion, F diminue.</li>
 							</ul>
 							<p>Si (H<sub>0</sub>), F suit une <b>loi de Fischer de degrés (p-1, N-p)</b>.</p>
 							<p>La p-value est la probabilité qu'une loi de  Fischer de degrés (p-1, N-p) ait une valeur $\geq$ F. Si la p-value est faible ($<$0.05), on peut rejeter (H<sub>0</sub>).</p>

@@ -308,7 +308,7 @@
 							<p>Pas une distance géographique, mais une distance prenant en compte les valeurs des variables.<br> Deux individus sont proches dans "l'espace des distances" si la distance est faible.</p>
 							<p>Il existe plusieurs distances : euclidienne, Manhattan...</p>
 							<p><span style="color: red;">⚠</span> Normaliser les variables avant de calculer une distance !</p>
-							<p><span style="color: red;">⚠ Variables qualitatives :</span> Encodage, distances sur les hierarchies...</p>
+							<p><span style="color: red;">⚠ Variables qualitatives :</span> Encodage, distances sur les hiérarchies...</p>
 						</div>
 					</section>
 					<section>
@@ -398,7 +398,7 @@
 						<h4 class="top_bar">Exemple en 2D</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p><b>Etape 2 : calcul de la matrice de corrélation</b></p>
-							<p>Matrice de la corrélation entre chaque paire de variable. Si on a M variables, la matrice est de taille M$\times$M.</p>
+							<p>Matrice de la corrélation entre chaque paire de variables. Si on a M variables, la matrice est de taille M$\times$M.</p>
 							<p>$cor(X, Y)=cov(X_{cr}, Y_{cr})=\frac{1}{N}\sum_{i=1}^N X_{cr_i}Y_{cr_i}$</p>
 							<p>$COR = \begin{pmatrix} cor(X, X) & cor(X, Y) \\ cor(Y, X) & cor(Y, Y) \end{pmatrix} = \begin{pmatrix} 1 & 0.89 \\ 0.89 & 1 \end{pmatrix}$</p>
 						</div>
@@ -406,7 +406,7 @@
 					<section>
 						<h4 class="top_bar">Exemple en 2D</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
-							<p><b>Etape 3 :</b> chercher les directions de plus grande variance = <b>Les vecteurs propres</b>.<br>On cherche ces directions comme combinaisons linaires des anciennes variables.</p>
+							<p><b>Etape 3 :</b> chercher les directions de plus grande variance = <b>Les vecteurs propres</b>.<br>On cherche ces directions comme combinaisons linéaires des anciennes variables.</p>
 							<img src="img/images_multivariees/nuage_plus_directions.png" style="align-self: center; width: 45%;">
 						</div>
 					</section>
@@ -1063,7 +1063,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<p><b>Avantages</b></p>
 							<ul>
 								<li>Algorithme simple, pas besoin de fournir le nombre de clusters.</li>
-								<li>Est capable de détecter et exclure les données abbérantes.</li>
+								<li>Est capable de détecter et exclure les données aberrantes.</li>
 							</ul>
 							<p><b>Inconvénients</b></p>
 							<ul>
@@ -1218,7 +1218,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<p>Modèle de classification qui repose sur la séparation progressive des données à l'aide de seuils.</p>
 							<p><b>Avantages</b></p>
 							<ul>
-								<li>Facile à <b>intérpréter</b> c-à-d qu'on peut facilement comprendre les sorties du modèle à partir de ces entrées.</li>
+								<li>Facile à <b>interpréter</b> c-à-d qu'on peut facilement comprendre les sorties du modèle à partir de ces entrées.</li>
 								<li>Capable de faire des séparations non linéaires</li>
 							</ul>
 							<p><b>Inconvénients</b></p>
