@@ -638,7 +638,8 @@ spearmanr(df['sepal length (cm)'], df['sepal width (cm)'])</code></pre>
 					
 					  		<!-- Python Code -->
 					  		<pre class="numpy tab-content active"><code class="language-python">from scipy.stats import linregress
-linregress(df['petal length (cm)'], df['petal width (cm)'])</code></pre>
+linregress(df['petal length (cm)'], df['petal width (cm)'])
+#linregress(variable explicative, variable expliquée)</code></pre>
 					  
 					  		<!-- R Code -->
 					  		<pre class="r tab-content inactive"><code class="language-r">regression <- lm(iris$Petal.Length~iris$Petal.Width)
@@ -768,7 +769,7 @@ acf(residuals(modele1))</code></pre>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<img src="img/images_bivariees/expolin-1.png" style="align-self: center; width: 80%;">
 							<p>Relation de $y = e^{ax+b}$</p>
-							<p>Se linéarise par $ln(y) = ax+ln(b)$</p>
+							<p>Se linéarise par $ln(y) = ax + b$</p>
 						</div>
 					</section>
 					<section>
@@ -777,6 +778,7 @@ acf(residuals(modele1))</code></pre>
 							<img src="img/images_bivariees/logar-1.png" style="align-self: center; width: 80%;">
 							<p>Relation de $y = a \times ln(x)+b$</p>
 							<p>→ changement de variable</p>
+							<p>On fait la régression linéaire entre ln(x) et y/p>
 						</div>
 					</section>
 					<section>
@@ -1339,7 +1341,7 @@ acf(residuals(modele1))</code></pre>
 							<p>D’après le tableau de la loi du $\chi^2$, la valeur critique pour un test avec 5% de chances de se tromper est un degré de liberté de 2 vaut 5.991.</b></p>
 							<p>Si la valeur calculée du $\chi^2$ est <b>supérieure</b> à la valeur critique, on <b>rejette</b> $H_0$</b></p>
 							<p>Pour notre exemple: On rejette $H_0$, i.e. les deux variables sont <b>dépendantes</b>, car $\chi^2≈26>5.991$</p>
-							<p>Interprétation: «la forme est liée à la couleur dans cette population, nous pouvons l’affirmer avec un risque d’erreur d’au moins 5%»</p>
+							<p>Interprétation: «la forme est liée à la couleur dans cette population, nous pouvons l’affirmer avec un risque d’erreur de moins de 5%»</p>
 						</div>
 					</section>
 					<section>
