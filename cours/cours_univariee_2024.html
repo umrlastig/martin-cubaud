@@ -448,7 +448,7 @@ plot1</code></pre>
 						<h4 class="top_bar">Variance et écart-type</h4>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>La <b>variance</b> est la somme des écarts carrés à la moyenne rapporté à l’effectif.</p>
-							<p>\(\displaystyle var_x = \frac{1}{n}\sum_{i=0}^{n} (x_i -\bar{x})^2\)</p>
+							<p>\(\displaystyle var_x = \frac{1}{n}\sum_{i=1}^{n} (x_i -\bar{x})^2\)</p>
 							<p>Avec $X$ une variable, $x_i$ les valeurs de la variable, $\bar{x}$ la moyenne de $X$, et $n$ l'effectif.</p>
 							<p>$\sigma_x = \sqrt{var_x}$ : l'<b>écart type</b> est la racine carrée de la variance.</p>
 						</div>
@@ -706,7 +706,7 @@ lines(density(B), col="red")</code></pre>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							
 							<p>Ce coefficient est le moment d’ordre 3 de la variable $X$ ( de moyenne $\mu$ et d’écart-type $\sigma$) <b>centrée réduite</b></p>
-							<p>$skewness = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right] = \frac{\sum\limits_{i=0}^n(x_i - \bar{x})^3}{n\sigma^3}$</p>
+							<p>$skewness = \mathbb{E} \left[ \left( \frac{X - \mu}{\sigma} \right)^3 \right] = \frac{\sum\limits_{i=1}^n(x_i - \bar{x})^3}{n\sigma^3}$</p>
 							<img width="50%" src="img/images_univariees/asym1-1.png" style=" align-self: center;">
 						</div>
 					</section>
@@ -722,12 +722,16 @@ lines(density(B), col="red")</code></pre>
 						<h4 class="top_bar">Coefficient d'applatissement : Kurtosis</h4>
 						<div style="width:100%; height:75%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: left;">
 							<p>Coefficient non normalisé :</p>
-							<p>$K=\frac{\Sigma_{i=0}^n(x_i - \bar{x})^4}{n\sigma^4}$</p>
+							<p>$K=\frac{\Sigma_{i=1}^n(x_i - \bar{x})^4}{n\sigma^4}$</p>
 							<p>Si la distribution est normale, $K=3$</p>
-							<p>Si $K>3$, la distribution est <b>plus applatie</b>.</p>
-							<p>Si $K<3$, la distribution est <b>moins applatie</b>.</p>
+							<p>Si $K<3$, la distribution est <b>plus applatie</b>.</p>
+							<p>Si $K>3$, la distribution est <b>moins applatie</b>.</p>
 							<p>On normalise parfois en considérant $K′=K−3$ (excès d’applatissement)</p>
 						</div>
+					</section>
+					<section>
+						<h4 class="top_bar">Coefficient d'applatissement : Kurtosis</h4>
+						<img width="50%" src="img/images_univariees/kurtosis_evolution.gif" style=" align-self: center;">
 					</section>
 				</section>
 				<section>
