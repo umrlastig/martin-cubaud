@@ -479,7 +479,7 @@
 						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p><b>Les axes principaux : $F_1$ et $F_2$</b></p>
-							<p><b>Représentation des variables</b> : Chaque variable $V$ est représenté par un point de cordonnées $(cor(V, F1); cor(V, F2))$</p>
+							<p><b>Représentation des variables</b> : Chaque variable $V$ est représentée par un point de cordonnées $(cor(V, F1); cor(V, F2))$</p>
 							<img src="img/images_multivariees/cercles_correlations_explication.png" style="align-self: center; width: 50%;">
 							
 						</div>
@@ -517,7 +517,7 @@
 									<p style="font-size: 20px;">Angle proche de 0° : $cos(angle)=r(V_1, V_2)=1$<br>$\rightarrow V_1$ et $V_2$ sont fortement corrélés positivement.</p>
 									<p style="font-size: 20px;">Angle proche de 90° : $cos(angle)=r(V_1, V_2)=0$<br>$\rightarrow$ manque de corrélation entre $V_1$ et $V_2$.</p>
 									<p style="font-size: 20px;">Angle proche de 180° : $cos(angle)=r(V_1, V_2)=-1$<br>$\rightarrow V_1$ et $V_2$ sont fortement corrélés négativement.</p>
-									<p style="font-size: 20px; color:magenta"><br>$\rightarrow$Identifiez les variables corrélés positivement, négativement, et celles non corrélées.</p>
+									<p style="font-size: 20px; color:magenta"><br>$\rightarrow$Identifiez les variables corrélées positivement, négativement, et celles non corrélées.</p>
 								</div>
 								<img src="img/images_multivariees/cercles_correlations.png" style="align-self: center; width: 40%;">
 							</div>
@@ -527,7 +527,7 @@
 						<h4 class="top_bar">Représentation : cercle de corrélation.</h4>
 						<div style="width:100%; height:90%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<h5>Représentation des unités spatiales</h5>
-							<p>Les coordonnées factorielle de l'US <b>i</b> pour la composante <b>k</b> :</p>
+							<p>Les coordonnées factorielles de l'US <b>i</b> pour la composante <b>k</b> :</p>
 							<img src="img/images_multivariees/composantes_factorielles.png" style="align-self: center; width: 80%;">
 						</div>
 					</section>
@@ -544,7 +544,7 @@
 										<li>La part du budget consacré à la santé</li>
 										<li>Le taux de femmes actives</li>
 										<li>Le taux d'éducation</li>
-										<li>Le taux de chomage</li>
+										<li>Le taux de chômage</li>
 										<li>La mortalité infantile</li>
 									</ul>
 								</li>
@@ -747,7 +747,7 @@
 							<li><b>Méthodes par partitionnement</b><br>	Construire k partitions et les améliorer jusqu'à obtenir une similarité satisfaisante</li>
 							<div style="width: 100%; height: 1px; background-color: #97bf11;" class="fragment"  data-fragment-index="1"></div>
 							<li><b>Méthodes basées sur la densité<span class="fragment" style="color:red; text-align: right; font-size: 16px; margin-left: 10%;" data-fragment-index="1">Analyse de dynamiques spatiotemporelles</span></b><br> Consiste à grouper les US tant que la densité de voisinage excède une certaine limite</li>
-							<li><b>Méthodes basées sur la grille</b><br> Consiste à diviser l'espaces en cellules formant une grille multi-niveaux et grouper les cellules voisines en termes de distance</li>
+							<li><b>Méthodes basées sur la grille</b><br> Consiste à diviser l'espace en cellules formant une grille multi-niveaux et grouper les cellules voisines en termes de distance</li>
 							<div style="width: 100%; height: 1px; background-color: #97bf11;" class="fragment"  data-fragment-index="1"></div>
 							<li><b>Autres : basées sur le modèle ou l'apprentissage</b><br>SOM, COBWEB, réseaux de neurones</li>
 							</ul>
@@ -807,7 +807,7 @@
 								<li><b>Etape 1 : initialisation</b></li>
 								<ul>
 									<li>Partition en N singletons : chaque US constitue une <b>classe</b></li>
-									<li>Calculer la matrice de leur <span class="fragment custom border" id="distances" data-fragment-index="1">distances</span> deux à deux</li>
+									<li>Calculer la matrice de leurs <span class="fragment custom border" id="distances" data-fragment-index="1">distances</span> deux à deux</li>
 									<ul>
 										<li>d(i,j) représente la <b>dissimilarité</b> entre les individus i et j.</li>
 										<li>matrice symétrique avec des zéros sur la diagonale $\rightarrow$ seule une moitié est nécessaire.</li>
@@ -846,7 +846,7 @@
 						<h4 class="top_bar">Indice d'agrégation - exemple</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<ul>
-								<li>Unité spatiales : A, B, C, D, E, F, G</li>
+								<li>Unités spatiales : A, B, C, D, E, F, G</li>
 								<li>Déterminer le dendrogramme étant donné les distances entre les unités spatiales</li>
 								<li>Indice d'agrégation : <b>critère du saut minimal</b></li>
 							</ul>
@@ -983,7 +983,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>Le choix du paramètre $\alpha$ est très important :</p>
 							<ul>
-								<li>Caractériser chaque partition par les indices de qualités $Q_1$ et $Q_2$</li>
+								<li>Caractériser chaque partition par les indices de qualité $Q_1$ et $Q_2$</li>
 								<li>Choisir comme référence la valeur de Q1 calculée avec α = 1 (CAH de Ward sur D1).</li>
 								<li>Choisir le plus petit $\alpha$ possible tel que la valeur de $Q_1$ soit la moins dégradée possible.</li>
 							</ul>
@@ -1068,7 +1068,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<p><b>Inconvénients</b></p>
 							<ul>
 								<li>Les clusters sont supposés avoir la même densité.</li>
-								<li>Certains US ne sont pas clusterisés.</li>
+								<li>Certaines US ne sont pas clusterisés.</li>
 							</ul>
 							<p><b>Deux paramètres :</b></p>
 							<ul>
@@ -1144,11 +1144,11 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 						<h4 class="top_bar">Classification Supervisée - Principe</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<p>On veut classifier des données en K classes <b>connues</b>, pour lesquelles on dispose d'<b>exemples</b>.</p>
-							<p>Un <b>algorithme d'apprentissage automatique</b> est <b>entrainé</b> sur ces exemples, puis est utilisé pour <b>inférer</b> la classe des individus.</p>
+							<p>Un <b>algorithme d'apprentissage automatique</b> est <b>entraîné</b> sur ces exemples, puis est utilisé pour <b>inférer</b> la classe des individus.</p>
 							<ul>
-								<li><b>Jeu d'entrainement</b> = jeu de données sur lequel est entrainé le modèle.</li>
+								<li><b>Jeu d'entraînement</b> = jeu de données sur lequel est entraîné le modèle.</li>
 								<li><b>Jeu de validation</b> = jeu sur lequel on ajuste les <b>hyperparamètres</b> du modèle (<i>hyperparameter tuning</i>).</li>
-								<li><b>Jeu de test</b> (ou d'évaluation) = jeu sur lequel la qualité du classifieur est évaluée.<br> Le jeu de test doit être strictement distinct du jeu d'entrainement, pour éviter la "fuite de données" (<i>data leakage</i>) qui biaise le test.</li>
+								<li><b>Jeu de test</b> (ou d'évaluation) = jeu sur lequel la qualité du classifieur est évaluée.<br> Le jeu de test doit être strictement distinct du jeu d'entraînement, pour éviter la "fuite de données" (<i>data leakage</i>) qui biaise le test.</li>
 							</ul>
 							<p style="color:red">Attention à l'autocorrélation spatiale ! <span style="color:black;">[Karasiak 2022]</span></p>
 						</div>
@@ -1232,7 +1232,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 						<h4 class="top_bar">Arbre de décision</h4>
 						<div style="width:100%; height:80%; display: flex; flex-direction:column; justify-content: center; align-items:start; text-align: justify;">
 							<img src="img/images_multivariees/arbre.svg" style="align-self: center; width: 65%;">
-							<p>Au court de l'entrainement :</p>
+							<p>Au cours de l'entraînement :</p>
 							<ul>
 								<li>On associe à chaque nœud une variable et un seuil sur les valeurs de cette variable.</li>
 								<li>On associe à chaque feuille une classe.</li>
@@ -1245,7 +1245,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<img src="img/images_multivariees/arbre.svg" style="align-self: center; width: 65%;">
 							<p>Pour l'inférence d'un individu :</p>
 							<ul>
-								<li>Les comparaison de la valeur prise par variable pour l'individu à prédire et le seuil indique de quel côté du nœud aller.</li>
+								<li>Les comparaisons de la valeur prise par variable pour l'individu à prédire et le seuil indique de quel côté du nœud aller.</li>
 								<li>La feuille dans laquelle on arrive détermine la classe prédite.</li>
 							</ul>
 						</div>
@@ -1294,7 +1294,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<p style="text-align:center;">$Gini = \sum_{i=1}^{C} p_i(1 - p_i) = 1 - \sum_{i=1}^{C} p_i^2$</p>
 							<ul>
 								<li><b>p<sub>i</sub></b> est la proportion des individus appartenant à la classe <i>i</i> dans le nœud.</li>
-								<li>Un Gini de <b>0</b> indique que le nœud est <b>pur</b> (toutes les individus appartiennent à une seule classe).</li>
+								<li>Un Gini de <b>0</b> indique que le nœud est <b>pur</b> (tous les individus appartiennent à une seule classe).</li>
 								<li>Un Gini proche de <b>0.5</b> indique une forte impureté (les classes sont mélangées).</li>
 							</ul>
 						</div>
@@ -1389,7 +1389,7 @@ plt.ylabel(iris.feature_names[2])</code></pre>
 							<ol>
 								<li>Créer <b>plusieurs sous-échantillons</b> du jeu de données (échantillonnage bootstrap).</li>
 								<li>Construire un arbre de décision sur chaque échantillon.</li>
-								<li>Prédire une nouvelle individu en <b>faisant voter</b> tous les arbres et choisir la classe majoritaire.</li>
+								<li>Prédire un nouvel individu en <b>faisant voter</b> tous les arbres et choisir la classe majoritaire.</li>
 							</ol>
 							<p>Chaque arbre est ainsi légèrement différent, ce qui réduit la corrélation entre eux et augmente la <b>robustesse globale</b> du modèle.</p>
 						</div>
